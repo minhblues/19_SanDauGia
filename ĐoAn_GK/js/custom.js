@@ -320,7 +320,7 @@
         $(this).addClass('active').siblings().removeClass('active');
     });
 
-    var inputPrice = $("#price-auction");
+    var inputPrice = $("#price_auction");
     inputPrice.ready(function() {
         inputPrice.value = "0";
     });
