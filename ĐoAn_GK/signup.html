@@ -51,51 +51,54 @@
             </div>
         </div>
     </header>
-    <!-- Header part end-->
-    <!--================login_part Area =================-->
-    <section class="login_part section_padding">
+    <section class="checkout_area section_padding">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="login_part_text text-center">
-                        <div class="login_part_text_iner">
-                            <h2>New to our Shop?</h2>
-                            <p>There are advances being made in science and technology
-                                everyday, and a good example of this is the</p>
-                            <a href="signup.html" class="btn_3">Create an Account</a>
-                        </div>
+            <div class="billing_details">
+                <h3>Sign Up</h3>
+                <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                    <div class="col-md-6 form-group p_star">
+                        <input type="text" class="form-control" id="first" name="name" placeholder="First name" />
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="login_part_form">
-                        <div class="login_part_form_iner">
-                            <h3>Welcome Back ! <br>
-                                Please Sign in now</h3>
-                            <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-                                <div class="col-md-12 form-group p_star">
-                                    <input type="text" class="form-control" id="name" name="name" value="" placeholder="Username">
-                                </div>
-                                <div class="col-md-12 form-group p_star">
-                                    <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password">
-                                </div>
-                                <div class="col-md-12 form-group">
-                                    <div class="creat_account d-flex align-items-center">
-                                        <input type="checkbox" id="f-option" name="selector">
-                                        <label for="f-option">Remember me</label>
-                                    </div>
-                                    <button type="submit" value="submit" class="btn_3">
-                                        log in
-                                    </button>
-                                    <a class="lost_pass" href="#">forget password?</a>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="col-md-6 form-group p_star">
+                        <input type="text" class="form-control" id="last" name="name" placeholder="Last name" />
                     </div>
+                    <div class="col-md-12 form-group">
+                        <input type="text" class="form-control" id="company" name="company" placeholder="Company name" />
+                    </div>
+                    <div class="col-md-6 form-group p_star">
+                        <input type="text" class="form-control" id="number" name="number" placeholder="Phone number" />
+                    </div>
+                    <div class="col-md-6 form-group p_star">
+                        <input type="text" class="form-control" id="email" name="compemailany" placeholder="Email Address" />
+                    </div>
+                    <div class="col-md-12 form-group p_star ">
+                        <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="Password" />
+                    </div>
+                    <div class="col-md-12 form-group p_star">
+                        <input type="password" class="form-control" id="cfmpassword" name="cfmpassword" placeholder="Confirm Password" />
+                    </div>
+                    <div class="col-md-12 form-group p_star">
+                        <input type="text" class="form-control" id="add1" name="add1" placeholder="Address line 01" />
+                    </div>
+                    <div class="col-md-12 form-group p_star">
+                        <input type="text" class="form-control" id="add2" name="add2" placeholder="Address line 02" />
+                    </div>
+                    <div class="col-md-12 form-group p_star">
+                        <input type="text" class="form-control" id="city" name="city" placeholder="Town/City" />
+                    </div>
+                </form>
+                <div class="col-md-12 form-group ">
+                    <form action="?" method="POST">
+                        <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+                        <br />
+                        <button type="submit" value="submit" class="btn_3">
+                            Sign Up
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
-    <!--================login_part end =================-->
     <!-- jquery plugins here-->
     <!-- jquery -->
     <script src="js/jquery-1.12.1.min.js"></script>
