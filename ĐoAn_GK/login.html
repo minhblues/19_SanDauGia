@@ -71,7 +71,7 @@
                         <div class="login_part_form_iner">
                             <h3>Welcome Back ! <br>
                                 Please Sign in now</h3>
-                            <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                            <form class="row contact_form" action="#" method="post" novalidate="novalidate" onsubmit="return checkInf()">
                                 <div class="col-md-12 form-group p_star">
                                     <input type="text" class="form-control" id="name" name="name" value="" placeholder="Username">
                                 </div>
@@ -83,7 +83,7 @@
                                         <input type="checkbox" id="f-option" name="selector">
                                         <label for="f-option">Remember me</label>
                                     </div>
-                                    <button type="submit" value="submit" class="btn_3">
+                                    <button type="submit" value="submit" class="btn_3" onclick="checkInf()">
                                         log in
                                     </button>
                                     <a class="lost_pass" href="#">forget password?</a>
@@ -124,6 +124,7 @@
     <script src="js/price_rangs.js"></script>
     <!-- custom js -->
     <script src="js/custom.js"></script>
+    <script src="site.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
