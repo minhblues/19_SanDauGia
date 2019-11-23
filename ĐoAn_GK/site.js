@@ -28,6 +28,15 @@ $(() => {
     $('.priceformat').each(() => {
         $(this).text().number(true, 0, '.', ',');
     });
+
+    $('#addImage').click(() => {
+        $('#addImage').before(
+            '<input type="file" name="file_img">')
+    });
+
+    $('#Post').click(() => {
+        alert('Đăng sản phẩm thành công')
+    });
 });
 
 var checkName = () => {

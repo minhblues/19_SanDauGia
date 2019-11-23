@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/animate.css">
     <!-- owl carousel CSS -->
     <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/lightslider.min.css">
     <!-- font awesome CSS -->
     <link rel="stylesheet" href="css/all.css">
     <!-- flaticon CSS -->
@@ -20,13 +21,12 @@
     <link rel="stylesheet" href="css/themify-icons.css">
     <!-- font awesome CSS -->
     <link rel="stylesheet" href="css/magnific-popup.css">
-    <!-- swiper CSS -->
-    <link rel="stylesheet" href="css/slick.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="site.css">
 </head>
 
-<body>
+<body class="bg-white">
     <!--::header part start::-->
     <header class="main_menu home_menu">
         <div class="container-fluid">
@@ -64,6 +64,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="mybid.html">
+                                  
                                         Đấu giá của tôi
                                     </a>
                                 </li>
@@ -103,6 +104,7 @@
     </header>
     <!-- Header part end-->
 
+
     <!-- breadcrumb start-->
     <section class="breadcrumb breadcrumb_bg">
         <div class="container">
@@ -110,7 +112,9 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
                         <div class="breadcrumb_iner_item">
-                            <p>Trang chủ/ Giỏ hàng</p>
+                            <p><a href="index.html">Trang chủ</a>/
+                                <a href="PostProduct.html">Sản phẩm của tôi</a>/
+                                <a href="PostProduct.html">Đăng sản phẩm</a></p>
                         </div>
                     </div>
                 </div>
@@ -118,118 +122,90 @@
         </div>
     </section>
     <!-- breadcrumb start-->
+    <div class="container">
 
-    <!--================Cart Area =================-->
-    <section class="cart_area section_padding">
-        <div class="container">
-            <div class="cart_inner">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Sản phẩm</th>
-                                <th scope="col">Giá</th>
-                                <th scope="col">Số lượng</th>
-                                <th scope="col">Tổng</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/arrivel/iphone11.png" alt="" />
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Iphone 11 Pro Max 256GB</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>28.000.000 VND</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                                        <input class="input-number" type="text" value="1" min="0" max="10">
-                                        <span class="input-number-increment"> <i class="ti-plus"></i></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>28.000.000 VND</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/arrivel/asus.jpg" alt="" />
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Laptop Asus TUF Gaming FX705DT-AU017T</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>22.000.000 VND</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                                        <input class="input-number" type="text" value="1" min="0" max="10">
-                                        <span class="input-number-increment"> <i class="ti-plus"></i></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>22.000.000 VND</h5>
-                                </td>
-                            </tr>
 
-                            <tr class="shipping_area">
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <h5>Shipping</h5>
-                                </td>
-                                <td>
-                                    <div class="shipping_box">
-                                        <ul class="list">
-                                            <li>
-                                                Free Shipping
-                                                <input type="radio" aria-label="Radio button for following text input">
-                                            </li>
-                                            <li>
-                                                Bưu điện: 40.000 VND
-                                                <input type="radio" aria-label="Radio button for following text input">
-                                            </li>
-                                            <li class="active">
-                                                Chuyển phát nhanh: 35.000 VND
-                                                <input type="radio" aria-label="Radio button for following text input">
-                                            </li>
-                                        </ul>
-                                        <input class="post_code" type="text" placeholder="Mã bưu điện" />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <h5>Tổng tiền</h5>
-                                </td>
-                                <td>
-                                    <h5>50.000.000 VND</h5>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="checkout_btn_inner float-right">
-                        <a class="btn_1 checkout_btn_1" href="#">Thanh toán</a>
-                    </div>
+        <form action="designer-finish.html" class="form-horizontal" role="form">
+
+            <!-- card_area // -->
+
+            <div class="card_area">
+                <label for="name" class="col-sm-3 control-label">Tên sản phẩm</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="productname">
                 </div>
             </div>
-    </section>
-    <!--================End Cart Area =================-->
+            <!-- card_area // -->
+            <div class="card_area">
+                <label for="name" class="col-sm-3 control-label">Giá khởi điểm</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="StartPrice">
+                </div>
+            </div>
+            <!-- card_area // -->
+            <div class="card_area">
+                <label for="name" class="col-sm-3 control-label">Bước giá</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="PriceStep">
+                </div>
+            </div>
+
+            <div class="card_area">
+                <label for="name" class="col-sm-3 control-label">Giá mua ngay</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="BuyNow">
+                </div>
+            </div>
+
+            <div class="card_area">
+                <label for="about" class="col-sm-3 control-label">Mô tả</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" id="ProductDescription"></textarea>
+                </div>
+            </div>
+            <!-- card_area // -->
+
+            <div class="card_area">
+                <label for="name" class="col-sm-3 control-label">Phương thức đấu giá</label>
+                <div class="col-sm-9">
+                    <label class="radio-inline">
+              <input type="radio"  id="defaultAuction" value="option1"> Mặc định
+            </label>
+                    <label class="radio-inline">
+              <input type="radio" id="specialAuction" value="option2"> Tự động gia hạn
+            </label>
+                </div>
+            </div>
+
+            <div class="card_area">
+                <label for="name" class="col-sm-3 control-label">Ảnh minh hoạ</label>
+                <div class="col-sm-3">
+                    <input type="file">
+                </div>
+                <div class="col-sm-3">
+                    <input type="file">
+                </div>
+                <div class="col-sm-3">
+                    <input type="file">
+                </div>
+                <div class="col-sm-3">
+                    <a class="border primary-border" id="addImage">Thêm hình ảnh</a>
+                </div>
+            </div>
+            <!-- card_area // -->
+
+            <hr>
+            <div class="card_area">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <a href="index.html" class="btn btn-primary" id="Post">Đăng sản phẩm</a>
+                </div>
+            </div>
+            <!-- card_area // -->
+        </form>
+
+
+    </div>
+    <!-- container// -->
 
     <!--::footer_part start::-->
     <footer class="footer_part">
@@ -239,8 +215,10 @@
                     <div class="single_footer_part">
                         <h4>Category</h4>
                         <ul class="list-unstyled">
-                            <li><a href="#">Điện thoại di động</a></li>
-                            <li><a href="#">Máy tính xách tay</a></li>
+                            <li><a href="#">Male</a></li>
+                            <li><a href="#">Female</a></li>
+                            <li><a href="#">Shoes</a></li>
+                            <li><a href="#">Fashion</a></li>
                         </ul>
                     </div>
                 </div>
@@ -259,9 +237,9 @@
                     <div class="single_footer_part">
                         <h4>Address</h4>
                         <ul class="list-unstyled">
-                            <li><a href="#">University of science</a></li>
+                            <li><a href="#">200, Green block, NewYork</a></li>
                             <li><a href="#">+10 456 267 1678</a></li>
-                            <li><span>team19@gmail.com</span></li>
+                            <li><span>contact89@winter.com</span></li>
                         </ul>
                     </div>
                 </div>
@@ -269,8 +247,8 @@
                     <div class="single_footer_part">
                         <h4>Newsletter</h4>
                         <div id="mc_embed_signup">
-                            <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative mail_part">
-                                <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address" class="placeholder hide-on-focus" onfocus="this.placeholder = ''" onblur="this.placeholder = ' Email Address '">
+                            <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative mail_part" novalidate="true">
+                                <input type="email" name="EMAIL" id="newsletter-form-email" placeholder="Email Address" class="placeholder hide-on-focus" onfocus="this.placeholder = ''" onblur="this.placeholder = ' Email Address '">
                                 <button type="submit" name="submit" id="newsletter-submit" class="email_icon newsletter-submit button-contactForm">subscribe</button>
                                 <div class="mt-10 info"></div>
                             </form>
@@ -280,6 +258,20 @@
                             <a href="#"><i class="ti-twitter-alt"></i></a>
                             <a href="#"><i class="ti-instagram"></i></a>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="copyright_text">
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>20192019 All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
                     </div>
                 </div>
             </div>
@@ -296,10 +288,10 @@
     <!-- easing js -->
     <script src="js/jquery.magnific-popup.js"></script>
     <!-- swiper js -->
-    <script src="js/swiper.min.js"></script>
+    <script src="js/lightslider.min.js"></script>
     <!-- swiper js -->
     <script src="js/mixitup.min.js"></script>
-    <script src="js/price_rangs.js"></script>
+    <script src="js/lightslider.min.js"></script>
     <!-- particles js -->
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -314,6 +306,9 @@
     <script src="js/mail-script.js"></script>
     <!-- custom js -->
     <script src="js/custom.js"></script>
+    <!-- site js -->
+    <script src="site.js"></script>
+
 </body>
 
 </html>
