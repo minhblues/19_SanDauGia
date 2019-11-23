@@ -1,6 +1,6 @@
 var checkName = () => {
     var x = document.getElementById('name').value;
-    var y = "nguyenvana"
+    var y = ""
     if (y.length != x.length) return false;
     for (var i = 0; i <= x.length; i++) {
         if (x[i] != y[i]) {
@@ -12,7 +12,7 @@ var checkName = () => {
 
 var checkPass = () => {
     var x = document.getElementById('password').value;
-    var y = "123456"
+    var y = ""
     if (y.length != x.length) return false;
     for (var i = 0; i <= x.length; i++) {
         if (x[i] != y[i]) {
@@ -25,10 +25,12 @@ var checkPass = () => {
 var checkInf = () => {
 
     if (checkName() & checkPass()) {
-        alert("Đăng nhập thành công");
         return true;
     }
-        alert("Đăng nhập thất bại");
 
     return false;
 }
+
+
+
+    

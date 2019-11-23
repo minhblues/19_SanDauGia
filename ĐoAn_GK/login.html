@@ -83,7 +83,8 @@
                                         <input type="checkbox" id="f-option" name="selector">
                                         <label for="f-option">Remember me</label>
                                     </div>
-                                    <button type="submit" value="submit" class="btn_3" onclick="checkInf()">
+                                    from
+                                    <button type="button" id="loginbutton" value="button" class="btn_3">
                                         log in
                                     </button>
                                     <a class="lost_pass" href="#">forget password?</a>
@@ -98,6 +99,11 @@
     <!--================login_part end =================-->
     <!-- jquery plugins here-->
     <!-- jquery -->
+    <script>
+    document.getElementById("loginbutton").onclick = function() {
+        location.href = "index.html";
+    };
+    </script>
     <script src="js/jquery-1.12.1.min.js"></script>
     <!-- popper js -->
     <script src="js/popper.min.js"></script>

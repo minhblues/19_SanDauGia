@@ -88,7 +88,7 @@
                     <form action="?" method="POST">
                         <div class="g-recaptcha" data-sitekey="your_site_key"></div>
                         <br />
-                        <button type="submit" value="submit" class="btn_3">
+                        <button type="button" id="signupbutton" value="submit" class="btn_3">
                             Sign Up
                         </button>
                     </form>
@@ -96,6 +96,12 @@
             </div>
         </div>
     </section>
+    <script>
+    document.getElementById("signupbutton").onclick = function() {
+        console.log("Minh");
+        location.href = "index.html";
+    };
+    </script>
     <!-- jquery plugins here-->
     <!-- jquery -->
     <script src="js/jquery-1.12.1.min.js"></script>
@@ -124,6 +130,7 @@
     <script src="js/price_rangs.js"></script>
     <!-- custom js -->
     <script src="js/custom.js"></script>
+    <script src="site.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
