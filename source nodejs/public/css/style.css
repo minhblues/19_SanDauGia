@@ -3008,7 +3008,7 @@ ul {
     background-image: url("../img/banner_img.png");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 
