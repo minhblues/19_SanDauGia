@@ -6,12 +6,11 @@ var logger = require('morgan');
 var exphbs  = require('express-handlebars');
 const hbs_sections = require('express-handlebars-sections');
 
-var usersRouter = require('./routes/users');
 var homeRouter = require('./routes/home.routes')
-var loginRouter = require('./routes/login')
+var loginRouter = require('./routes/login.routes')
+var signupRouter = require('./routes/signup.routes')
+
 var app = express();
-
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -33,10 +32,12 @@ app.engine('hbs', exphbs({
     format: val => numeral(val).format('0,0'),
   }
 }));
+
 app.set('view engine', 'hbs');
+
 app.use('/',homeRouter);
 app.use('/',loginRouter);
-//app.use('/', indexRouter);
+app.use('/',signupRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
