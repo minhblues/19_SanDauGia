@@ -1,14 +1,8 @@
 const mysql = require('mysql');
 const util = require('util');
+const config = require('../config/default');
 
-const pool = mysql.createPool({
-    connectionLimit: 50,
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '1234',
-    database: 'onlineauction'
-});
+const pool = mysql.createPool(config.mysql);
 
 const mysql_query = util.promisify(pool.query).bind(pool);
 

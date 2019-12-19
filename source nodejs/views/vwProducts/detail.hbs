@@ -21,7 +21,7 @@
                 <div class="col-lg-5">
                     <div class="product_slider_img">
                         <div id="vertical">
-                            {{#each this.ImgPath}}
+                            {{#each this.IMG}}
                             <div data-thumb={{this}}>
                                 <img src={{this}} />
                             </div>
@@ -31,13 +31,13 @@
                 </div>
                 <div class="col-lg-5 offset-lg-1">
                     <div class="s_product_text">
-                        <h2>{{ProductName}}</h2>
+                        <h2>{{Name}}</h2>
                         <h3>Giá hiện tại: {{Price}} VND</h3>
-                        <h2>Giá mua ngay: {{BuyNow}} VND</h2>
+                        <h2>Giá mua ngay: {{InstancePrice}} VND</h2>
                         <ul class="list">
                             <li>
-                                <a class="active" href="#">
-                                    <span>Thể loại: {{Type}}</a>
+                                <a class="active" href="/{{Category}}">
+                                    <span>Thể loại: {{Category}}</a>
                             </li>
                             <li>
                                 <a href="#">
@@ -48,10 +48,10 @@
                                 <a href="#"> <span>Người bán: {{Seller}} {{SellerScore}}/10</span></a>
                             </li>
                             <li>
-                                <div>Thời gian đăng: {{Time}}</div>
+                                <div>Thời gian đăng: {{StartTime}}</div>
                             </li>
                             <li>
-                                <div>Thời gian kết thúc: {{TimeUp}}</div>
+                                <div>Thời gian kết thúc: {{EndTime}}</div>
                             </li>
                         </ul>
                         <p>
