@@ -1,0 +1,66 @@
+<header class="main_menu home_menu">
+    <div class="container-fluid">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-11">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="#"> <img width="50" height="50" src="images/logo.png" alt="logo"> </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="menu_icon"><i class="fas fa-bars"></i></span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="checkout_area section_padding">
+    <div class="container">
+        <div class="billing_details">
+            <h3>Sign Up</h3>
+            <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="first" name="name" placeholder="First name" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="last" name="name" placeholder="Last name" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="number" name="number" placeholder="Phone number" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="email" name="compemailany"
+                        placeholder="Email Address" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="User Name " />
+                </div>
+                <div class="col-md-6 form-group p_star ">
+                    <input type="password" class="form-control" id="newpassword" name="newpassword"
+                        placeholder="Password" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="password" class="form-control" id="cfmpassword" name="cfmpassword"
+                        placeholder="Confirm Password" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="add1" name="add1" placeholder="Address " />
+                </div>
+            </form>
+            <div class="col-md-12 form-group ">
+                <form action="?" method="POST">
+                    <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+                    <br />
+                    <button type="button" id="signupbutton" value="submit" class="btn_3">
+                        Sign Up
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    document.getElementById("signupbutton").onclick = function () {
+        location.href = "/";
+    };
+</script>
