@@ -39,7 +39,8 @@ app.get('/', async(req, res) => {
 app.get('/detail/:id', async(req, res) => {
     console.log(req.params.id);
     single = await Product.single(req.params.id);
-    res.render('vwProducts/detail', single);
+    console.log(single);
+    res.render('vwProducts/detail', single[0]);
 });
 
 const PORT = 3000;
