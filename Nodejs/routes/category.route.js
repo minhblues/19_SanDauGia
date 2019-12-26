@@ -1,5 +1,5 @@
 const express = require('express');
-const productModel = require('../models/product.model');
+const productModel = require('../models/product.models');
 const config = require('../config/default.json');
 
 const router = express.Router();
