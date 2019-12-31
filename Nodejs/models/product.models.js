@@ -1,4 +1,4 @@
-const db = require('../lib/db');
+const db = require('../utils/db');
 const config = require('../config/default.json');
 
 module.exports = {
