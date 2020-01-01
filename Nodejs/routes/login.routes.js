@@ -3,7 +3,6 @@ var bcrypt = require('bcryptjs');
 const userModel = require('../models/username.models');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/login', function (req, res, next) {
   res.render('login', {
     title: 'Sign In'
@@ -21,10 +20,10 @@ router.post('/login', async (req, res) => {
     return res.render('/login', {
       title: 'Sign In',
       layout: false,
-      err_message: 'Login failed'
+      err_message:'Login failed'
     });
   }
-
+  
   delete user.Password;
   // req.session.isAuthenticated = true;
   // req.session.authUser = user;

@@ -31,15 +31,15 @@
                 <div class="login_part_form">
                     <div class="login_part_form_iner">
                         <h3>Welcome Back ! <br> Please Sign in now</h3>
-                        <form class="row contact_form" action="#" method="POST" novalidate="novalidate">
-                            {{#if err_message}}
-                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                {{err_message}}
-                            </div>
-                            {{/if}}
+                        {{#if err_message}}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{err_message}}
+                        </div>
+                        {{/if}}
+                        <form class="row contact_form" method="POST" novalidate="novalidate">
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="username" name="username" value=""
                                     placeholder="Username">
@@ -53,7 +53,7 @@
                                     <input type="checkbox" id="f-option" name="selector">
                                     <label for="f-option">Remember me</label>
                                 </div>
-                                <button id="loginbutton"class="btn_3" type="submit">
+                                <button id="loginbutton" class="btn_3" type="submit">
                                     Sign In
                                 </button>
                                 <a class="lost_pass" href="#">forget password?</a>

@@ -45,6 +45,28 @@
                 <div class="col-md-6 form-group p_star">
                     <input type="text" class="form-control" id="Address" name="Address" placeholder="Address " />
                 </div>
+                <div class="col-md-6 form-group p_star">
+                    <span id="add">
+                        <script>
+                            var x = Math.floor(Math.random() * 100);
+                            var y = Math.floor(Math.random() * 100);
+                            var z = x + '+' + y + '= ?';
+                            document.getElementById('add').innerHTML = z;
+                            var checkAdd = () => {
+                                var z = document.getElementById('result').value;
+                                if (z != x + y) {
+                                    document.getElementById('requiredAdd').innerHTML = 'Please fill out a correct answer';
+                                    return false;
+                                }
+                                else
+                                    return true;
+                            }
+                        </script>
+                    </span>
+                    <span id="requiredAdd"></span>
+                    <input type="text" class="form-control" id="result" name="result" />
+                </div>
+
                 <div class="col-md-12 form-group ">
                     <div class="g-recaptcha" data-sitekey="your_site_key"></div>
                     <br />

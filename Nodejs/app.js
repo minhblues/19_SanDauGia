@@ -10,6 +10,10 @@ const session = require('express-session');
 var homeRouter = require('./routes/home.routes')
 var loginRouter = require('./routes/login.routes')
 var signupRouter = require('./routes/signup.routes')
+var profileRouter = require('./routes/profile.routes')
+var cartRouter = require('./routes/cart.routes')
+var wishlistRouter = require('./routes/wishlist.routes')
+var commentRouter = require('./routes/comment.routes')
 var Category = require('./routes/category.route');
 
 var app = express();
@@ -40,6 +44,10 @@ app.set('view engine', 'hbs');
 app.use('/', homeRouter);
 app.use('/', loginRouter);
 app.use('/', signupRouter);
+app.use('/', profileRouter);
+app.use('/', cartRouter);
+app.use('/',wishlistRouter);
+app.use('/',commentRouter);
 app.use('/', Category);
 
 // catch 404 and forward to error handler

@@ -14,6 +14,17 @@ router.get('/signup', async(req, res, next)=> {
 router.post('/signup', async (req, res) => {
   const N = 10;
   const hash = bcrypt.hashSync(req.body.f_Newpassword, N);
+  
+  const email = await userModel.singleByUserName(req.body.username);
+  if(req.body.f_Newpassword !== req.body.cfmpassword)
+  {
+    
+  }
+  if (email !== null)
+  {
+
+  }
+
   const entity = req.body;
   entity.Password = hash;
   entity.IsBidder = null;
