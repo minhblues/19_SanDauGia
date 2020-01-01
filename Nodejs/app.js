@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var exphbs = require('express-handlebars');
 const hbs_sections = require('express-handlebars-sections');
+const session = require('express-session');
 
 var homeRouter = require('./routes/home.routes')
 var loginRouter = require('./routes/login.routes')
@@ -56,5 +57,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+
 
 module.exports = app;
