@@ -1,6 +1,8 @@
 {{#section 'js'}}
 <script src="/javascripts/bootstrap-input-spinner.js"></script>
 <script>
+    if({{Auction}})
+        alert('Đấu giá thành công!!!');
     if({{product.StepPrice}})
         $("input[type='number']").prop('min',parseInt($("input[type='number']").prop('min'))+{{product.StepPrice}});
     $("input[type='number']").inputSpinner();
@@ -41,7 +43,7 @@
                         {{#each subIMG}}
                         <div class="carousel-item">
                             <img width="300" height="400" class="d-block w-100"
-                                src="/images/arrivel/{{product.IMG}}.png" alt="Second slide">
+                                src="/images/arrivel/{{IMG}}.png" alt="Second slide">
                         </div>
                         {{/each}}
                     </div>
@@ -76,13 +78,13 @@
                         </li>
                         <li>
                             <div>
-                                <span class="col-sm-6">Người ra giá: {{auction.Bidder}} </span>
-                                <span class="col-sm-6">Score: {{Percentformat bidScore}}</span>
+                                <span class="col-sm-6">Người bán: {{product.Seller}} </span>
+                                <span class="col-sm-6">Score: {{Percentformat sellScore}}</span>
                             </div>
                         </li>
                         <li>
                             <div>
-                                <span class="col-sm-6">Người bán: {{auction.Bidder}} </span>
+                                <span class="col-sm-6">Người ra giá: {{product.PriceHolder}} </span>
                                 <span class="col-sm-6">Score: {{Percentformat bidScore}}</span>
                             </div>
                         </li>
@@ -90,7 +92,7 @@
                             <div>Thời gian đăng: {{DateTimeFormat product.StartTime}}</div>
                         </li>
                         <li>
-                            <div>Thời gian kết thúc: <span>{{EndTimeFormat product.EndTime}}</span></div>
+                            <div>Thời gian kết thúc: <span>{{SpecialTimeFormat product.EndTime}}</span></div>
                         </li>
                     </ul>
                     <p>
@@ -98,19 +100,23 @@
                     </p>
                     <div class="card_area">
                         <div class="col-sm-12 mt-10">
-                            <form method="POST" action="/detail/auction/{{ID}}" id="Auction">
+                            <form method="POST" action="/detail/{{ID}}/Auction" id="Auction">
                                 <div class="col-lg-6 col-sm-12">
                                     <input type="number" name="Price"
                                         value="{{product.Price}}" min="{{product.Price}}" step="{{product.StepPrice}}">
                                     <input name="StepPrice" value="{{product.StepPrice}}" hidden=true>
                                 </div>
-                                <div class="text-danger col-sm" id="Invalid-price" hidden="true">Giá không hợp lệ </div>
                                 <div class="col-sm-12 mt-10">
 
                                     <button type="submit" class="btn btn-primary" id="Auction">Đấu giá</button>
-                                    <a href="cart.html" class="btn btn-primary m-auto">Mua ngay</a>
-                                    <a href="#" class="like_us"> <i class="fa fa-heart fa-lg" style="color:black"
-                                            aria-hidden="false"></i> </a>
+                                    <a href="/detail/{{ID}}/Buy" class="btn btn-primary m-auto">Mua ngay</a>
+                                    <a href="/wishlist/{{ID}}" class="btn btn-outline-danger favoriteBtn">
+                                        {{#if product.isFavorite}}
+                                        <i class="fa fa-heart"></i>
+                                        {{else}}
+                                        <i class="far fa-heart "></i>
+                                        {{/if}}
+                                    </a>
                                 </div>
                             </form>
                         </div>
@@ -201,27 +207,7 @@
             </div>
             <div class="row">
                 {{#each alikeProduct}}
-                <div class="col-lg-4 col-sm-6 mt-10" style="display: bvlock;">
-                    <a class="h-100" href="/detail/{{ProductID}}">
-                        <div class="card m-auto h-100" style="width: 18rem; background-color: transparent;">
-                            <img width="300" height="340" class="card-img-top" src="/images/arrivel/{{IMG}}.png" alt="">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">{{Name}}</h5>
-                                <p class="card-text">
-                                    <p>Giá hiện tại: {{Numberformat Price}} VND</p>
-                                    {{#if InstancePrice}}
-                                    <p>Giá mua ngay: {{Numberformat InstancePrice}} VND</p>
-                                    {{/if}}
-                                    <p>Ngày kết thúc: {{DateTimeFormat EndTime}}</p>
-                                </p>
-                            </div>
-                    </a>
-                    <a class="mt-0 card-footer text-center " href="#">
-                        <i class="far fa-heart" style="color: red;"></i>
-                        <span class="text-danger"> Yêu thích</span>
-                    </a>
-                </div>
-            </div>
+                {{>productCard}}
             {{/each}}
         </div>
 </section>

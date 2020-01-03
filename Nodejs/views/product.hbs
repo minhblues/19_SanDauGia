@@ -1,8 +1,4 @@
 {{>header}}
-<!--::header part start::-->
-<header class="main_menu home_menu"></header>
-<!-- Header part end-->
-<!--================Home Banner Area =================-->
 <!-- breadcrumb start-->
 <section class="breadcrumb breadcrumb_bg">
     <div class="container">
@@ -44,26 +40,7 @@
             <div class="col-sm-9">
                 <div class="row">
                     {{#each products}}
-                    <div class="col-lg-4 col-sm-6 mt-10" style="display: bvlock;">
-                        <a class="h-100" href="/detail/{{ProductID}}">
-                        <div class="card m-auto h-100" style="width: 17rem; background-color: transparent;">
-                            <img width="300" height="340" class="card-img-top" src="/images/arrivel/{{IMG}}.png" alt="">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">{{Name}}</h5>
-                                <p class="card-text">
-                                    <p>Giá hiện tại: {{Numberformat Price}} VND</p>
-                                    {{#if InstancePrice}}
-                                    <p>Giá mua ngay: {{Numberformat InstancePrice}} VND</p>
-                                    {{/if}}
-                                    <p>Ngày kết thúc: {{DateTimeFormat EndTime}}</p>
-                                </p>
-                            </div></a>
-                            <a class="mt-0 card-footer text-center " href="#">
-                                <i class="far fa-heart" style="color: red;"></i>
-                                <span class="text-danger"> Yêu thích</span>
-                            </a>
-                        </div>
-                    </div>
+                    {{>productCard}}
                     {{/each}}
                 </div>
 

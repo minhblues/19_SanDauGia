@@ -14,11 +14,10 @@ module.exports = {
         return ret[0]
     },
     properties: id => db.load(`select * from properties where Product =${id}`),
-    popular: _ => db.load(`select products.* from products,auctions 
-                            where products.ProductID=auctions.product and NOW() < products.EndTime 
-                            Group by products.ProductID
-                            order by count(Bidder) desc limit 5`),
-    nearFinish: _ => db.load(`select products.* from products 
+    popular: _ => db.load(`select * from products
+                            where NOW() < products.EndTime 
+                            order by AuctionTime desc limit 5`),
+    nearFinish: _ => db.load(`select products.* from products where EndTime-NOW()>0
                             order by EndTime-NOW() asc limit 5`),
     mostExpensive: _ => db.load(`select * from products order by Price desc limit 5`),
     popularByCat: catId => db.load(`select products.* from products  left join auctions on ProductID=product

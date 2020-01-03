@@ -53,7 +53,7 @@ app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
 app.use('/profile', auth, lsCategories, profileRouter);
 app.use('/cart', auth, lsCategories, cartRouter);
-app.use('/favorite', auth, lsCategories, wishlistRouter);
+app.use('/wishlist', auth, lsCategories, wishlistRouter);
 app.use('/comment', auth, lsCategories, commentRouter);
 
 // catch 404 and forward to error handler
@@ -69,7 +69,6 @@ app.use(async(err, req, res, next) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-
     // render the error page
     errstatus = err.status || 500;
     res.status(errstatus);

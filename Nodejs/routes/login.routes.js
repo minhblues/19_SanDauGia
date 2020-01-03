@@ -1,6 +1,6 @@
 var express = require('express');
 var bcrypt = require('bcryptjs');
-const userModel = require('../models/username.models');
+const userModel = require('../models/users.model');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -26,10 +26,13 @@ router.post('/', async(req, res) => {
 
     delete user.Password;
     req.session.isAuthenticated = true;
-    req.session.authUser = user;
+    req.session.authUser = user.Username;
 
     const url = req.query.retUrl || '/';
-    res.redirect(url);
+    if (req.query.method == 'post')
+        res.redirect(307, url);
+    else
+        res.redirect(url);
 })
 
 module.exports = router;
