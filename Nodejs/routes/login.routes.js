@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.get('/login', function (req, res, next) {
   res.render('login', {
-    title: 'Sign In'
+    title: 'Đăng nhập'
   });
 });
 
@@ -17,9 +17,8 @@ router.post('/login', async (req, res) => {
 
   const rs = bcrypt.compareSync(req.body.password, user.Password);
   if (rs === false) {
-    return res.render('/login', {
-      title: 'Sign In',
-      layout: false,
+    return res.render('login', {
+      title: 'Đăng nhập',
       err_message:'Login failed'
     });
   }

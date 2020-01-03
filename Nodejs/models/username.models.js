@@ -10,7 +10,7 @@ module.exports = {
         return rows[0];
     },
     singleByEmail: async email =>{
-        const rows = await db.load(`select * from users where Username = '${email}'`);
+        const rows = await db.load(`select * from users where Email = '${email}'`);
         if(rows.length === 0)
             return null;
         return rows[0];
