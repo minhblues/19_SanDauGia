@@ -47,7 +47,7 @@ app.engine('hbs', exphbs({
 
 app.set('view engine', 'hbs');
 
-app.use('/', homeRouter);
+app.use('/', lsCategories, homeRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
@@ -63,9 +63,9 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(async(err, req, res, next) => {
-    if (!req.session.categories)
-        req.session.categories = await categoryModel.all();
-    categories = req.session.categories;
+    if (!res.locals.lsCategories)
+        res.locals.lsCategories = await categoryModel.all();
+    categories = res.locals.lsCategories;
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

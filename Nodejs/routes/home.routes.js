@@ -9,7 +9,6 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', async(req, res) => {
-    categories = req.session.categories;
     const [popular, nearFinish, mostExpensive] = await Promise.all(
         [
             productModel.popular(),
@@ -18,22 +17,15 @@ router.get('/', async(req, res) => {
         ]
     )
     res.render('home', {
-        categories,
+        title: 'Sàn đấu giá',
+        categories: res.locals.lsCategories,
         popular,
         nearFinish,
         mostExpensive,
-        title: 'Sàn đấu giá'
     });
 });
 
-
-router.get('/err', (req, res) => {
-    throw 500;
-})
-
 router.get('/detail/:id/', async(req, res) => {
-    categories = req.session.categories;
-
     const ID = req.params.id;
     const invalidPrice = req.query.invalidPrice;
     const [product, auction, subIMG, properties] = await Promise.all(
@@ -58,7 +50,8 @@ router.get('/detail/:id/', async(req, res) => {
     });
     res.render('detail', {
         ID,
-        categories,
+        title: product.Name,
+        categories: res.locals.lsCategories,
         product,
         auction,
         subIMG,
@@ -84,12 +77,12 @@ router.post('/detail/auction/:id', auth, async(req, res) => {
                 [
                     auctionModel.patchHighestPrice({
                         Product: req.params.id,
-                        User: req.session.UserName,
+                        User: req.session.authUser,
                         Price: req.body.Price
                     }),
                     auctionModel.add({
                         Product: req.params.id,
-                        Bidder: req.session.UserName,
+                        Bidder: req.session.authUser,
                         Price: product.Price,
                         Time: new Date()
                     }),
@@ -99,7 +92,7 @@ router.post('/detail/auction/:id', auth, async(req, res) => {
             product.Price = +req.body.Price + +product.StepPrice;
             await auctionModel.add({
                 Product: req.params.id,
-                Bidder: req.session.UserName,
+                Bidder: req.session.authUser,
                 Price: req.body.Price,
                 Time: new Date()
             });
@@ -120,12 +113,12 @@ router.post('/detail/auction/:id', auth, async(req, res) => {
             [
                 auctionModel.addHighestPrice({
                     Product: req.params.id,
-                    User: req.session.UserName,
+                    User: req.session.authUser,
                     Price: req.body.Price
                 }),
                 auctionModel.add({
                     Product: req.params.id,
-                    Bidder: req.session.UserName,
+                    Bidder: req.session.authUser,
                     Price: product.Price,
                     Time: new Date()
                 }),

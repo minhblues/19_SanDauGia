@@ -9,7 +9,6 @@ const router = express.Router();
 // xem ds sản phẩm thuộc danh mục :id
 
 router.get('/:name/products/', async(req, res) => {
-    categories = req.session.categories;
 
     const catName = req.params.name;
     const limit = config.paginate.limit;
@@ -36,7 +35,8 @@ router.get('/:name/products/', async(req, res) => {
 
     // const rows = await productModel.pageByCat(catId, offset);
     res.render('product', {
-        categories,
+        title: catName,
+        categories: res.locals.lsCategories,
         catName,
         products: rows,
         empty: rows.length === 0,
@@ -50,10 +50,6 @@ router.get('/:name/products/', async(req, res) => {
     //   products: rows,
     //   empty: rows.length === 0
     // });
-})
-
-router.get('/', (req, res) => {
-    res.send('abc');
 })
 
 module.exports = router;

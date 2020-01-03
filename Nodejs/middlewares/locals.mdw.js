@@ -1,6 +1,8 @@
+categoryModel = require('../models/category.model')
+
 module.exports = async(req, res, next) => {
-    if (!req.session.categories)
-        req.session.categories = await categoryModel.all();
+    if (!res.locals.lsCategories)
+        res.locals.lsCategories = await categoryModel.all();
 
     next();
 }

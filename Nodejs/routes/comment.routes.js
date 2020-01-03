@@ -3,7 +3,8 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
     res.render('comment', {
-        title: 'Đánh giá'
+        title: 'Đánh giá',
+        categories: res.locals.lsCategories
     });
 });
 
