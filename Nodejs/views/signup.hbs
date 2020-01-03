@@ -18,25 +18,32 @@
     <div class="container">
         <div class="billing_details">
             <h3>Sign Up</h3>
-            <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+            {{#if err_message}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{err_message}}
+            </div>
+            {{/if}}
+            <form class="row contact_form" action="#" method="Post" novalidate="novalidate">
                 <div class="col-md-6 form-group p_star">
-                    <input type="text" class="form-control" id="first" name="name" placeholder="First name" />
+                    <input type="text" class="form-control" id="first" name="Firstname" placeholder="First name" />
                 </div>
                 <div class="col-md-6 form-group p_star">
-                    <input type="text" class="form-control" id="last" name="name" placeholder="Last name" />
+                    <input type="text" class="form-control" id="last" name="Lastname" placeholder="Last name" />
                 </div>
                 <div class="col-md-6 form-group p_star">
-                    <input type="text" class="form-control" id="number" name="number" placeholder="Phone number" />
+                    <input type="text" class="form-control" id="Phone" name="Phone" placeholder="Phone number" />
                 </div>
                 <div class="col-md-6 form-group p_star">
-                    <input type="text" class="form-control" id="email" name="compemailany"
-                        placeholder="Email Address" />
+                    <input type="text" class="form-control" id="email" name="Email" placeholder="Email Address" />
                 </div>
                 <div class="col-md-6 form-group p_star">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="User Name " />
+                    <input type="text" class="form-control" id="username" name="Username" placeholder="User Name " />
                 </div>
                 <div class="col-md-6 form-group p_star ">
-                    <input type="password" class="form-control" id="newpassword" name="newpassword"
+                    <input type="password" class="form-control" id="newpassword" name="f_Newpassword"
                         placeholder="Password" />
                 </div>
                 <div class="col-md-6 form-group p_star">
@@ -44,18 +51,43 @@
                         placeholder="Confirm Password" />
                 </div>
                 <div class="col-md-6 form-group p_star">
-                    <input type="text" class="form-control" id="add1" name="add1" placeholder="Address " />
+                    <input type="text" class="form-control" id="Address" name="Address" placeholder="Address " />
                 </div>
-            </form>
-            <div class="col-md-12 form-group ">
-                <form action="?" method="POST">
+                <div class="md-form col-md-12 form-group ">
+                    <label for="date-picker-example">   Ngày sinh</label>
+                    <input placeholder="Selected date" type="text" id="date-picker-example"class="form-control datepicker">
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <span id="add">
+                        <script>
+                            var x = Math.floor(Math.random() * 100);
+                            var y = Math.floor(Math.random() * 100);
+                            var z = x + ' + ' + y + ' = ?';
+                            document.getElementById('add').innerHTML = z;
+                            var checkAdd = () => {
+                                var z = document.getElementById('result').value;
+                                if (z != x + y) {
+                                    document.getElementById('requiredAdd').innerHTML = 'Please fill out a correct answer';
+                                    return false;
+                                }
+                                else
+                                    return true;
+                            }
+                        </script>
+                    </span>
+                    <span id="requiredAdd"></span>
+                    <input type="text" class="form-control" id="result" name="result" />
+                </div>
+
+                <div class="col-md-12 form-group ">
                     <div class="g-recaptcha" data-sitekey="your_site_key"></div>
                     <br />
-                    <button type="button" id="signupbutton" value="submit" class="btn_3">
+                    <button type="submit" id="signupbutton" value="submit" class="btn_3">
                         Sign Up
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
+
         </div>
     </div>
 </section>
@@ -63,4 +95,8 @@
     document.getElementById("signupbutton").onclick = function () {
         location.href = "/";
     };
+    $('.datepicker').pickadate({
+        weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        showMonthsShort: true
+    })
 </script>

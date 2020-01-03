@@ -7,12 +7,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var exphbs = require('express-handlebars');
+const auth = require('./middlewares/auth.mdw')
+const lsCategories = require('./middlewares/locals.mdw')
 const categoryModel = require('./models/category.model')
 
 var homeRouter = require('./routes/home.routes')
 var loginRouter = require('./routes/login.routes')
 var signupRouter = require('./routes/signup.routes')
-var Category = require('./routes/category.route');
+var profileRouter = require('./routes/profile.routes')
+var cartRouter = require('./routes/cart.routes')
+var wishlistRouter = require('./routes/wishlist.routes')
+var commentRouter = require('./routes/comment.routes')
+var Category = require('./routes/category.route')
 
 var app = express();
 
@@ -42,9 +48,13 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs');
 
 app.use('/', homeRouter);
-app.use('/Login', loginRouter);
-app.use('/Signup', signupRouter);
-app.use('/Category', Category);
+app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
+app.use('/Category', lsCategories, Category);
+app.use('/profile', auth, lsCategories, profileRouter);
+app.use('/cart', auth, lsCategories, cartRouter);
+app.use('/favorite', auth, lsCategories, wishlistRouter);
+app.use('/comment', auth, lsCategories, commentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,5 +75,7 @@ app.use(async(err, req, res, next) => {
     res.status(errstatus);
     res.render('error', { categories, errstatus });
 });
+
+
 
 module.exports = app;
