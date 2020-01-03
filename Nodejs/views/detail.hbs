@@ -4,10 +4,10 @@
     if({{product.StepPrice}})
         $("input[type='number']").prop('min',parseInt($("input[type='number']").prop('min'))+{{product.StepPrice}});
     $("input[type='number']").inputSpinner();
-    $.ajax({
-        type: "post",
-        url: "/detail/auction/{{ID}}",
-        success: (data,text)=>alert("Đấu giá thành công")
+    $("form#Auction").on("submit",e=>{
+        $.post(this.action,(data,status)=>{
+            alert(data);
+        })
     })
 </script>
 {{/section}}
@@ -98,16 +98,13 @@
                     </p>
                     <div class="card_area">
                         <div class="col-sm-12 mt-10">
-                            <form method="POST" action="/detail/auction/{{ID}}">
+                            <form method="POST" action="/detail/auction/{{ID}}" id="Auction">
                                 <div class="col-lg-6 col-sm-12">
                                     <input type="number" name="Price"
                                         value="{{product.Price}}" min="{{product.Price}}" step="{{product.StepPrice}}">
                                     <input name="StepPrice" value="{{product.StepPrice}}" hidden=true>
                                 </div>
-
-                                {{#if invalidPrice}}
-                                <div class="text-danger col-sm" id="Invalid-price">Giá không hợp lệ </div>
-                                {{/if}}
+                                <div class="text-danger col-sm" id="Invalid-price" hidden="true">Giá không hợp lệ </div>
                                 <div class="col-sm-12 mt-10">
 
                                     <button type="submit" class="btn btn-primary" id="Auction">Đấu giá</button>

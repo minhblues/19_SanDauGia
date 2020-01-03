@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/cart', function (req, res, next) {
+router.get('/', function(req, res, next) {
     res.render('cart', {
-      title: 'Giỏ hàng',
-      
-    });
-  });
+        title: 'Giỏ hàng',
 
-  module.exports = router;
+    });
+});
+
+module.exports = router;

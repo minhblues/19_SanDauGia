@@ -9,8 +9,6 @@ const router = express.Router();
 // xem ds sản phẩm thuộc danh mục :id
 
 router.get('/:name/products/', async(req, res) => {
-    if (!req.session.categories)
-        req.session.categories = await categoryModel.all();
     categories = req.session.categories;
 
     const catName = req.params.name;

@@ -4,13 +4,11 @@ const productModel = require('../models/product.model');
 const auctionModel = require('../models/auctions.model');
 const imageModel = require('../models/images.model')
 const userModel = require('../models/users.model')
-const JSalert = require('js-alert')
+const auth = require('../middlewares/auth.mdw')
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', async(req, res) => {
-    if (!req.session.categories)
-        req.session.categories = await categoryModel.all();
     categories = req.session.categories;
     const [popular, nearFinish, mostExpensive] = await Promise.all(
         [
@@ -34,8 +32,6 @@ router.get('/err', (req, res) => {
 })
 
 router.get('/detail/:id/', async(req, res) => {
-    if (!req.session.categories)
-        req.session.categories = await categoryModel.all();
     categories = req.session.categories;
 
     const ID = req.params.id;
@@ -74,7 +70,7 @@ router.get('/detail/:id/', async(req, res) => {
     });
 })
 
-router.post('/detail/auction/:id', async(req, res) => {
+router.post('/detail/auction/:id', auth, async(req, res) => {
     [entity, product] = await Promise.all(
         [
             auctionModel.getHighestPrice(req.params.id),
@@ -136,7 +132,13 @@ router.post('/detail/auction/:id', async(req, res) => {
                 productModel.patch(product),
             ])
     }
-    JSalert.alert("abc");
     res.redirect('/');
 });
+
+router.get('/logout', (req, res) => {
+    req.session.isAuthenticated = false;
+    if (req.session.authUser)
+        delete req.session.authUser;
+    res.redirect('/login');
+})
 module.exports = router;
