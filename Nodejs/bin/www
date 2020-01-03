@@ -55,6 +55,7 @@ server.on('listening', _ => {
         'pipe ' + addr :
         'port ' + addr.port;
     debug('Listening on ' + bind);
+    console.log('server running on http://localhost:3000')
 });
 
 /**

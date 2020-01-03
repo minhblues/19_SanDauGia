@@ -1,5 +1,6 @@
 const express = require('express');
-const productModel = require('../models/product.models');
+const productModel = require('../models/product.model');
+const categoryModel = require('../models/category.model');
 const config = require('../config/default.json');
 
 const router = express.Router();
@@ -7,15 +8,12 @@ const router = express.Router();
 //
 // xem ds sản phẩm thuộc danh mục :id
 
-router.get('/:id/products', async(req, res) => {
+router.get('/:name/products/', async(req, res) => {
+    if (!req.session.categories)
+        req.session.categories = await categoryModel.all();
+    categories = req.session.categories;
 
-    for (const c of res.locals.lcCategories) {
-        if (c.CatID === +req.params.id) {
-            c.isActive = true;
-        }
-    }
-
-    const catId = req.params.id;
+    const catName = req.params.name;
     const limit = config.paginate.limit;
 
     const page = req.query.page || 1;
@@ -23,8 +21,8 @@ router.get('/:id/products', async(req, res) => {
     const offset = (page - 1) * config.paginate.limit;
 
     const [total, rows] = await Promise.all([
-        productModel.countByCat(catId),
-        productModel.pageByCat(catId, offset)
+        productModel.countByCat(catName),
+        productModel.pageByCat(catName, offset)
     ]);
 
     // const total = await productModel.countByCat(catId);
@@ -39,7 +37,9 @@ router.get('/:id/products', async(req, res) => {
     }
 
     // const rows = await productModel.pageByCat(catId, offset);
-    res.render('vwProducts/allByCat', {
+    res.render('product', {
+        categories,
+        catName,
         products: rows,
         empty: rows.length === 0,
         page_numbers,
@@ -52,6 +52,10 @@ router.get('/:id/products', async(req, res) => {
     //   products: rows,
     //   empty: rows.length === 0
     // });
+})
+
+router.get('/', (req, res) => {
+    res.send('abc');
 })
 
 module.exports = router;
