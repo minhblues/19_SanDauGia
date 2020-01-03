@@ -1,3 +1,16 @@
+{{#section 'js'}}
+<script src="/javascripts/bootstrap-input-spinner.js"></script>
+<script>
+    if({{product.StepPrice}})
+        $("input[type='number']").prop('min',parseInt($("input[type='number']").prop('min'))+{{product.StepPrice}});
+    $("input[type='number']").inputSpinner();
+    $.ajax({
+        type: "post",
+        url: "/detail/auction/{{ID}}",
+        success: (data,text)=>alert("Đấu giá thành công")
+    })
+</script>
+{{/section}}
 {{>header}}
 <!-- breadcrumb start-->
 <section class="breadcrumb breadcrumb_bg">
@@ -50,12 +63,16 @@
                 <div class="s_product_text">
                     <h2 id="product-name">{{product.Name}}</h2>
                     <h3>Giá hiện tại: {{Numberformat product.Price}} VND</h3>
+                    {{#if product.stepPrice}}
+                    <h2>Giá mua ngay: {{Numberformat product.InstancePrice}} VND</h2>
+                    {{/if}}
                     {{#if InstancePrice}}
                     <h2>Giá mua ngay: {{Numberformat product.InstancePrice}} VND</h2>
                     {{/if}}
                     <ul class="list">
                         <li>
-                            <div> Thể loại: <a href="/Category/{{catName.CatName}}/products">{{catName.CatName}}</a></div>
+                            <div> Thể loại: <a href="/Category/{{catName.CatName}}/products">{{catName.CatName}}</a>
+                            </div>
                         </li>
                         <li>
                             <div>
@@ -82,9 +99,10 @@
                     <div class="card_area">
                         <div class="col-sm-12 mt-10">
                             <form method="POST" action="/detail/auction/{{ID}}">
-                                <div class="col-sm-4">
-                                    <input type="number" class="rounded-pill text-center" name="Price"
-                                        value="{{product.Price}}" min="{{product.Price}}">
+                                <div class="col-lg-6 col-sm-12">
+                                    <input type="number" name="Price"
+                                        value="{{product.Price}}" min="{{product.Price}}" step="{{product.StepPrice}}">
+                                    <input name="StepPrice" value="{{product.StepPrice}}" hidden=true>
                                 </div>
 
                                 {{#if invalidPrice}}
@@ -209,28 +227,6 @@
             </div>
             {{/each}}
         </div>
-</div>
 </section>
 
 {{>footer}}
-
-{{#section 'js'}}
-<script>
-    const second = 1000,
-        minute = second * 60,
-        hour = minute * 60,
-        day = hour * 24;
-    alert("dkmm");
-
-    let date = new Date('{{product.EndTime}}')
-    let distance = date.getTime() - Date.now();
-    if (Math.floor(distance / day) <= 3) {
-        var days = Math.floor(distance / (day));
-        var hours = Math.floor((distance % (day)) / hour));
-        var minutes = Math.floor((distance % (hour)) / (minute));
-        var seconds = Math.floor((distance % (minute)) / second);
-        var element = `Thời gian còn lại: ${days} ngày ${hours} giờ ${minutes} phút ${second} giây`
-        $('#EndTime').html(element);
-    }
-</script>
-{{/section}}

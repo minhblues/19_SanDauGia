@@ -1,4 +1,5 @@
 var createError = require('http-errors');
+const hbs_sections = require('express-handlebars-sections');
 var express = require('express');
 var session = require('express-session');
 var path = require('path');
@@ -17,7 +18,7 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -35,7 +36,7 @@ app.engine('hbs', exphbs({
     defaultLayout: __dirname + '/views/layouts/main.hbs',
     layoutsDir: __dirname + '/views/layouts/',
     partialsDir: __dirname + '/views/partials/',
-    helpers: require('./config/handlebars-helper')
+    helpers: require('./config/handlebars-helper'),
 }));
 
 app.set('view engine', 'hbs');

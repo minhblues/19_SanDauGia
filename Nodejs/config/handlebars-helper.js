@@ -1,5 +1,4 @@
 const hbs_sections = require('express-handlebars-sections');
-const categoriesModel = require('../models/category.model')
 const numeral = require('numeral')
 const moment = require('moment')
 
@@ -11,7 +10,10 @@ module.exports = {
     Percentformat: val => numeral(val).format('0.00%'),
     DateTimeFormat: date => moment(date).format('DD/MM/YYYY h:mm'),
     EndTimeFormat: date => {
+        if ((date - new Date()) < 0)
+            return "Sản Phẩm đã kết thúc";
         if ((date - new Date()) < 3 * 24 * 3600000) {
+            console.log(date - new Date());
             day = new Date(date - new(Date));
             console.log(day);
             ret = "Còn ";
@@ -24,7 +26,6 @@ module.exports = {
             ret += day.getUTCSeconds() + " giây ";
             return ret;
         }
-        console.log(date - new Date());
         return moment(date).format('DD/MM/YYYY h:mm');
     }
 }

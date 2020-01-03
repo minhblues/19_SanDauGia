@@ -4,6 +4,7 @@ const productModel = require('../models/product.model');
 const auctionModel = require('../models/auctions.model');
 const imageModel = require('../models/images.model')
 const userModel = require('../models/users.model')
+const JSalert = require('js-alert')
 var router = express.Router();
 
 /* GET home page. */
@@ -61,7 +62,6 @@ router.get('/detail/:id/', async(req, res) => {
     });
     res.render('detail', {
         ID,
-        invalidPrice,
         categories,
         product,
         auction,
@@ -74,8 +74,69 @@ router.get('/detail/:id/', async(req, res) => {
     });
 })
 
-router.post('/detail/auction/:id', (req, res) => {
-    console.log(req.body.Price);
-    res.redirect(`../${req.params.id}/?invalidPrice=true`);
-})
+router.post('/detail/auction/:id', async(req, res) => {
+    [entity, product] = await Promise.all(
+        [
+            auctionModel.getHighestPrice(req.params.id),
+            productModel.single(req.params.id)
+        ]);
+    console.log(entity)
+    if (entity)
+        if (req.body.Price > entity.Price) {
+            product.Price = +entity.Price + +req.body.StepPrice;
+            await Promise.all(
+                [
+                    auctionModel.patchHighestPrice({
+                        Product: req.params.id,
+                        User: req.session.UserName,
+                        Price: req.body.Price
+                    }),
+                    auctionModel.add({
+                        Product: req.params.id,
+                        Bidder: req.session.UserName,
+                        Price: product.Price,
+                        Time: new Date()
+                    }),
+                    productModel.patch(product)
+                ]);
+        } else {
+            product.Price = +req.body.Price + +product.StepPrice;
+            await auctionModel.add({
+                Product: req.params.id,
+                Bidder: req.session.UserName,
+                Price: req.body.Price,
+                Time: new Date()
+            });
+            await Promise.all(
+                [
+                    auctionModel.add({
+                        Product: req.params.id,
+                        Bidder: entity.User,
+                        Price: product.Price,
+                        Time: new Date()
+                    }),
+                    productModel.patch(product),
+                ]);
+        }
+    else {
+        product.Price = +product.Price + +product.StepPrice;
+        await Promise.all(
+            [
+                auctionModel.addHighestPrice({
+                    Product: req.params.id,
+                    User: req.session.UserName,
+                    Price: req.body.Price
+                }),
+                auctionModel.add({
+                    Product: req.params.id,
+                    Bidder: req.session.UserName,
+                    Price: product.Price,
+                    Time: new Date()
+                }),
+                productModel.patch(product),
+            ])
+    }
+    JSalert.alert("abc");
+    res.redirect('/');
+});
 module.exports = router;
