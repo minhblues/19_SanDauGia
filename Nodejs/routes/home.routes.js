@@ -39,6 +39,7 @@ router.get('/', async(req, res) => {
 });
 
 router.get('/detail/:id*', async(req, res) => {
+    console.log(req.originalUrl)
     const ID = req.params.id;
     const [product, auction, subIMG, properties, favoriteList] = await Promise.all(
         [productModel.single(ID),
