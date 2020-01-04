@@ -44,5 +44,7 @@ module.exports = {
                             from products left join categories on products.Category=categories.CatId
                             where (match(Name) against(\"${key}\")) OR (match(CatName) against(\"${key}\"))`);
         return ret[0].total
-    }
+    },
+    getWinningProductByUser: user=>db.load(`select * from products where EndTime<NOW() and PriceHolder=\"${user}\" and Status=0`),
+    getProductByUserCart: user=>db.load(`select products.* from products,carts where ProductID=Product and User=\"${user}\"`)
 };

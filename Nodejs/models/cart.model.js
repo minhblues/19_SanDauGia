@@ -1,10 +1,8 @@
 const db = require('../utils/db');
 
-const db = require('../utils/db');
-
 module.exports = {
   all: () => db.load('select * from carts'),
-  single: Username => db.load(`select * from carts where Username = ${username}`),
+  allByUser: Username => db.load(`select * from carts where Username = \"${username}\" and Stattus=0`),
   add: entity => db.add('carts', entity),
   del: id => db.del('carts', { ProductID: id }),
   patch: entity => {
