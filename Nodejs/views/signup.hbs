@@ -1,3 +1,21 @@
+{{#section 'js'}}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<script>
+    $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap',
+        todayHighlight: true
+    });
+</script>
+{{/section}}
+
+{{#section 'css'}}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+{{/section}}
+
 <header class="main_menu home_menu">
     <div class="container-fluid">
         <div class="row align-items-center justify-content-center">
@@ -54,8 +72,8 @@
                     <input type="text" class="form-control" id="Address" name="Address" placeholder="Address " />
                 </div>
                 <div class="md-form col-md-12 form-group ">
-                    <label for="date-picker-example">   Ngày sinh</label>
-                    <input placeholder="Selected date" type="text" id="date-picker-example"class="form-control datepicker">
+                    <label for="date-picker-example"> Ngày sinh</label>
+                    <input id="datepicker" name="Date" width="270" />
                 </div>
                 <div class="col-md-6 form-group p_star">
                     <span id="add">
