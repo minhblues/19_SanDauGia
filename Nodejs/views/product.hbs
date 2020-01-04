@@ -1,4 +1,12 @@
 {{>header}}
+{{#section 'js'}}
+<script>
+    if ($('title').text().indexOf('Result ') != -1) {
+        searchKey = $('title').text().substr(7);
+        $('a.page-link').each(function(){($(this).prop('href', $(this).prop('href') + "&searchKey=" + searchKey))});
+    }
+</script>
+{{/section}}
 <!-- breadcrumb start-->
 <section class="breadcrumb breadcrumb_bg">
     <div class="container">
@@ -56,7 +64,7 @@
                         {{#if isCurrentPage}}
                         <li class="page-item active"><a class="page-link" href="#">{{value}}</a></li>
                         {{else}}
-                        <li class="page-item"><a class="page-link" href="/?page={{value}}">{{value}}</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{value}}">{{value}}</a></li>
                         {{/if}}
                         {{/each}}
                         <li class="page-item">

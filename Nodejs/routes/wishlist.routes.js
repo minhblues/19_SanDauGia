@@ -4,8 +4,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
     res.render('wishlist', {
-        title: 'Danh sách yêu thích',
-        categories: res.locals.lsCategories
+        title: 'Danh sách yêu thích'
     });
 });
 

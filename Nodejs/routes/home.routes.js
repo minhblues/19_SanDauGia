@@ -31,7 +31,6 @@ router.get('/', async(req, res) => {
     });
     res.render('home', {
         title: 'Sàn đấu giá',
-        categories: res.locals.lsCategories,
         popular,
         nearFinish,
         mostExpensive,
@@ -73,7 +72,6 @@ router.get('/detail/:id*', async(req, res) => {
     res.render('detail', {
         ID,
         title: product.Name,
-        categories: res.locals.lsCategories,
         product,
         auction,
         subIMG,
@@ -161,7 +159,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/login');
 })
 
-router.post('/search', async(req, res) => {
+router.get('/search', async(req, res) => {
 
     const limit = config.paginate.limit
     const page = req.query.page || 1;
@@ -169,14 +167,14 @@ router.post('/search', async(req, res) => {
     const offset = (page - 1) * limit;
     [products, total, favoritesList] = await Promise.all(
         [
-            productModel.search(req.body.searchKey, offset),
-            productModel.countBySearch(req.body.searchKey),
+            productModel.search(req.query.searchKey, offset),
+            productModel.countBySearch(req.query.searchKey),
             favoritesModel.all()
         ]
     )
 
     products.forEach(j => {
-        favoriteList.forEach(k => {
+        favoritesList.forEach(k => {
             if (k.User == req.session.authUser && k.Product == j.ProductID)
                 j.isFavorite = true;
         });
@@ -190,9 +188,10 @@ router.post('/search', async(req, res) => {
             isCurrentPage: i === +page
         })
     }
+    res.location('/search')
     res.render('product', {
-        title: 'Result ' + req.body.searchKey,
-        categories: res.locals.lsCategories,
+        title: 'Result ' + req.query.searchKey,
+        searchKey: req.query.searchKey,
         products,
         empty: products.length === 0,
         page_numbers,

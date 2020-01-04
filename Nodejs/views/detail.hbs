@@ -74,11 +74,11 @@
                     <div class="carousel-inner">
                         <div width="300" height="400" class="carousel-item active">
                             <img style="width: 300;height: 400;" class="d-block w-100"
-                                src="/images/arrivel/{{product.IMG}}.png" alt="First slide">
+                                src="/images/product/{{product.ProductID}}/main.jpg" alt="First slide">
                         </div width="300" height="400">
                         {{#each subIMG}}
                         <div class="carousel-item">
-                            <img width="300" height="400" class="d-block w-100" src="/images/arrivel/{{IMG}}.png"
+                            <img width="300" height="400" class="d-block w-100" src="/images/product/{{product.ProductID}}/{{subIMG.id}}.jpg"
                                 alt="Second slide">
                         </div>
                         {{/each}}
