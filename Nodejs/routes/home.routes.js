@@ -2,7 +2,6 @@ var express = require('express');
 const categoryModel = require('../models/category.model');
 const productModel = require('../models/product.model');
 const auctionModel = require('../models/auctions.model');
-const imageModel = require('../models/images.model')
 const userModel = require('../models/users.model')
 const favoritesModel = require('../models/favorites.model')
 const auth = require('../middlewares/auth.mdw')
@@ -39,10 +38,9 @@ router.get('/', async(req, res) => {
 
 router.get('/detail/:id*', async(req, res) => {
     const ID = req.params.id;
-    const [product, auction, subIMG, properties, favoriteList] = await Promise.all(
+    const [product, auction, properties, favoriteList] = await Promise.all(
         [productModel.single(ID),
             auctionModel.getAuctionByProductId(ID),
-            imageModel.getIMGByProductId(ID),
             productModel.properties(ID),
             favoritesModel.all()
         ]);
@@ -69,6 +67,9 @@ router.get('/detail/:id*', async(req, res) => {
                 j.isFavorite = true;
         });
     });
+    subIMG = []
+    for (i = 1; i <= product.ImageCount; i++)
+        subIMG.id = i;
     res.render('detail', {
         ID,
         title: product.Name,
