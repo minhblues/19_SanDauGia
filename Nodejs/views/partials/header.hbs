@@ -56,20 +56,20 @@
                                     <a class="dropdown-item" href="/profile"> Tài khoản của tôi </a>
                                     <a class="dropdown-item" href="/wishlist">Sản phẩm yêu thích</a>
                                     <a class="dropdown-item" href="/comment">Nhận xét của tôi </a>
-                                    <a class="dropdown-item" href="/logout">Đăng xuất </a>
+                                    <a class="dropdown-item" href="/logout">Đăng nhập/Đăng xuất </a>
                                 </div>
                             </li>
                         </ul>
                     </div>
                     <div class="hearer_icon d-flex">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="q">
+                        <form class="input-group" action="/search" method="POST">
+                            <input type="text" class="form-control" placeholder="Search" name="searchKey">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-secondary">
+                                <button type="submit" class="btn btn-secondary">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </nav>
             </div>

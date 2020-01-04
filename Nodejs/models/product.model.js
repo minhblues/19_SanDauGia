@@ -28,8 +28,21 @@ module.exports = {
     add: entity => db.add('products', entity),
     del: id => db.del('products', { ProductID: id }),
     patch: entity => {
+        console.log(entity);
         const condition = { ProductID: entity.ProductID };
         delete entity.ProductID;
         return db.patch('products', entity, condition);
+    },
+    search: async(key, offset) => {
+        return await db.load(`select products.*,CatName 
+                                            from products left join categories on products.Category=categories.CatId
+                                            where (match(Name) against(\"${key}\")) OR (match(CatName) against(\"${key}\"))
+                                            limit ${config.paginate.limit} offset ${offset}`)
+    },
+    countBySearch: async key => {
+        ret = await db.load(`select count(*) as total
+                            from products left join categories on products.Category=categories.CatId
+                            where (match(Name) against(\"${key}\")) OR (match(CatName) against(\"${key}\"))`);
+        return ret[0].total
     }
 };

@@ -1,6 +1,7 @@
 const express = require('express');
 const productModel = require('../models/product.model');
 const categoryModel = require('../models/category.model');
+const favoritesModel = require('../models/favorites.model')
 const config = require('../config/default.json');
 
 const router = express.Router();
@@ -17,10 +18,18 @@ router.get('/:name/products/', async(req, res) => {
     if (page < 1) page = 1;
     const offset = (page - 1) * config.paginate.limit;
 
-    const [total, rows] = await Promise.all([
+    const [total, rows, favoriteList] = await Promise.all([
         productModel.countByCat(catName),
-        productModel.pageByCat(catName, offset)
+        productModel.pageByCat(catName, offset),
+        favoritesModel.all()
     ]);
+
+    rows.forEach(j => {
+        favoriteList.forEach(k => {
+            if (k.User == req.session.authUser && k.Product == j.ProductID)
+                j.isFavorite = true;
+        });
+    });
 
     // const total = await productModel.countByCat(catId);
     let nPages = Math.floor(total / limit);

@@ -7,6 +7,7 @@ const userModel = require('../models/users.model')
 const favoritesModel = require('../models/favorites.model')
 const auth = require('../middlewares/auth.mdw')
 const sleep = require('sleepjs')
+const config = require('../config/default.json');
 var router = express.Router();
 
 /* GET home page. */
@@ -23,7 +24,6 @@ router.get('/', async(req, res) => {
     data.forEach(i => {
         i.forEach(j => {
             favoriteList.forEach(k => {
-                console.log(k.User, req.session.authUser, k.Product, j.ProductID)
                 if (k.User == req.session.authUser && k.Product == j.ProductID)
                     j.isFavorite = true;
             });
@@ -39,7 +39,6 @@ router.get('/', async(req, res) => {
 });
 
 router.get('/detail/:id*', async(req, res) => {
-    console.log(req.originalUrl)
     const ID = req.params.id;
     const [product, auction, subIMG, properties, favoriteList] = await Promise.all(
         [productModel.single(ID),
@@ -49,7 +48,6 @@ router.get('/detail/:id*', async(req, res) => {
             favoritesModel.all()
         ]);
     favoriteList.forEach(k => {
-        console.log(k.User, req.session.authUser, k.Product, product.ProductID)
         if (k.User == req.session.authUser && k.Product == product.ProductID)
             product.isFavorite = true;
     });
@@ -58,7 +56,6 @@ router.get('/detail/:id*', async(req, res) => {
             userModel.getScore(product.Seller),
             productModel.popularByCat(product.Category)
         ]);
-    console.log(sellScore);
     bidScore = 0;
     if (auction.length != 0)
         bidScore = await userModel.getScore(auction[0].Bidder)
@@ -69,7 +66,6 @@ router.get('/detail/:id*', async(req, res) => {
     });
     alikeProduct.forEach(j => {
         favoriteList.forEach(k => {
-            console.log(k.User, req.session.authUser, k.Product, j.ProductID)
             if (k.User == req.session.authUser && k.Product == j.ProductID)
                 j.isFavorite = true;
         });
@@ -163,5 +159,45 @@ router.get('/logout', (req, res) => {
     if (req.session.authUser)
         delete req.session.authUser;
     res.redirect('/login');
+})
+
+router.post('/search', async(req, res) => {
+
+    const limit = config.paginate.limit
+    const page = req.query.page || 1;
+    if (page < 1) page = 1;
+    const offset = (page - 1) * limit;
+    [products, total, favoritesList] = await Promise.all(
+        [
+            productModel.search(req.body.searchKey, offset),
+            productModel.countBySearch(req.body.searchKey),
+            favoritesModel.all()
+        ]
+    )
+
+    products.forEach(j => {
+        favoriteList.forEach(k => {
+            if (k.User == req.session.authUser && k.Product == j.ProductID)
+                j.isFavorite = true;
+        });
+    });
+    nPages = Math.floor(total / limit);
+    if (total % limit > 0) nPages++;
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        })
+    }
+    res.render('product', {
+        title: 'Result ' + req.body.searchKey,
+        categories: res.locals.lsCategories,
+        products,
+        empty: products.length === 0,
+        page_numbers,
+        prev_value: +page - 1,
+        next_value: +page + 1,
+    })
 })
 module.exports = router;
