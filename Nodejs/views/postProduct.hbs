@@ -97,11 +97,29 @@
             </div>
           </div>
         </div>
+        <div class="col-md-12 form-group">
+          <label class="col-sm-2  control-label" for="Category">Thể loại</label>
+          <div class="input-wrap pl-5">
+            <div class="row ">
+              {{#each this.categories}}
+              <div class="col-xs-4 mr-5">
+                <label>
+                  <input type="radio" name="{{CatName}}" value="on" >
+                  <span>
+                    <i class="ico"></i>
+                  </span>
+                  {{CatName}}
+                </label>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
 
         <div class="col-md-12 form-group">
           <label class="col-sm-4 col-form-label" for="email">Thêm ảnh cho sản phẩm</label>
           <div class="file-loading">
-            <input id="fuMain" name="IMG" type="file">
+            <input id="fuMain" name="IMG" type="file" multiple>
           </div>
         </div>
         <div class="col-md-12 form-group">

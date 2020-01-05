@@ -4,7 +4,7 @@ var bcrypt = require('bcryptjs');
 const userModel = require('../models/users.model');
 var router = express.Router();
 
-<<<<<<< HEAD
+
 router.get('/', async (req, res) => {
     const user = await userModel.singleByUserName(req.session.authUser);
     const dob = moment(user.Date, 'YYYY-MM-DD').format('MM/DD/YYYY');
@@ -18,17 +18,9 @@ router.get('/', async (req, res) => {
         email: user.Email,
         address: user.Address,
         date: dob
-=======
-router.get('/', function(req, res, next) {
-    res.render('profile', {
-        title: 'Thông tin cá nhân',
-        name: 'Phạm Bá Minh',
-        phone: '01234656',
-        email: 'phambaminh@gmail.com',
-        address: 'Hà Tĩnh'
->>>>>>> cb25ba012b9ef9f772c601c0bec7ad6ed7647ac6
     });
 });
+
 
 router.post('/', async (req, res) => {
 
