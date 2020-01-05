@@ -1,0 +1,314 @@
+
+    <!-- breadcrumb start-->
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <div class="breadcrumb_iner_item">
+                            <p>Trang chủ/ Điện tử / Điện thoại di động</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb start-->
+    <!--================Single Product Area =================-->
+    <div class="product_image_area section_padding">
+        <div class="container">
+            <div class="row s_product_inner">
+                <div class="col-lg-5">
+                    <div class="product_slider_img">
+                        <div id="vertical">
+                            {{#each this.IMG}}
+                            <div data-thumb={{this}}>
+                                <img src={{this}} />
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="s_product_text">
+                        <h2>{{Name}}</h2>
+                        <h3>Giá hiện tại: {{Price}} VND</h3>
+                        <h2>Giá mua ngay: {{InstancePrice}} VND</h2>
+                        <ul class="list">
+                            <li>
+                                <a class="active" href="/{{Category}}">
+                                    <span>Thể loại: {{Category}}</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Người ra giá: {{Bidder}}</span>
+                                    <span> {{BidderScore}}/10</span></a>
+                            </li>
+                            <li>
+                                <a href="#"> <span>Người bán: {{Seller}} {{SellerScore}}/10</span></a>
+                            </li>
+                            <li>
+                                <div>Thời gian đăng: {{StartTime}}</div>
+                            </li>
+                            <li>
+                                <div>Thời gian kết thúc: {{EndTime}}</div>
+                            </li>
+                        </ul>
+                        <p>
+                            {{ProductDescription}}<div class="card_area">
+                            <div class="product_count d-inline-block">
+                                <input class="input-number priceformat" id="price_auction" type="number" maxlength="5">
+                                <span>VND</span>
+                            </div>
+                            <div class="add_to_cart">
+                                <a href="#" class="btn_3" id="Auction">Đấu giá</a>
+                                <div class="text-danger" id="Invalid-price">Giá không hợp lệ </div>
+                                <a href="cart.html" class="btn_3 ml-3" id="Auction">Mua ngay</a>
+                                <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================End Single Product Area =================-->
+    <!-- history bidder part -->
+    <section class="col-lg-12">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="section_tittle text-center">
+                        <h2>Lịch sử đấu giá</h2>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-dark table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Người đấu giá</th>
+                        <th scope="col">Giá</th>
+                    </tr>
+                </thead>
+                <tbody id="history-table">
+                    {{#each this.historyBidder}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{Name}}</td>
+                        <td>{{BidValue}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- history bidder end       -->
+    <section class="product_description_area">
+        <div class="container">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mô tả</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Thông số</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <p>{{detail}}</p>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h5>Màn hình:</h5>
+                                    </td>
+                                    <td>
+                                        <h5>OLED, 6.5", Super Retina XDR</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Hệ điều hành:</h5>
+                                    </td>
+                                    <td>
+                                        <h5>IOS 13</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Camera sau:</h5>
+                                    </td>
+                                    <td>
+                                        <h5>3 camera 12 MP</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Camera trước:</h5>
+                                    </td>
+                                    <td>
+                                        <h5>12 MP</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>CPU:</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Apple A13 Bionic 6 nhân</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Bộ nhớ trong:</h5>
+                                    </td>
+                                    <td>
+                                        <h5>256 GB</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Thẻ SIM:</h5>
+                                    </td>
+                                    <td>
+                                        <h5> Nano SIM & eSIM, Hỗ trợ 4G</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Dung lượng pin:</h5>
+                                    </td>
+                                    <td>
+                                        <h5>3969 mAh, có sạc nhanh</h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </section>
+    <section class="product_list best_seller padding_bottom">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="section_tittle text-center">
+                        <h2>Sản phẩm tương tự</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_category_product">
+                        <div class="single_category_img">
+                            <img width="260" height="280" src="img/arrivel/iphone11.png" alt="">
+                            <div class="category_social_icon">
+                                <ul>
+                                    <li><a href="#"><i class="ti-heart"></i></a></li>
+                                    <li><a href="#"><i class="ti-bag"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="category_product_text">
+                                <a href="detail.html">
+                                    <h5>Iphone 11 Pro Max 256GB</h5>
+                                </a>
+                                <p>28.000.000 VND</p>
+                                <p>00:00:10</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_category_product">
+                        <div class="single_category_img">
+                            <img width="260" height="280" src="img/arrivel/SsGs10.png" alt="">
+                            <div class="category_social_icon">
+                                <ul>
+                                    <li><a href="#"><i class="ti-heart"></i></a></li>
+                                    <li><a href="#"><i class="ti-bag"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="category_product_text">
+                                <a href="detail.html">
+                                    <h5>Samsung Galaxy S10+</h5>
+                                </a>
+                                <p>28.000.000 VND</p>
+                                <p>00:00:15</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_category_product">
+                        <div class="single_category_img">
+                            <img width="260" height="280" src="img/arrivel/Xm9SE.png" alt="">
+                            <div class="category_social_icon">
+                                <ul>
+                                    <li><a href="#"><i class="ti-heart"></i></a></li>
+                                    <li><a href="#"><i class="ti-bag"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="category_product_text">
+                                <a href="detail.html">
+                                    <h5>Xiaomi Mi 9 SE</h5>
+                                </a>
+                                <p>7.000.000 VND</p>
+                                <p>00:00:14</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_category_product">
+                        <div class="single_category_img">
+                            <img width="260" height="280" src="img/arrivel/huaweip30.png" alt="">
+                            <div class="category_social_icon">
+                                <ul>
+                                    <li><a href="#"><i class="ti-heart"></i></a></li>
+                                    <li><a href="#"><i class="ti-bag"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="category_product_text">
+                                <a href="detail.html">
+                                    <h5>Huawei P30 Lite</h5>
+                                </a>
+                                <p>7.000.000 VND</p>
+                                <p>00:00:14</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_category_product">
+                        <div class="single_category_img">
+                            <img width="260" height="280" src="img/arrivel/oppo.png" alt="">
+                            <div class="category_social_icon">
+                                <ul>
+                                    <li><a href="#"><i class="ti-heart"></i></a></li>
+                                    <li><a href="#"><i class="ti-bag"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="category_product_text">
+                                <a href="detail.html">
+                                    <h5>OPPO F11 Pro</h5>
+                                </a>
+                                <p>7.000.000 VND</p>
+                                <p>00:00:14</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer_part"></footer>
+   

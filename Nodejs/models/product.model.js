@@ -28,6 +28,10 @@ module.exports = {
     add: entity => db.add('products', entity),
     del: id => db.del('products', { ProductID: id }),
     patch: entity => {
+<<<<<<< HEAD
+=======
+        console.log(entity);
+>>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
         const condition = { ProductID: entity.ProductID };
         delete entity.ProductID;
         return db.patch('products', entity, condition);
@@ -44,6 +48,11 @@ module.exports = {
                             where (match(Name) against(\"${key}\")) OR (match(CatName) against(\"${key}\"))`);
         return ret[0].total
     },
+<<<<<<< HEAD
     getWinningProductByUser: user => db.load(`select * from products where EndTime<NOW() and PriceHolder=\"${user}\" and Status=0`),
     getProductByUserCart: user => db.load(`select products.* from products,carts where ProductID=Product and User=\"${user}\"`)
+=======
+    getWinningProductByUser: user=>db.load(`select * from products where EndTime<NOW() and PriceHolder=\"${user}\" and Status=0`),
+    getProductByUserCart: user=>db.load(`select products.* from products,carts where ProductID=Product and User=\"${user}\"`)
+>>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
 };

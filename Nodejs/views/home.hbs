@@ -22,6 +22,7 @@
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-sm-12">
+<<<<<<< HEAD
                         <div class="row">
                             <div class="product_top_bar d-flex justify-content-between align-items-center">
                                 <div class="single_product_menu product_bar_item">
@@ -37,12 +38,28 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="row">
+=======
+                        <div class="product_top_bar d-flex justify-content-between align-items-center">
+                            <div class="single_product_menu product_bar_item">
+                                <h2>Top 5 sản phẩm gần kết thúc</h2>
+                            </div>
+                        </div>
+                    </div>
+                    {{#each this.nearFinish}}
+                    {{>productCard}}
+                    {{/each}}
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+>>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
                             <div class="product_top_bar d-flex justify-content-between align-items-center">
                                 <div class="single_product_menu product_bar_item">
                                     <h2>Top 5 sản phẩm có nhiều lượt ra giá nhất</h2>
                                 </div>
                             </div>
                         </div>
+<<<<<<< HEAD
                         <div class="row ">
                             {{#each this.popular}}
                             {{>productCard}}
@@ -74,3 +91,30 @@
 
 {{>subJs}}
 {{/section}}
+=======
+
+                    </div>
+                    {{#each this.popular}}
+                    {{>productCard}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="product_top_bar d-flex justify-content-between align-items-center">
+                        <div class="single_product_menu product_bar_item">
+                            <h2>Top 5 sản phẩm có giá cao nhất</h2>
+                        </div>
+                    </div>
+                </div>
+                {{#each this.mostExpensive}}
+                {{>productCard}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</section>
+{{>footer}}
+>>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
