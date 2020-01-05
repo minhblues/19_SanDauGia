@@ -20,6 +20,7 @@ var wishlistRouter = require('./routes/wishlist.routes')
 var commentRouter = require('./routes/comment.routes')
 var postProductRouter = require('./routes/postProduct.routes')
 var Category = require('./routes/category.route')
+var detailRouter = require('./routes/detail.routes')
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs');
 
 app.use('/', lsCategories, homeRouter);
+app.use('/detail', lsCategories, detailRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
