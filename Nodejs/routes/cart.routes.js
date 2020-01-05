@@ -3,15 +3,17 @@ const productModel = require('../models/product.model')
 const cartModel = require('../models/cart.model')
 var router = express.Router();
 
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
     winningProduct = await productModel.getWinningProductByUser(req.session.authUser);
     entity = [];
+
     winningProduct.forEach(async element => {
         entity.push({
             User: req.session.authUser,
             Product: element.ProductID
         })
         element.Status = 1;
+
         await productModel.patch(element);
     });
 
@@ -22,6 +24,7 @@ router.get('/', async(req, res) => {
 
     res.render('cart', {
         title: 'Giỏ hàng',
+
         cart
     });
 });
