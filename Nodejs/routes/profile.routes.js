@@ -4,6 +4,7 @@ var bcrypt = require('bcryptjs');
 const userModel = require('../models/users.model');
 var router = express.Router();
 
+
 router.get('/', async(req, res) => {
     const user = await userModel.singleByUserName(req.session.authUser);
     const dob = moment(user.Date, 'YYYY-MM-DD').format('MM/DD/YYYY');
@@ -19,6 +20,7 @@ router.get('/', async(req, res) => {
         date: dob
     });
 });
+
 
 router.post('/', async(req, res) => {
 
