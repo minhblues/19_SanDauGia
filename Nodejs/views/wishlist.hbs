@@ -21,40 +21,7 @@
             <div class="form-group ">
                 <h4>Danh sách yêu thích</h4>
             </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Sản phẩm</th>
-                            <th scope="col">Giá</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each this.wishlist}}
-                        <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="{{IMG}}" alt="" />
-                                    </div>
-                                    <div class="media-body">
-                                        <p>{{Name}}</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>{{price}}</h5>
-                            </td>
-                            <td>
-                                <a href=""><i class="fas fa-trash-alt"></i></a>
-                            </td>
-                            <td>
-                                <a href=""><i class="fas fa-cart-plus"></i></a>
-                            </td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+            <div class="container">
             </div>
         </div>
 </section>
