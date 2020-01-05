@@ -7,6 +7,8 @@ var router = express.Router();
 router.get('/', async (req, res) => {
     const user = await userModel.singleByUserName(req.session.authUser);
     const dob = moment(user.Date, 'YYYY-MM-DD').format('MM/DD/YYYY');
+    if (req.query.error)
+        err_message = "SignUp failed!";
     res.render('profile', {
         title: 'Thông tin cá nhân',
         categories: res.locals.lsCategories,
@@ -39,14 +41,8 @@ router.post('/', async (req, res) => {
 
     const rs = bcrypt.compareSync(req.body.OldPassword, user.Password);
     if (rs === false) {
-        return res.render('profile', {
-            title: 'Thông tin cá nhân',
-            name: user.Name,
-            phone: user.Phone,
-            email: user.Email,
-            address: user.Address,
-            date: dob,
-            err_message: 'Mật khẩu không khớp.'
+        return res.redirect( {
+            err_message: 'Mật khẩu cũ không đúng',
         });
     }
 
