@@ -4,6 +4,8 @@ const userModel = require('../models/users.model');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
+    if (req.session.isAuthenticated)
+        return res.redirect('/');
     err_message = false;
     if (req.query.error)
         err_message = "Login failed!";
@@ -15,7 +17,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', async(req, res) => {
-
     const user = await userModel.singleByUserName(req.body.username);
     if (user === null) {
         return res.redirect('?error=true');

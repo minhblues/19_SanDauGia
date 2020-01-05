@@ -8,6 +8,6 @@
         "database": "onlineauction"
     },
     "paginate": {
-        "limit": 6
+        "limit": 4
     }
 }

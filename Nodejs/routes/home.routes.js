@@ -2,7 +2,6 @@ var express = require('express');
 const categoryModel = require('../models/category.model');
 const productModel = require('../models/product.model');
 const auctionModel = require('../models/auctions.model');
-const imageModel = require('../models/images.model')
 const userModel = require('../models/users.model')
 const favoritesModel = require('../models/favorites.model')
 const auth = require('../middlewares/auth.mdw')
@@ -31,7 +30,6 @@ router.get('/', async(req, res) => {
     });
     res.render('home', {
         title: 'Sàn đấu giá',
-        categories: res.locals.lsCategories,
         popular,
         nearFinish,
         mostExpensive,
@@ -40,10 +38,9 @@ router.get('/', async(req, res) => {
 
 router.get('/detail/:id*', async(req, res) => {
     const ID = req.params.id;
-    const [product, auction, subIMG, properties, favoriteList] = await Promise.all(
+    const [product, auction, properties, favoriteList] = await Promise.all(
         [productModel.single(ID),
             auctionModel.getAuctionByProductId(ID),
-            imageModel.getIMGByProductId(ID),
             productModel.properties(ID),
             favoritesModel.all()
         ]);
@@ -70,10 +67,12 @@ router.get('/detail/:id*', async(req, res) => {
                 j.isFavorite = true;
         });
     });
+    subIMG = []
+    for (i = 1; i <= product.ImageCount; i++)
+        subIMG.id = i;
     res.render('detail', {
         ID,
         title: product.Name,
-        categories: res.locals.lsCategories,
         product,
         auction,
         subIMG,
@@ -92,6 +91,13 @@ router.post('/detail/:id/Auction', auth, async(req, res) => {
             auctionModel.getHighestPrice(req.params.id),
             productModel.single(req.params.id)
         ]);
+    res.type('html');
+    res.charset = 'utf-8';
+    if (+req.body.Price < +product.Price + (+product.StepPrice)) {
+        res.status(304);
+        res.statusMessage('failed');
+        return res.send("Giá không hợp lệ (Giá phải cao hơn giá gốc ít nhất một khoảng bước giá)");
+    }
     product.AuctionTime = +product.AuctionTime + 1;
     if (entity)
         if (req.body.Price > entity.Price) {
@@ -151,7 +157,8 @@ router.post('/detail/:id/Auction', auth, async(req, res) => {
                 productModel.patch(product),
             ])
     }
-    res.redirect('?Auction=true');
+    res.status(200);
+    res.send("Đấu giá thành công!!!");
 });
 
 router.get('/logout', (req, res) => {
@@ -161,7 +168,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/login');
 })
 
-router.post('/search', async(req, res) => {
+router.get('/search', async(req, res) => {
 
     const limit = config.paginate.limit
     const page = req.query.page || 1;
@@ -169,14 +176,14 @@ router.post('/search', async(req, res) => {
     const offset = (page - 1) * limit;
     [products, total, favoritesList] = await Promise.all(
         [
-            productModel.search(req.body.searchKey, offset),
-            productModel.countBySearch(req.body.searchKey),
+            productModel.search(req.query.searchKey, offset),
+            productModel.countBySearch(req.query.searchKey),
             favoritesModel.all()
         ]
     )
 
     products.forEach(j => {
-        favoriteList.forEach(k => {
+        favoritesList.forEach(k => {
             if (k.User == req.session.authUser && k.Product == j.ProductID)
                 j.isFavorite = true;
         });
@@ -190,9 +197,10 @@ router.post('/search', async(req, res) => {
             isCurrentPage: i === +page
         })
     }
+    res.location('/search')
     res.render('product', {
-        title: 'Result ' + req.body.searchKey,
-        categories: res.locals.lsCategories,
+        title: 'Result ' + req.query.searchKey,
+        searchKey: req.query.searchKey,
         products,
         empty: products.length === 0,
         page_numbers,
