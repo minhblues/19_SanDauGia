@@ -18,15 +18,10 @@ var profileRouter = require('./routes/profile.routes')
 var cartRouter = require('./routes/cart.routes')
 var wishlistRouter = require('./routes/wishlist.routes')
 var commentRouter = require('./routes/comment.routes')
-<<<<<<< HEAD
 var postProductRouter = require('./routes/postProduct.routes')
 var Category = require('./routes/category.route')
 var detailRouter = require('./routes/detail.routes')
 var mybidRouter = require('./routes/mybid.routes')
-=======
-var Category = require('./routes/category.route')
-
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
 var app = express();
 
 app.use(logger('dev'));
@@ -55,23 +50,16 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs');
 
 app.use('/', lsCategories, homeRouter);
-<<<<<<< HEAD
 app.use('/detail', lsCategories, detailRouter);
-=======
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
 app.use('/profile', auth, lsCategories, profileRouter);
 app.use('/cart', auth, lsCategories, cartRouter);
 app.use('/wishlist', auth, lsCategories, wishlistRouter);
-<<<<<<< HEAD
 app.use('/postProduct', auth, lsCategories, postProductRouter);
 app.use('/mybid', auth, lsCategories, mybidRouter);
 app.use('/comment', auth, lsCategories,  mybidRouter);
-=======
-app.use('/comment', auth, lsCategories, commentRouter);
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

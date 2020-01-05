@@ -1,5 +1,4 @@
 var express = require('express');
-<<<<<<< HEAD
 const moment = require('moment');
 var bcrypt = require('bcryptjs');
 const userModel = require('../models/users.model');
@@ -73,20 +72,5 @@ router.post('/', async (req, res) => {
     res.redirect('/');
 })
 
-=======
-var router = express.Router();
 
-router.get('/', function(req, res, next) {
-    console.log(res.locals.lsCategories);
-    res.render('profile', {
-        title: 'Thông tin cá nhân',
-        categories: res.locals.lsCategories,
-        name: 'Phạm Bá Minh',
-        phone: '01234656',
-        email: 'phambaminh@gmail.com',
-        address: 'Hà Tĩnh'
-    });
-});
-
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
 module.exports = router;

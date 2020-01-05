@@ -2,10 +2,7 @@ const db = require('../utils/db');
 
 module.exports = {
     all: () => db.load('select * from users'),
-<<<<<<< HEAD
-=======
-    single: id => db.load(`select * from users where user_ID = ${id}`),
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
+
     singleByUserName: async username => {
         const rows = await db.load(`select * from users where Username = '${username}'`);
         if (rows.length === 0)
@@ -28,12 +25,10 @@ module.exports = {
                 return 0;
             else return ret[0].Score / ret[0].RateTime
     },
-<<<<<<< HEAD
     patch: entity => {
         const condition = { Username: entity.Username };
         delete entity.Username;
         return db.patch('users', entity, condition);
       },
-=======
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
+
 }

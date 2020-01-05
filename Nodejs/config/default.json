@@ -8,10 +8,6 @@
         "database": "onlineauction"
     },
     "paginate": {
-<<<<<<< HEAD
         "limit": 4
-=======
-        "limit": 6
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
     }
 }
