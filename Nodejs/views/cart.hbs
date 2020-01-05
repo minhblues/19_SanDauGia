@@ -18,34 +18,41 @@
     <div class="container">
         <div class="cart_inner">
             <div class="table-responsive">
-                
-                <table id="cart" class="table table-hover table-condensed">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th style="width:40%">Product</th>
-                            <th style="width:10%">Price</th>
-                            <th style="width:15%" class="text-center">Seller</th>
-                            <th style="width:10%">Score</th>
-                            <th style="width:25%">Shipping</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Tổng</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each cart}}
+                        {{#each this.cart}}
                         <tr>
-                            <td data-th="Product">
-                                <div class="row">
-                                    <div class="col-sm-2 hidden-xs"><img src="/images/product/{{ProductID}}/main.jpg"
-                                            class="img-responsive" /></div>
-                                    <div class="col-sm-10">
-                                        <h4 class="nomargin">{{Name}}</h4>
-                                        <p>{{Description}}</p>
+                            <td>
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <img src="{{IMG}}" alt="" />
+                                    </div>
+                                    <div class="media-body">
+                                        <p>{{Name}}</p>
                                     </div>
                                 </div>
                             </td>
-                            <td data-th="Price">{{Numberformat Price}}VND</td>
-                            
-                            <td data-th="Seller" class="text-center">{{Seller}}</td>
-                            <td data-th="Score" class="text-center">{{Score}}</td>
+                            <td>
+                                <h5>{{Price}} VND</h5>
+                            </td>
+                            <td>
+                                <h5>{{Price}} VNĐ</h5>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        <tr class="shipping_area">
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>Shipping</h5>
+                            </td>
                             <td>
                                 <div class="shipping_box">
                                     <ul class="list">
@@ -66,21 +73,17 @@
                                 </div>
                             </td>
                         </tr>
-                        {{/each}}
-                    </tbody>
-                    {{!-- <tfoot>
-                        <tr class="visible-xs">
-                            <td class="text-center"><strong>Total 1.99</strong></td>
-                        </tr>
                         <tr>
-                            <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue
-                                    Shopping</a></td>
-                            <td colspan="2" class="hidden-xs"></td>
-                            <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-                            <td><a href="#" class="btn btn-success btn-block">Checkout <i
-                                        class="fa fa-angle-right"></i></a></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>Tổng tiền</h5>
+                            </td>
+                            <td>
+                                <h5>{{totalBill}} VND</h5>
+                            </td>
                         </tr>
-                    </tfoot> --}}
+                    </tbody>
                 </table>
                 <div class="checkout_btn_inner float-right">
                     <a class="btn_1 checkout_btn_1" href="#">Thanh toán</a>
