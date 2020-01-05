@@ -91,6 +91,13 @@ router.post('/detail/:id/Auction', auth, async(req, res) => {
             auctionModel.getHighestPrice(req.params.id),
             productModel.single(req.params.id)
         ]);
+    res.type('html');
+    res.charset = 'utf-8';
+    if (+req.body.Price < +product.Price + (+product.StepPrice)) {
+        res.status(304);
+        res.statusMessage('failed');
+        return res.send("Giá không hợp lệ (Giá phải cao hơn giá gốc ít nhất một khoảng bước giá)");
+    }
     product.AuctionTime = +product.AuctionTime + 1;
     if (entity)
         if (req.body.Price > entity.Price) {
@@ -150,7 +157,8 @@ router.post('/detail/:id/Auction', auth, async(req, res) => {
                 productModel.patch(product),
             ])
     }
-    res.redirect('?Auction=true');
+    res.status(200);
+    res.send("Đấu giá thành công!!!");
 });
 
 router.get('/logout', (req, res) => {
