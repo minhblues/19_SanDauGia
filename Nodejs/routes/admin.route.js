@@ -3,7 +3,6 @@ const userModel = require('../models/users.model');
 const categoriesModel = require('../models/category.model');
 var router = express.Router();
 
-
 router.get('/nguoidung', async(req, res) => {
     const list = await userModel.all();
     list.forEach(element => {
@@ -32,32 +31,64 @@ router.get('/nguoidung', async(req, res) => {
 });
 
 router.get('/danhmuc', async(req, res) => {
-    const list = await categoriesModel.all();
+    const list = await userModel.all();
     res.render('admin_categories', {
         title: 'Admin',
-        categories: list
+        users: list
     });
 });
 
+router.get('/danhmuc/them', (req, res) => {
+    res.render('add_categories', {
+        title: 'Thêm danh mục'
+    });
+});
+
+router.post('/danhmuc/them', async(req, res) => {
+    const entity = {
+        CatName: req.body.txtCatName,
+    }
+    const result = await categoriesModel.add(entity);
+    console.log(result);
+    res.render('add_categories', {
+        title: 'Thêm danh mục'
+    });
+});
+
+router.get('/danhmuc/edit/:id', async(req, res) => {
+    const rows = await categoriesModel.single(req.params.id);
+    res.render('edit_categories', {
+        title: 'Sửa danh mục',
+        category: rows
+    });
+});
+
+router.post('/danhmuc/patch', async(req, res) => {
+    const result = await categoriesModel.patch(req.body);
+    res.redirect('/admin/danhmuc');
+});
+
+router.post('/danhmuc/del', async(req, res) => {
+    const result = await categoriesModel.del(req.body.CatId);
+    res.redirect('/admin/danhmuc');
+});
+
 router.get('/', async(req, res) => {
-    const list = await userModel.all();
+    const list = await userModel.allWaiting();
     res.render('admin_upgrade', {
         title: 'Admin',
         users: list
     });
 });
 
-router.get('/danhmuc/them', async(req, res) => {
-    const list = await userModel.all();
-    res.render('add_categories', {
-        title: 'Thêm danh mục',
-        users: list
-    });
+router.get('/:username/accept', async(req, res) => {
+    const result = await userModel.waitingToSeller(req.params.username);
+    res.redirect('/admin/');
 });
 
-
-router.post('/danhmuc/them', (req, res) => {
-    res.end();
+router.get('/:username/delete', async(req, res) => {
+    const result = await userModel.waitingToBidder(req.params.username);
+    res.redirect('/admin/');
 });
 
 module.exports = router;
