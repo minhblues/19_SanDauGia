@@ -4,7 +4,7 @@ const categoriesModel = require('../models/category.model');
 var router = express.Router();
 
 
-router.get('/nguoidung', async (req, res) => {
+router.get('/nguoidung', async(req, res) => {
     const list = await userModel.all();
     list.forEach(element => {
         switch (element.Status) {
@@ -31,36 +31,32 @@ router.get('/nguoidung', async (req, res) => {
     });
 });
 
-router.get('/danhmuc', async (req, res) => {
+router.get('/danhmuc', async(req, res) => {
     const list = await categoriesModel.all();
-    console.log(list);
     res.render('admin_categories', {
         title: 'Admin',
         categories: list
     });
 });
 
-router.get('/capquyen', async (req, res) => {
+router.get('/capquyen', async(req, res) => {
     const list = await userModel.all();
-    console.log(list);
     res.render('admin_upgrade', {
         title: 'Admin',
         users: list
     });
 });
 
-router.get('/danhmuc/them', async (req, res) => {
+router.get('/danhmuc/them', async(req, res) => {
     const list = await userModel.all();
-    console.log(list);
     res.render('add_categories', {
         title: 'Thêm danh mục',
         users: list
     });
 });
 
-router.get('/danhmuc/them', async (req, res) => {
+router.get('/danhmuc/them', async(req, res) => {
     const list = await userModel.all();
-    console.log(list);
     res.render('add_categories', {
         title: 'Thêm danh mục',
         users: list

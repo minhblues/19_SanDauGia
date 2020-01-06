@@ -6,12 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var exphbs = require('express-handlebars');
-var nodemailer = require('nodemailer');
 const auth = require('./middlewares/auth.mdw')
 const lsCategories = require('./middlewares/locals.mdw')
 const categoryModel = require('./models/category.model')
-const authAdmin = require('./middlewares/admin.mdw')
-const authNormal = require('./middlewares/normalUser.mdw')
+const authAdmin = require('./middlewares/normalUser.mdw')
 
 var homeRouter = require('./routes/home.route')
 var loginRouter = require('./routes/login.route')
@@ -66,14 +64,14 @@ app.use('/detail', lsCategories, detailRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
-app.use('/profile', auth, authAdmin, lsCategories, profileRouter);
-app.use('/wonlist', auth, authAdmin, lsCategories, wonlistRouter);
-app.use('/watchlist', auth, authAdmin, lsCategories, watchlistRouter);
-app.use('/postProduct', auth, authAdmin, lsCategories, postProductRouter);
-app.use('/mybid', auth, authAdmin, lsCategories, mybidRouter);
-app.use('/comment', auth, authAdmin, lsCategories, commentRouter);
-app.use('/admin', auth, authNormal, Admin);
-app.use('/myproduct', auth, authAdmin, myproductRouter)
+app.use('/profile', auth, lsCategories, profileRouter);
+app.use('/wonlist', auth, lsCategories, wonlistRouter);
+app.use('/watchlist', auth, lsCategories, watchlistRouter);
+app.use('/postProduct', auth, lsCategories, postProductRouter);
+app.use('/mybid', auth, lsCategories, mybidRouter);
+app.use('/comment', auth, lsCategories, commentRouter);
+app.use('/admin', auth, authAdmin, Admin);
+app.use('/myproduct', auth, myproductRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -93,5 +91,7 @@ app.use(async(err, req, res, next) => {
     res.status(errstatus);
     res.render('error', { categories, errstatus });
 });
+
+
 
 module.exports = app;
