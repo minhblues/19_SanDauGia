@@ -17,6 +17,15 @@ router.post('/', async(req, res) => {
     const N = 10;
     const hash = bcrypt.hashSync(req.body.f_Newpassword, N);
     const email = await userModel.singleByEmail(req.body.Email);
+    if(req.body.Firstname.length === 0 || req.body.Lastname.length === 0  || req.body.f_Newpassword.length === 0  ||
+         req.body.cfmpassword.length === 0 || req.body.Email.length === 0 || req.body.Phone.length === 0  || req.body.Username.length === 0 
+         || req.body.Address.length === 0  || req.body.Date.length === 0  || req.body.result.length === 0  )
+    {
+        return res.render('signup', {
+            title: 'Đăng kí tài khoản',
+            err_message: 'Vui lòng điền đầy đủ thông tin.'
+        });
+    }
     if (req.body.f_Newpassword !== req.body.cfmpassword) {
         return res.render('signup', {
             title: 'Đăng kí tài khoản',
