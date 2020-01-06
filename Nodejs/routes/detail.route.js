@@ -81,6 +81,8 @@ router.post('/:id/Auction', auth, async(req, res) => {
         ]);
     res.type('html');
     res.charset = 'utf-8';
+    if (product.Seller == req.session.authUser.Username)
+        return res.send('Your Product')
     if (product.Public == 0 && score < 0.8)
         return res.send('Low Score');
     if (+req.body.Price < +product.Price + (+product.StepPrice))
@@ -161,6 +163,8 @@ router.post('/:id/Auction', auth, async(req, res) => {
 router.get('/:id/Buy', auth, async(req, res) => {
     product = await productModel.single(req.params.id);
     score = await userModel.getScore(req.session.authUser.Username);
+    if (product.Seller == req.session.authUser.Username)
+        return res.send('Your Product')
     if (!product.InstancePrice)
         return res.send('No Instance Price')
     if (product.Public == 0 && score < 0.8)
