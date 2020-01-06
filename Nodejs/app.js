@@ -21,7 +21,7 @@ var watchlistRouter = require('./routes/watchlist.routes')
 var commentRouter = require('./routes/comment.routes') <<
     << << < HEAD
 var postProductRouter = require('./routes/postProduct.routes')
-var Category = require('./routes/category.route')
+var Category = require('./routes/category.routes')
 var detailRouter = require('./routes/detail.routes')
 var mybidRouter = require('./routes/mybid.routes')
 var commentRouter = require('./routes/comment.routes')
