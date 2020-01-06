@@ -1,5 +1,6 @@
 <script>
     $('a.favoriteBtn').each(function () {
+        {{#if isAuthenticated}}
         $(this).on('click', () => {
             $.get($(this).prop('href'), (data, status) => {
                 if (data == 'liked')
@@ -13,5 +14,8 @@
             }) 
             return false;
         })
+        {{else}}
+            $(this).prop('href','/login?retUrl='+window.location.pathname);
+            {{/if}}
     })
 </script>

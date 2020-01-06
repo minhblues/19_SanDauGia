@@ -1,0 +1,122 @@
+{{#section 'js'}}
+<script>
+    $('#Dialog').on('hide.bs.modal', () => location.reload())
+    $('a.submitExtraTime').each(function()  {
+        $(this).on('click', function () {
+            console.log($(this).prop('href'));
+            $.get($(this).prop('href'), (data, status) => {
+                if (data == 'Success') {
+                    $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Gia hạn thành công!!!</span>');
+                    $('#Dialog').modal('show');
+                } else {
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color: green;"></i><span>&nbsp;Có lỗi xảy ra!!!</span>');
+                    $('#Dialog').modal('show');
+                }
+            })
+            return false;
+        })
+    })
+</script>
+{{/section}}
+
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/Đấu giá của tôi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="cart_area section_padding">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+
+                <table id="cart" class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="width:50%">Sản phẩm</th>
+                            <th style="width:10%">Giá hiện tại</th>
+                            <th style="width:30%" class="text-center">Thời gian còn lại</th>
+                            <th style="width:10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                        <tr>
+                            <td data-th="Product"><a href="/detail/{{ProductID}}">
+                                    <div class="row">
+                                        <div class="col-sm-2 hidden-xs"><img
+                                                src="/images/product/{{ProductID}}/main.jpg" class="img-responsive" />
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <h4 class="nomargin">{{Name}}</h4>
+                                            <p>{{Description}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </td>
+                            <td data-th="Price">{{Numberformat Price}}VND</td>
+
+                            <td data-th="Seller" class="text-center">{{EndTimeFormat EndTime}}</td>
+                            <td data-th="Score" class="text-center">
+                                <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                    data-target="#ExtraTimeDialog{{ProductID}}">Gia hạn</button>
+                                    </td>
+                            
+                            <div class="modal fade" id="ExtraTimeDialog{{ProductID}}" tabindex="-1" role="dialog"
+                                aria-labelledby="BuyDialogLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="BuyDialogLabel">Xác nhận gia hạn</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            Bạn có chắc muốn gia hạn sản phẩm này không?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Hủy</button>
+                                            <a href="/myproduct/extratime?Product={{ProductID}}"
+                                                class="btn btn-primary submitExtraTime">Xác nhận</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="Dialog" tabindex="-1" role="dialog" aria-labelledby="AuctionDialogLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AuctionDialogLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="message">
+                <i class="fa fa-check" aria-hidden="true"></i><span>Gia hạn thành công!!!</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
