@@ -6,38 +6,31 @@ var router = express.Router();
 
 
 router.get('/', async(req, res) => {
-    const user = req.session.authUser;
-    const dob = moment(user.Date, 'YYYY-MM-DD').format('MM/DD/YYYY');
+    user = req.session.authUser;
+    date = moment(user.Date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+    isSeller = (user.Status == 0);
     if (req.query.error)
         err_message = "SignUp failed!";
+
+    console.log(req.session.authUser)
     res.render('profile', {
         title: 'Thông tin cá nhân',
-        name: user.Name,
-        phone: user.Phone,
-        email: user.Email,
-        address: user.Address,
-        date: dob
+        user,
+        date,
+        isSeller
     });
 });
 
 
 router.post('/', async(req, res) => {
 
-    const user = await userModel.singleByUserName(req.session.authUser.Username);
-    const dob = moment(user.Date, 'YYYY-MM-DD').format('MM/DD/YYYY');
+    const user = req.session.authUser;
+    const dob = moment(user.Date, 'YYYY-MM-DD').format('DD/MM/YYYY');
     if (user === null) {
         return res.redirect('?error=true');
     }
     if (req.body.NewPassword !== req.body.ConfirmPassword) {
-        return res.render('profile', {
-            title: 'Thông tin cá nhân',
-            name: user.Name,
-            phone: user.Phone,
-            email: user.Email,
-            address: user.Address,
-            date: dob,
-            err_message: 'Mật khẩu không khớp.'
-        });
+        return res.redirect('/profile');
     }
 
     const rs = bcrypt.compareSync(req.body.OldPassword, user.Password);
@@ -47,17 +40,14 @@ router.post('/', async(req, res) => {
         });
     }
 
+    req.session.authUser.Date = entity.Date;
+    req.session.authUser.Name = entity.Name;
+    req.session.authUser.Email = entity.Email;
+    req.session.authUser.Phone = entity.Phone;
+    req.session.authUser.Address = entity.Address;
     const rd = bcrypt.compareSync(req.body.NewPassword, user.Password);
     if (rd === true) {
-        return res.render('profile', {
-            title: 'Thông tin cá nhân',
-            name: user.Name,
-            phone: user.Phone,
-            email: user.Email,
-            address: user.Address,
-            date: dob,
-            err_message: 'Mật khẩu mới không được trùng với mật khẩu cũ.'
-        });
+        return res.redirect('/profile');
     }
     const entity = req.body;
     entity.Password = bcrypt.hashSync(entity.NewPassword, 10);
@@ -66,9 +56,17 @@ router.post('/', async(req, res) => {
     delete entity.OldPassword;
     delete entity.NewPassword;
     delete entity.ConfirmPassword;
-    console.log(entity);
+
     const result = await userModel.patch(entity);
     res.redirect('/');
+})
+
+router.get('/upgrade', async(req, res) => {
+    user = req.session.authUser;
+    user.Date = new Date(user.Date)
+    user.Status = 2;
+    await userModel.patch(user);
+    res.send('Success')
 })
 
 module.exports = router;

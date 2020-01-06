@@ -49,5 +49,10 @@ module.exports = {
     getProductByUserCart: user => db.load(`select products.* from products,carts where ProductID=Product and User=\"${user}\" and carts.Status=0`),
     getFavoriteProductByUser: user => db.load(`select products.* from products,favorites where ProductID=Product and User=\"${user}\"`),
     getProductByUserHistoryBidder: user => db.load(`select distinct products.* from products,auctions where ProductID=Product and Bidder=\"${user}\"`),
-    getProductBySeller: user => db.load(`select products.* from products where Seller=\"${user}\"`)
+    getProductBySeller: user => db.load(`select products.* from products where Seller=\"${user}\"`),
+    getMaxId: async() => {
+        ret = await db.load(`select MAX(ProductID) + 1 as ID from products`);
+        return ret[0];
+    }
+
 };

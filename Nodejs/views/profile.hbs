@@ -6,6 +6,22 @@
         uiLibrary: 'bootstrap'
     });
 </script>
+<script>
+    $('#Dialog').on('hide.bs.modal', () => location.reload())
+    $('#upgrade').on('click', function () {
+        console.log($(this).prop('href'));
+        $.get($(this).prop('href'), (data, status) => {
+            if (data == 'Success') {
+                alert('Success')
+                window.location.reload();
+            } else {
+                alert('Có lỗi xảy ra')
+                window.localStorage.reload();
+            }
+        })
+        return false;
+    })
+</script>
 {{/section}}
 
 {{#section 'css'}}
@@ -35,30 +51,30 @@
             <div class="form-group ">
                 <h4>Thông tin tài khoản</h4>
             </div>
-           {{#if err_message}}
+            {{#if err_message}}
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="false">&times;</span>
                 </button>
-                {{err_message}}
+                {{user.err_message}}
             </div>
             {{/if}}
             <form class="row contact_form" action="#" method="Post" novalidate="novalidate">
                 <div class="col-md-12 form-group ">
                     <label class="col-sm-2 col-form-label" for="fullname">Họ tên </label>
-                    <input type="text" class="form-control" id="name" value="{{name}}" name="Name" />
+                    <input type="text" class="form-control" id="name" value="{{user.Name}}" name="Name" />
                 </div>
                 <div class="col-md-12 form-group">
                     <label class="col-sm-2 col-form-label" for="phone_number">Số điện thoại</label>
-                    <input type="text" class="form-control" id="Phone" name="Phone" value="{{phone}}" />
+                    <input type="text" class="form-control" id="Phone" name="Phone" value="{{user.Phone}}" />
                 </div>
                 <div class="col-md-12 form-group">
                     <label class="col-sm-2 col-form-label" for="email">Email</label>
-                    <input type="text" class="form-control" id="Email" name="Email" value="{{email}}" />
+                    <input type="text" class="form-control" id="Email" name="Email" value="{{user.Email}}" />
                 </div>
                 <div class="col-md-12 form-group">
                     <label class="col-sm-2 col-form-label" for="Address">Địa chỉ</label>
-                    <input type="text" class="form-control" id="Address" name="Address" value="{{address}}" />
+                    <input type="text" class="form-control" id="Address" name="Address" value="{{user.Address}}" />
                 </div>
                 <div class="col-md-12 form-group">
                     <label class="col-sm-2 col-form-label" for="date">Ngày sinh</label>
@@ -77,12 +93,36 @@
                         placeholder="Confirm Password" />
                 </div>
                 <div class="col-md-12 form-group">
-                    <button type="submit" value="submit" class="btn_3">
+                    <button type="submit" value="submit" class="btn  btn-danger">
                         Cập nhật
                     </button>
+                    {{#if isSeller}}
+                    <a class="btn btn-primary" href="/profile/upgrade" id="upgrade">
+                        Đăng ký làm người bán
+                    </a>
+                    {{/if}}
                 </div>
             </form>
         </div>
     </div>
 </section>
-{{footer}}
+
+<div class="modal fade" id="Dialog" tabindex="-1" role="dialog" aria-labelledby="AuctionDialogLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AuctionDialogLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="message">
+                <i class="fa fa-check" aria-hidden="true"></i><span>Đấu giá thành công!!!</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}

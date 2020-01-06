@@ -1,38 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var session = require('express-session');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var logger = require('morgan');
-var exphbs = require('express-handlebars');
-const auth = require('./middlewares/auth.mdw')
-const lsCategories = require('./middlewares/locals.mdw')
+const createError = require('http-errors');
+const express = require('express');
+const session = require('express-session');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const logger = require('morgan');
+const exphbs = require('express-handlebars');
+
+
 const categoryModel = require('./models/category.model')
-const authAdmin = require('./middlewares/normalUser.mdw')
+const middleware = require('./middlewares/router.mdw');
 
-var homeRouter = require('./routes/home.route')
-var loginRouter = require('./routes/login.route')
-var signupRouter = require('./routes/signup.route')
-var profileRouter = require('./routes/profile.route')
-var wonlistRouter = require('./routes/wonlist.route')
-var watchlistRouter = require('./routes/watchlist.route')
-var commentRouter = require('./routes/comment.route')
-var postProductRouter = require('./routes/postProduct.route')
-var Category = require('./routes/category.route')
-var detailRouter = require('./routes/detail.route')
-var mybidRouter = require('./routes/mybid.route')
-var commentRouter = require('./routes/comment.route')
-var Category = require('./routes/category.route')
-var Admin = require('./routes/admin.route')
-var Category = require('./routes/category.route')
-var Admin = require('./routes/admin.route')
-var postProductRouter = require('./routes/postProduct.route')
-var detailRouter = require('./routes/detail.route')
-var mybidRouter = require('./routes/mybid.route')
-var myproductRouter = require('./routes/myproduct.route')
-
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -59,20 +38,7 @@ app.engine('hbs', exphbs({
 
 app.set('view engine', 'hbs');
 
-app.use('/', lsCategories, homeRouter);
-app.use('/detail', lsCategories, detailRouter);
-app.use('/login', loginRouter);
-app.use('/signup', signupRouter);
-app.use('/Category', lsCategories, Category);
-app.use('/profile', auth, lsCategories, profileRouter);
-app.use('/wonlist', auth, lsCategories, wonlistRouter);
-app.use('/watchlist', auth, lsCategories, watchlistRouter);
-app.use('/postProduct', auth, lsCategories, postProductRouter);
-app.use('/mybid', auth, lsCategories, mybidRouter);
-app.use('/comment', auth, lsCategories, commentRouter);
-app.use('/admin', auth, authAdmin, Admin);
-app.use('/myproduct', auth, myproductRouter)
-
+middleware(app);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
