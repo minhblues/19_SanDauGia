@@ -23,11 +23,11 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Addons
+            Quản lý
         </div>
 
         <!-- Nav Item - Tables -->
-          <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="/admin/capquyen">
                 <i class="fas fa-user-cog"></i>
                 <span>Phân quyền</span></a>
@@ -74,7 +74,7 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Danh sách Người dùng</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Danh sách Người dùng muốn trở thành Seller</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -83,10 +83,11 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Username</th>
-                                        <th>Status</th>
                                         <th>Address</th>
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
 
@@ -95,20 +96,21 @@
                                     <tr>
                                         <td>{{Name}}</td>
                                         <td>{{Username}}</td>
-                                        {{#if IsBidder}}
-                                        <td>Bidder</td>
-                                        {{else}}
-                                        <td>Seller</td>
-                                        {{/if}}
                                         <td>{{Address}}</td>
                                         <td>{{Phone}}</td>
                                         <td>{{Email}}</td>
+                                        <td class="text-center"> <a href="/admin/capquyen/{{Username}}/accept"><i
+                                                    class="fas fa-fw fa-check"></i></a>
+                                        </td>
+                                        <td class="text-center"> <a href="/admin/capquyen/{{Username}}/delete"><i
+                                                    class="fas fa-fw fa-trash"></i></a>
+                                        </td>
                                     </tr>
                                     {{/each}}
                                 </tbody>
                             </table>
-
                         </div>
+
                     </div>
                 </div>
             </div>

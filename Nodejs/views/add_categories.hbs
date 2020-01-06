@@ -23,7 +23,7 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Addons
+            Quản lý
         </div>
 
         <!-- Nav Item - Tables -->
@@ -72,9 +72,18 @@
                 <form method="POST">
                     <div class="form-group">
                         <label for="txtCatName">Tên sản phẩm</label>
-                        <input type="text" class="form-control" id="txtCatName" placeholder="Tên danh muc" name="txtCatName" autofocus>
+                        <input type="text" class="form-control" id="txtCatName" placeholder="Tên danh muc"
+                            name="txtCatName" autofocus>
                     </div>
-                   <button type="submit" class="btn btn-primary"> Save </button>
+                    <a class="btn btn-outline-primary" href="/admin/danhmuc">
+                        <i class="fa fa-backward" aria-hidden="true"></i>
+                        List
+                    </a>
+                    <button type="submit" class="btn btn-outline-primary btn-outline-success"
+                        formaction="/admin/danhmuc/patch">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Save
+                    </button>
                 </form>
             </div>
 
