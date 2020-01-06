@@ -6,6 +6,10 @@ module.exports = {
         ret = await db.load(`select * from categories where CatId = ${id}`);
         return ret[0]
     },
+    getIdByCatName: async CatName =>{
+        ret = await db.load(`select * from categories where CatName = '${CatName}'`);
+        return ret[0];
+    },
     add: entity => db.add('categories', entity),
     del: id => db.del('categories', { CatId: id }),
     patch: entity => {
