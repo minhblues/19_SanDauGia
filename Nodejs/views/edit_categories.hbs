@@ -1,5 +1,5 @@
 {{#section 'css'}}
-<link rel="stylesheet" href="../stylesheets/admin.css">
+<link rel="stylesheet" href="../../../stylesheets/admin.css">
 {{/section}}
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -23,11 +23,11 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Quản lý
+            Addons
         </div>
 
         <!-- Nav Item - Tables -->
-          <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="/admin/capquyen">
                 <i class="fas fa-user-cog"></i>
                 <span>Phân quyền</span></a>
@@ -69,44 +69,32 @@
             </nav>
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
-
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Danh sách Người dùng</h6>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="txtCatName">ID</label>
+                        <input type="text" class="form-control" id="txtCatId" placeholder="ID" name="CatId"
+                            value="{{this.category.CatId}}" readonly>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Username</th>
-                                        <th>Status</th>
-                                        <th>Address</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {{#each this.users}}
-                                    <tr>
-                                        <td>{{Name}}</td>
-                                        <td>{{Username}}</td>
-                                        <td>{{UserMode}}</td>
-                                        <td>{{Address}}</td>
-                                        <td>{{Phone}}</td>
-                                        <td>{{Email}}</td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-
-                        </div>
+                    <div class="form-group">
+                        <label for="txtCatName">Tên danh mục</label>
+                        <input type="text" class="form-control" id="txtCatName" placeholder="Tên danh mục"
+                            name="CatName" value="{{this.category.CatName}}" autofocus>
                     </div>
-                </div>
+                    <a class="btn btn-outline-primary" href="/admin/danhmuc">
+                        <i class="fa fa-backward" aria-hidden="true"></i>
+                        List
+                    </a>
+                    <button type="submit" class="btn btn-outline-primary btn-outline-success"
+                        formaction="/admin/danhmuc/patch">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Save
+                    </button>
+                    <button type="submit" class="btn btn-outline-primary btn-outline-danger"
+                        formaction="/admin/danhmuc/del">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Delete
+                    </button>
+                </form>
             </div>
 
             <!-- End of Content Wrapper -->

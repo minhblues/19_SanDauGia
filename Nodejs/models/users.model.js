@@ -2,6 +2,7 @@ const db = require('../utils/db');
 
 module.exports = {
     all: () => db.load('select * from users'),
+    allWaiting: () => db.load('select * from users where Status = 2'),
     singleByUserName: async username => {
         const rows = await db.load(`select * from users where Username = '${username}'`);
         if (rows.length === 0)

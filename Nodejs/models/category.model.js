@@ -7,10 +7,10 @@ module.exports = {
         return ret[0]
     },
     add: entity => db.add('categories', entity),
-    del: id => db.del('categories', { CatID: id }),
+    del: id => db.del('categories', { CatId: id }),
     patch: entity => {
-        const condition = { CatID: entity.CatID };
-        delete entity.CatID;
+        const condition = { CatId: entity.CatId };
+        delete entity.CatId;
         return db.patch('categories', entity, condition);
     },
 

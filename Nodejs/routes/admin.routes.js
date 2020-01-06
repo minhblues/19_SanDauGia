@@ -31,44 +31,74 @@ router.get('/nguoidung', async (req, res) => {
     });
 });
 
-router.get('/danhmuc', async (req, res) => {
-    const list = await categoriesModel.all();
-    console.log(list);
-    res.render('admin_categories', {
-        title: 'Admin',
-        categories: list
-    });
-});
-
 router.get('/capquyen', async (req, res) => {
     const list = await userModel.all();
-    console.log(list);
-    res.render('admin_upgrade', {
+    list.forEach(element => {
+        switch (element.Status) {
+            case 0:
+                element.UserMode = 'Bidder';
+                break;
+            case 1:
+                element.UserMode = 'Seller';
+                break;
+            case 2:
+                element.UserMode = 'Waiting';
+                break;
+            case 3:
+                element.UserMode = 'Admin';
+                break;
+            default:
+                element.UserMode = 'Error';
+
+        }
+        res.render('admin_upgrade', {
+            title: 'Admin',
+            users: list
+        });
+    });
+});
+
+router.get('/danhmuc', async (req, res) => {
+    const list = await userModel.all();
+    res.render('admin_categories', {
         title: 'Admin',
         users: list
     });
 });
 
-router.get('/danhmuc/them', async (req, res) => {
-    const list = await userModel.all();
-    console.log(list);
+router.get('/danhmuc/them', (req, res) => {
     res.render('add_categories', {
-        title: 'Thêm danh mục',
-        users: list
+        title: 'Thêm danh mục'
     });
 });
 
-router.get('/danhmuc/them', async (req, res) => {
-    const list = await userModel.all();
-    console.log(list);
+router.post('/danhmuc/them', async (req, res) => {
+    const entity = {
+        CatName: req.body.txtCatName,
+    }
+    const result = await categoriesModel.add(entity);
+    console.log(result);
     res.render('add_categories', {
-        title: 'Thêm danh mục',
-        users: list
+        title: 'Thêm danh mục'
     });
 });
 
-router.post('/danhmuc/them', (req, res) => {
-    res.end();
+router.get('/danhmuc/edit/:id', async (req, res) => {
+    const rows = await categoriesModel.single(req.params.id);
+    res.render('edit_categories', {
+        title: 'Sửa danh mục',
+        category: rows
+    });
+});
+
+router.post('/danhmuc/patch', async (req, res) => {
+    const result = await categoriesModel.patch(req.body);
+    res.redirect('/admin/danhmuc');
+});
+
+router.post('/danhmuc/del', async (req, res) => {
+    const result = await categoriesModel.del(req.body.CatId);
+    res.redirect('/admin/danhmuc');
 });
 
 module.exports = router;

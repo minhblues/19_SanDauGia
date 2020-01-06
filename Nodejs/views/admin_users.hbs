@@ -23,11 +23,11 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Addons
+            Quản lý
         </div>
 
         <!-- Nav Item - Tables -->
-         <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="/admin/capquyen">
                 <i class="fas fa-user-cog"></i>
                 <span>Phân quyền</span></a>
@@ -81,8 +81,8 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
                                         <th>Username</th>
+                                        <th>Name</th>
                                         <th>Status</th>
                                         <th>Address</th>
                                         <th>Phone</th>
@@ -93,8 +93,8 @@
                                 <tbody>
                                     {{#each this.users}}
                                     <tr>
-                                        <td>{{Name}}</td>
                                         <td>{{Username}}</td>
+                                        <td>{{Name}}</td>
                                         <td>{{UserMode}}</td>
                                         <td>{{Address}}</td>
                                         <td>{{Phone}}</td>
