@@ -4,6 +4,8 @@ const userModel = require('../models/users.model');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
+    if (req.session.isAuthenticated)
+        return res.redirect('/');
     err_message = false;
     if (req.query.error)
         err_message = "Login failed!";
@@ -27,6 +29,8 @@ router.post('/', async(req, res) => {
     delete user.Password;
     req.session.isAuthenticated = true;
     req.session.authUser = user;
+    if (req.session.authUser.Status == 3)
+        return res.redirect('/admin');
 
     const url = req.query.retUrl || '/';
     if (req.query.method == 'post')

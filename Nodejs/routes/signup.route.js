@@ -39,8 +39,6 @@ router.post('/', async(req, res) => {
     const dob = moment(req.body.Date, 'MM/DD/YYYY').format('YYYY-MM-DD');
     const entity = req.body;
     entity.Password = hash;
-    entity.IsBidder = 0;
-    entity.Score = 0;
     entity.Name = req.body.Firstname + ' ' + req.body.Lastname;
     entity.Date = dob;
     delete entity.Firstname;
@@ -49,6 +47,8 @@ router.post('/', async(req, res) => {
     delete entity.f_Newpassword;
     delete entity.result;
     const result = await userModel.add(entity);
+    req.session.isAuthenticated = true
+    req.session.authUser = entity;
     res.redirect('/');
 });
 
