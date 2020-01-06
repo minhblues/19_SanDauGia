@@ -4,7 +4,7 @@ const productModel = require('../models/product.model');
 var router = express.Router();
 
 router.get('/', async(req, res, next) => {
-    products = await productModel.getFavoriteProductByUser(req.session.authUser);
+    products = await productModel.getFavoriteProductByUser(req.session.authUser.Username);
     products.forEach(element => {
         element.isFavorite = true;
     });
@@ -16,12 +16,12 @@ router.get('/', async(req, res, next) => {
 });
 
 router.get('/:id', async(req, res) => {
-    check = await farvoriteModel.isFavorite(req.session.authUser, req.params.id);
+    check = await farvoriteModel.isFavorite(req.session.authUser.Username, req.params.id);
     if (check) {
-        await farvoriteModel.del({ User: req.session.authUser, Product: req.params.id });
+        await farvoriteModel.del({ User: req.session.authUser.Username, Product: req.params.id });
         return res.send('unliked');
     } else {
-        await farvoriteModel.add({ User: req.session.authUser, Product: req.params.id })
+        await farvoriteModel.add({ User: req.session.authUser.Username, Product: req.params.id })
         return res.send('liked');
     };
 });

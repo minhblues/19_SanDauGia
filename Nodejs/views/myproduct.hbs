@@ -1,9 +1,10 @@
 {{#section 'js'}}
 <script>
-    $('#Dialog').on('hide.bs.modal', () => location.reload())
     $('a.likeBtn').each(function () {
         $(this).on('click', function () {
-            $.get($(this).prop('href'), (data, status) => {
+            var r=prompt('Mời thêm nhận xét:');
+            if(r!=null)
+            $.get($(this).prop('href')+'&comment='+r, (data, status) => {
                 if (data == 'Success') {
                     alert(data);
                     location.reload();
@@ -64,7 +65,7 @@
                             </td>
                             <td data-th="Price">{{Numberformat Price}}VND</td>
 
-                            <td data-th="EndTime" class="text-center">{{EndTimeFormat EndTime}}</td>
+                            <td data-th="EndTime" class="text-center">{{Message}}</td>
                             <td data-th="PriceHolder" class="text-center">{{PriceHolder}}</td>
                             {{#if ratable}}
                             <td data-th="Score" class="text-center">

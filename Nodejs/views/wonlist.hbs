@@ -78,21 +78,24 @@
         </div>
 </section>
 
-{{footer}}
+{{>footer}}
 
 {{#section 'js'}}
 <script>
     $('a.deletecart').each(function () {
-        $(this).on('click', function() {
-            $.get($(this).prop('href'), (data, status) => { });
-            window.location.reload();
+        $(this).on('click', function () {
+            $.get($(this).prop('href'), (data, status) => {
+                alert(data);
+                window.location.reload();
+            });
             return false;
         })
     })
     $('form.payment').each(function () {
-        $(this).on('submit', function() {
-            $.get($(this).prop('action'), (data, status) => { });
-            window.location.reload();
+        $(this).on('submit', function () {
+            $.get($(this).prop('action'), (data, status) => {alert(data);
+                window.location.reload();
+             });
             return false;
         })
     })

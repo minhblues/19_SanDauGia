@@ -24,42 +24,35 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Sản phẩm</th>
-                            <th scope="col">Đánh giá</th>
-                            <th scope="col">Người đánh giá</th>
+                            <th style="width:45%">Sản phẩm</th>
+                            <th scope="width:45%">Nhận xét</th>
+                            <th scope="width:10%">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each this.comment}}
+                        {{#each this.comments}}
                         <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="{{IMG}}" alt="" />
+                            <td data-th="Product"><a href="/detail/{{Product}}">
+                                    <div class="row">
+                                        <div class="col-sm-2 hidden-xs"><img src="/images/product/{{Product}}/main.jpg"
+                                                class="img-responsive" />
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <h4 class="nomargin">{{Name}}</h4>
+                                            <p>{{Description}}</p>
+                                        </div>
                                     </div>
-                                    <div class="media-body">
-                                        <p>{{Name}}</p>
-                                    </div>
-                                </div>
+                                </a>
                             </td>
-                            <td>
-                                <h5>{{comment}}</h5>
-                                <div class="rating_list mt-2">
-                                    <ul class="list">
-                                        <li>
-                                            <a href="#">2.5 Star
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>
-                                <h5><a href="">{{customer}}</a></h5>
-                            </td>
+                            <td data-th="comment">{{Comment}}</td>
+                            {{#if Status}}
+                            <td data-th="Status"><span class="btn btn-outline-success">
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                </span></td>{{else}}
+                            <td data-th="Status"><span class="btn btn-outline-danger">
+                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                </span></td>
+                            {{/if}}
                         </tr>
                         {{/each}}
                     </tbody>

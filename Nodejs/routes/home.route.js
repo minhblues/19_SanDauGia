@@ -15,7 +15,7 @@ router.get('/', async(req, res) => {
         ]
     )
     data = [popular, nearFinish, mostExpensive];
-    if (req.session.isAuthenticated)
+    if (req.session.authUser)
         data.forEach(i => {
             i.forEach(j => {
                 favoriteList.forEach(k => {
