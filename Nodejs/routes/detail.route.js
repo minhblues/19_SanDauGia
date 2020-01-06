@@ -3,8 +3,9 @@ const categoryModel = require('../models/category.model');
 const productModel = require('../models/product.model');
 const cartModel = require('../models/cart.model');
 const auctionModel = require('../models/auctions.model');
-const userModel = require('../models/users.model')
-const favoritesModel = require('../models/favorites.model')
+const userModel = require('../models/users.model');
+const mailerModel = require('../models/mailer.model');
+const favoritesModel = require('../models/favorites.model');
 const auth = require('../middlewares/auth.mdw')
 const sleep = require('sleepjs')
 var router = express.Router();
@@ -73,6 +74,7 @@ router.get('/:id', async(req, res) => {
 })
 
 router.post('/:id/Auction', auth, async(req, res) => {
+    const list = userModel.all();
     [entity, product, score] = await Promise.all(
         [
             auctionModel.getHighestPrice(req.params.id),
@@ -157,6 +159,7 @@ router.post('/:id/Auction', auth, async(req, res) => {
             ])
     }
     res.status(200);
+    mailerModel.sendEmail(req, res, req.session.authUser.Email, "Đấu giá thành công!", "Chúc mừng bạn đấu giá thành công!");
     res.send("Success");
 });
 
