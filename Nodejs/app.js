@@ -18,8 +18,7 @@ var signupRouter = require('./routes/signup.routes')
 var profileRouter = require('./routes/profile.routes')
 var wonlistRouter = require('./routes/wonlist.routes')
 var watchlistRouter = require('./routes/watchlist.routes')
-var commentRouter = require('./routes/comment.routes') <<
-    << << < HEAD
+var commentRouter = require('./routes/comment.routes')
 var postProductRouter = require('./routes/postProduct.routes')
 var Category = require('./routes/category.route')
 var detailRouter = require('./routes/detail.routes')
@@ -28,15 +27,13 @@ var commentRouter = require('./routes/comment.routes')
 var Category = require('./routes/category.route')
 var Admin = require('./routes/admin.routes')
 
-===
-=== =
 var Category = require('./routes/category.route')
 var Admin = require('./routes/admin.routes')
 
 var postProductRouter = require('./routes/postProduct.routes')
 var detailRouter = require('./routes/detail.routes')
-var mybidRouter = require('./routes/mybid.routes') >>>
-    >>> > MinhC
+var mybidRouter = require('./routes/mybid.routes')
+
 var app = express();
 
 app.use(logger('dev'));

@@ -20,10 +20,12 @@ router.get('/:id', async(req, res) => {
         ]);
     if (!product)
         return res.redirect('/err');
-    favoriteList.forEach(k => {
-        if (k.User == req.session.authUser.Username && k.Product == product.ProductID)
-            product.isFavorite = true;
-    });
+
+    if (req.session.isAuthenticated)
+        favoriteList.forEach(k => {
+            if (k.User == req.session.authUser.Username && k.Product == product.ProductID)
+                product.isFavorite = true;
+        });
     const [catName, sellScore, alikeProduct] = await Promise.all(
         [categoryModel.single(product.Category),
             userModel.getScore(product.Seller),
@@ -37,12 +39,15 @@ router.get('/:id', async(req, res) => {
         element.STT = i;
         i++;
     });
-    alikeProduct.forEach(j => {
-        favoriteList.forEach(k => {
-            if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
-                j.isFavorite = true;
+    if (req.session.isAuthenticated)
+        alikeProduct.forEach(j => {
+            favoriteList.forEach(k => {
+                console.log(k)
+                if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
+                    j.isFavorite = true;
+            });
         });
-    });
+    console.log(favoriteList)
     subIMG = []
     for (i = 1; i <= product.ImageCount; i++) {
         subIMG.push({
@@ -156,6 +161,8 @@ router.post('/:id/Auction', auth, async(req, res) => {
 router.get('/:id/Buy', auth, async(req, res) => {
     product = await productModel.single(req.params.id);
     score = await userModel.getScore(req.session.authUser.Username);
+    if (!product.InstancePrice)
+        return res.send('No Instance Price')
     if (product.Public == 0 && score < 0.8)
         return res.send('Low Score');
     if (product.EndTime < new Date())

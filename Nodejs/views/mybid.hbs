@@ -16,38 +16,39 @@
 <section class="cart_area section_padding">
     <div class="container">
         <div class="cart_inner">
-            <div class="table-responsive">
-                <table class="table">
+           <div class="table-responsive">
+
+                <table id="cart" class="table table-hover table-condensed">
                     <thead>
                         <tr>
-                            <th scope="col">Sản phẩm</th>
-                            <th scope="col">Giá hiện tại của bạn</th>
-                            <th scope="col">Thời gian</th>
-                            <th scope="col">Trạng thái</th>
+                            <th style="width:50%">Sản phẩm</th>
+                            <th style="width:10%">Giá hiện tại</th>
+                            <th style="width:30%" class="text-center">Thời gian còn lại</th>
+                            <th style="width:10%">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {{#each products}}
                         <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="img/arrivel/iphone11.png" alt="" />
-                                    </div>
-                                    <div class="media-body">
-                                        <p>Iphone 11 Pro Max 256GB</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>28.000.000 VND</h5>
-                            </td>
-                            <td>
-                                <h5>00:00:15</h5>
-                            </td>
-                            <td>
-                                <h5>Win</h5>
-                            </td>
+                             <td data-th="Product"><a href="/detail/{{ProductID}}">
+                                        <div class="row">
+                                            <div class="col-sm-2 hidden-xs"><img
+                                                    src="/images/product/{{ProductID}}/main.jpg"
+                                                    class="img-responsive" />
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <h4 class="nomargin">{{Name}}</h4>
+                                                <p>{{Description}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td data-th="Price">{{Numberformat Price}}VND</td>
+
+                                <td data-th="Seller" class="text-center">{{EndTimeFormat EndTime}}</td>
+                                <td data-th="Score" class="text-center">{{State}}</td>
                         </tr>
+                        {{/each}}
                     </tbody>
                 </table>
             </div>

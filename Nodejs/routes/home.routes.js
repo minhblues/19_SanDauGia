@@ -15,14 +15,15 @@ router.get('/', async(req, res) => {
         ]
     )
     data = [popular, nearFinish, mostExpensive];
-    data.forEach(i => {
-        i.forEach(j => {
-            favoriteList.forEach(k => {
-                if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
-                    j.isFavorite = true;
+    if (req.session.isAuthenticated)
+        data.forEach(i => {
+            i.forEach(j => {
+                favoriteList.forEach(k => {
+                    if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
+                        j.isFavorite = true;
+                });
             });
         });
-    });
     res.render('home', {
         title: 'Sàn đấu giá',
         popular,
@@ -53,12 +54,13 @@ router.get('/search', async(req, res) => {
         ]
     )
 
-    products.forEach(j => {
-        favoriteList.forEach(k => {
-            if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
-                j.isFavorite = true;
+    if (req.session.isAuthenticated)
+        products.forEach(j => {
+            favoriteList.forEach(k => {
+                if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
+                    j.isFavorite = true;
+            });
         });
-    });
     nPages = Math.floor(total / limit);
     if (total % limit > 0) nPages++;
     const page_numbers = [];
