@@ -11,6 +11,7 @@ const auth = require('./middlewares/auth.mdw')
 const lsCategories = require('./middlewares/locals.mdw')
 const categoryModel = require('./models/category.model')
 
+<<<<<<< Updated upstream
 var homeRouter = require('./routes/home.routes')
 var loginRouter = require('./routes/login.routes')
 var signupRouter = require('./routes/signup.routes')
@@ -19,6 +20,28 @@ var cartRouter = require('./routes/cart.routes')
 var wishlistRouter = require('./routes/wishlist.routes')
 var commentRouter = require('./routes/comment.routes')
 var Category = require('./routes/category.route')
+=======
+var homeRouter = require('./routes/home.route')
+var loginRouter = require('./routes/login.route')
+var signupRouter = require('./routes/signup.route')
+var profileRouter = require('./routes/profile.route')
+var wonlistRouter = require('./routes/wonlist.route')
+var watchlistRouter = require('./routes/watchlist.route')
+var commentRouter = require('./routes/comment.route')
+var postProductRouter = require('./routes/postProduct.route')
+var Category = require('./routes/category.route')
+var detailRouter = require('./routes/detail.route')
+var mybidRouter = require('./routes/mybid.route')
+var commentRouter = require('./routes/comment.route')
+var Category = require('./routes/category.route')
+var Admin = require('./routes/admin.route')
+var Category = require('./routes/category.route')
+var Admin = require('./routes/admin.route')
+var postProductRouter = require('./routes/postProduct.route')
+var detailRouter = require('./routes/detail.route')
+var mybidRouter = require('./routes/mybid.route')
+var myproductRouter = require('./routes/myproduct.route')
+>>>>>>> Stashed changes
 
 var app = express();
 
@@ -51,10 +74,21 @@ app.use('/', lsCategories, homeRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
+<<<<<<< Updated upstream
 app.use('/profile', auth, lsCategories, profileRouter);
 app.use('/cart', auth, lsCategories, cartRouter);
 app.use('/wishlist', auth, lsCategories, wishlistRouter);
 app.use('/comment', auth, lsCategories, commentRouter);
+=======
+app.use('/profile', auth, authAdmin, lsCategories, profileRouter);
+app.use('/wonlist', auth, authAdmin, lsCategories, wonlistRouter);
+app.use('/watchlist', auth, authAdmin, lsCategories, watchlistRouter);
+app.use('/postProduct', auth, authAdmin, lsCategories, postProductRouter);
+app.use('/mybid', auth, authAdmin, lsCategories, mybidRouter);
+app.use('/comment', auth, authAdmin, lsCategories, commentRouter);
+app.use('/admin', auth, authNormal, Admin);
+app.use('/myproduct', auth, authAdmin, myproductRouter)
+>>>>>>> Stashed changes
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

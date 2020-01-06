@@ -6,9 +6,84 @@
     if ({{ product.StepPrice }})
     $("input[type='number']").prop('min', parseInt($("input[type='number']").prop('min')) + {{ product.StepPrice }});
     $("input[type='number']").inputSpinner();
+<<<<<<< Updated upstream
     $("form#Auction").on("submit", e => {
         $.post(this.action, (data, status) => {
             alert(data);
+=======
+</script>
+<script>
+    $("form#Auction").on("submit", function () {
+        $('#Dialog').on('hide.bs.modal', () => location.reload())
+        $.post("{{ID}}/Auction", $(this).serialize(), (message, status) => {
+            console.log(message)
+            switch (message) {
+                case 'Success':
+                    $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Đấu giá thành công!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Buy':
+                    $('#BuyDialog').modal('show');
+                    break;
+                case 'Sold Out':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm đã được mua bởi user khác!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Time Up':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm hết thời gian đấu giá!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Low Price':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Bạn trả giá quá thấp!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Price Holder':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Bạn đang giữ giá cao hơn giá bạn vừa trả!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Low Score':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Số điểm của bạn không đủ để đấu giá!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'No Instance Price':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm không bán trực tiếp!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                default:
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbspCó lỗi xảy ra, thử lại sau!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+            }
+        })
+        console.log(message)
+        return false;
+    })
+    $("#buy").on("click", function () {
+        $.get("{{ID}}/Buy", (message, status) => {
+                switch (message) {
+                    case 'Success':
+                        $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Mua thành công!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                    case 'Sold Out':
+                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm đã được mua bởi user khác!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                    case 'Time Up':
+                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm hết thời gian đấu giá!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                    case 'Low Score':
+                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Số điểm của bạn không đủ để đấu giá!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                    default:
+                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbspCó lỗi xảy ra, thử lại sau!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                }
+                console.log(message)
+>>>>>>> Stashed changes
         })
     })
 </script>
@@ -155,6 +230,16 @@
                                         </span>
                                     </td>
                                 </tr>
+<<<<<<< Updated upstream
+=======
+                                {{#if product.Status}}
+                                <tr>
+                                    <td colspan="4">
+                                        Hết hàng
+                                    </td>
+                                </tr>
+                                {{/if}}
+>>>>>>> Stashed changes
                             </tbody>
                         </table>
                     </div>
@@ -272,4 +357,70 @@
             </div>
     </section>
 
+<<<<<<< Updated upstream
+=======
+
+    <div class="modal fade" id="AuctionDialog" tabindex="-1" role="dialog" aria-labelledby="AuctionDialogLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AuctionDialogLabel">Xác nhận đấu giá</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    Bạn có chắc muốn đấu giá sản phẩm này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="submit" form="Auction" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="BuyDialog" tabindex="-1" role="dialog" aria-labelledby="BuyDialogLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="BuyDialogLabel">Xác nhận mua</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    Bạn có chắc muốn mua sản phẩm này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="buy">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Dialog" tabindex="-1" role="dialog" aria-labelledby="AuctionDialogLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AuctionDialogLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center" id="message">
+                    <i class="fa fa-check" aria-hidden="true"></i><span>Đấu giá thành công!!!</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+>>>>>>> Stashed changes
     {{>footer}}
