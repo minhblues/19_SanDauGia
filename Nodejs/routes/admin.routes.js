@@ -3,7 +3,6 @@ const userModel = require('../models/users.model');
 const categoriesModel = require('../models/category.model');
 var router = express.Router();
 
-
 router.get('/nguoidung', async (req, res) => {
     const list = await userModel.all();
     list.forEach(element => {
@@ -28,33 +27,6 @@ router.get('/nguoidung', async (req, res) => {
     res.render('admin_users', {
         title: 'Admin',
         users: list
-    });
-});
-
-router.get('/capquyen', async (req, res) => {
-    const list = await userModel.all();
-    list.forEach(element => {
-        switch (element.Status) {
-            case 0:
-                element.UserMode = 'Bidder';
-                break;
-            case 1:
-                element.UserMode = 'Seller';
-                break;
-            case 2:
-                element.UserMode = 'Waiting';
-                break;
-            case 3:
-                element.UserMode = 'Admin';
-                break;
-            default:
-                element.UserMode = 'Error';
-
-        }
-        res.render('admin_upgrade', {
-            title: 'Admin',
-            users: list
-        });
     });
 });
 
@@ -99,6 +71,24 @@ router.post('/danhmuc/patch', async (req, res) => {
 router.post('/danhmuc/del', async (req, res) => {
     const result = await categoriesModel.del(req.body.CatId);
     res.redirect('/admin/danhmuc');
+});
+
+router.get('/capquyen', async (req, res) => {
+    const list = await userModel.allWaiting();
+    res.render('admin_upgrade', {
+        title: 'Admin',
+        users: list
+    });
+});
+
+router.get('/capquyen/:username/accept', async (req, res) => {
+    const result = await userModel.waitingToSeller(req.params.username);
+    res.redirect('/admin/capquyen');
+});
+
+router.get('/capquyen/:username/delete', async (req, res) => {
+    const result = await userModel.waitingToBidder(req.params.username);
+    res.redirect('/admin/capquyen');
 });
 
 module.exports = router;

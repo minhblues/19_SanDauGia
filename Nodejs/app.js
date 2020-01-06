@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var exphbs = require('express-handlebars');
+var nodemailer = require('nodemailer');
 const auth = require('./middlewares/auth.mdw')
 const lsCategories = require('./middlewares/locals.mdw')
 const categoryModel = require('./models/category.model')
@@ -82,7 +83,5 @@ app.use(async(err, req, res, next) => {
     res.status(errstatus);
     res.render('error', { categories, errstatus });
 });
-
-
 
 module.exports = app;

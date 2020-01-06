@@ -3,6 +3,8 @@ const db = require('../utils/db');
 module.exports = {
     all: () => db.load('select * from users'),
     allWaiting: () => db.load('select * from users where Status = 2'),
+    waitingToSeller: username => db.load(`update users set Status = 1 where Username = \"${username}\"`),
+    waitingToBidder: username => db.load(`update users set Status = 0 where Username = \"${username}\"`),
     singleByUserName: async username => {
         const rows = await db.load(`select * from users where Username = '${username}'`);
         if (rows.length === 0)
