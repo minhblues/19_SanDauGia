@@ -2,7 +2,6 @@ const db = require('../utils/db');
 
 module.exports = {
     all: () => db.load('select * from users'),
-
     singleByUserName: async username => {
         const rows = await db.load(`select * from users where Username = '${username}'`);
         if (rows.length === 0)
@@ -29,6 +28,5 @@ module.exports = {
         const condition = { Username: entity.Username };
         delete entity.Username;
         return db.patch('users', entity, condition);
-      },
-
+    },
 }

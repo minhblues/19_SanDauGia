@@ -26,7 +26,7 @@ router.post('/', async(req, res) => {
 
     delete user.Password;
     req.session.isAuthenticated = true;
-    req.session.authUser = user.Username;
+    req.session.authUser = user;
 
     const url = req.query.retUrl || '/';
     if (req.query.method == 'post')

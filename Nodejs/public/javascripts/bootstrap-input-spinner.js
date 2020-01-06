@@ -4,16 +4,17 @@
  * License: MIT, see file 'LICENSE'
  */
 
-;(function ($) {
+;
+(function($) {
     "use strict"
 
     var triggerKeyPressed = false
     var originalVal = $.fn.val
-    $.fn.val = function (value) {
+    $.fn.val = function(value) {
         if (arguments.length >= 1) {
             if (this[0] && this[0]["bootstrap-input-spinner"] && this[0].setValue) {
                 var element = this[0]
-                setTimeout(function () {
+                setTimeout(function() {
                     element.setValue(value)
                 })
             }
@@ -21,7 +22,7 @@
         return originalVal.apply(this, arguments)
     }
 
-    $.fn.InputSpinner = $.fn.inputSpinner = function (options) {
+    $.fn.InputSpinner = $.fn.inputSpinner = function(options) {
 
         var config = {
             decrementButton: "<strong>-</strong>", // button text
@@ -51,7 +52,7 @@
 
         var locale = navigator.language || "en-US"
 
-        this.each(function () {
+        this.each(function() {
 
             var $original = $(this)
             $original[0]["bootstrap-input-spinner"] = true
@@ -92,21 +93,21 @@
                 $inputGroup.find(".input-group-append").prepend(suffixElement)
             }
 
-            $original[0].setValue = function (newValue) {
+            $original[0].setValue = function(newValue) {
                 setValue(newValue)
             }
 
-            var observer = new MutationObserver(function () {
+            var observer = new MutationObserver(function() {
                 updateAttributes()
                 setValue(value, true)
             })
-            observer.observe($original[0], {attributes: true})
+            observer.observe($original[0], { attributes: true })
 
             $original.after($inputGroup)
 
             setValue(value)
 
-            $input.on("paste input change focusout", function (event) {
+            $input.on("paste input change focusout", function(event) {
                 var newValue = $input[0].value
                 var focusOut = event.type === "focusout"
                 newValue = parseLocaleNumber(newValue)
@@ -114,13 +115,13 @@
                 dispatchEvent($original, event.type)
             })
 
-            onPointerDown($buttonDecrement[0], function () {
+            onPointerDown($buttonDecrement[0], function() {
                 stepHandling(-step)
             })
-            onPointerDown($buttonIncrement[0], function () {
+            onPointerDown($buttonIncrement[0], function() {
                 stepHandling(step)
             })
-            onPointerUp(document.body, function () {
+            onPointerUp(document.body, function() {
                 resetTimer()
             })
 
@@ -148,10 +149,10 @@
 
             function dispatchEvent($element, type) {
                 if (type) {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         var event
-                        if (typeof (Event) === 'function') {
-                            event = new Event(type, {bubbles: true})
+                        if (typeof(Event) === 'function') {
+                            event = new Event(type, { bubbles: true })
                         } else { // IE
                             event = document.createEvent('Event')
                             event.initEvent(type, true, true)
@@ -162,11 +163,11 @@
             }
 
             function stepHandling(step) {
-                if (!$input[0].disabled && !$input[0].readOnly) {
+                if (!$input[0].disabled) {
                     calcStep(step)
                     resetTimer()
-                    autoDelayHandler = setTimeout(function () {
-                        autoIntervalHandler = setInterval(function () {
+                    autoDelayHandler = setTimeout(function() {
+                        autoIntervalHandler = setInterval(function() {
                             if (boostStepsCount > config.boostThreshold) {
                                 if (autoMultiplier) {
                                     calcStep(step * parseInt(boostMultiplier, 10))
@@ -213,14 +214,14 @@
                 var readonly = $original.prop("readonly")
                 $input.prop("disabled", disabled)
                 $input.prop("readonly", readonly)
-                $buttonIncrement.prop("disabled", disabled || readonly)
-                $buttonDecrement.prop("disabled", disabled || readonly)
-                if (disabled || readonly) {
+                $buttonIncrement.prop("disabled", disabled)
+                $buttonDecrement.prop("disabled", disabled)
+                if (disabled) {
                     resetTimer()
                 }
                 var originalClass = $original.prop("class")
                 var groupClass = ""
-                // sizing
+                    // sizing
                 if (/form-control-sm/g.test(originalClass)) {
                     groupClass = "input-group-sm"
                 } else if (/form-control-lg/g.test(originalClass)) {
@@ -263,13 +264,13 @@
     }
 
     function onPointerUp(element, callback) {
-        element.addEventListener("mouseup", function (e) {
+        element.addEventListener("mouseup", function(e) {
             callback(e)
         })
-        element.addEventListener("touchend", function (e) {
+        element.addEventListener("touchend", function(e) {
             callback(e)
         })
-        element.addEventListener("keyup", function (e) {
+        element.addEventListener("keyup", function(e) {
             if ((e.keyCode === 32 || e.keyCode === 13)) {
                 triggerKeyPressed = false
                 callback(e)
@@ -278,17 +279,17 @@
     }
 
     function onPointerDown(element, callback) {
-        element.addEventListener("mousedown", function (e) {
+        element.addEventListener("mousedown", function(e) {
             e.preventDefault()
             callback(e)
         })
-        element.addEventListener("touchstart", function (e) {
+        element.addEventListener("touchstart", function(e) {
             if (e.cancelable) {
                 e.preventDefault()
             }
             callback(e)
         })
-        element.addEventListener("keydown", function (e) {
+        element.addEventListener("keydown", function(e) {
             if ((e.keyCode === 32 || e.keyCode === 13) && !triggerKeyPressed) {
                 triggerKeyPressed = true
                 callback(e)

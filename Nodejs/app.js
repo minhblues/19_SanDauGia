@@ -1,5 +1,4 @@
 var createError = require('http-errors');
-const hbs_sections = require('express-handlebars-sections');
 var express = require('express');
 var session = require('express-session');
 var path = require('path');
@@ -10,18 +9,34 @@ var exphbs = require('express-handlebars');
 const auth = require('./middlewares/auth.mdw')
 const lsCategories = require('./middlewares/locals.mdw')
 const categoryModel = require('./models/category.model')
+const authAdmin = require('./middlewares/admin.mdw')
+const authNormal = require('./middlewares/normalUser.mdw')
 
 var homeRouter = require('./routes/home.routes')
 var loginRouter = require('./routes/login.routes')
 var signupRouter = require('./routes/signup.routes')
 var profileRouter = require('./routes/profile.routes')
-var cartRouter = require('./routes/cart.routes')
-var wishlistRouter = require('./routes/wishlist.routes')
-var commentRouter = require('./routes/comment.routes')
+var wonlistRouter = require('./routes/wonlist.routes')
+var watchlistRouter = require('./routes/watchlist.routes')
+var commentRouter = require('./routes/comment.routes') <<
+    << << < HEAD
 var postProductRouter = require('./routes/postProduct.routes')
 var Category = require('./routes/category.route')
 var detailRouter = require('./routes/detail.routes')
 var mybidRouter = require('./routes/mybid.routes')
+var commentRouter = require('./routes/comment.routes')
+var Category = require('./routes/category.route')
+var Admin = require('./routes/admin.routes')
+
+===
+=== =
+var Category = require('./routes/category.route')
+var Admin = require('./routes/admin.routes')
+
+var postProductRouter = require('./routes/postProduct.routes')
+var detailRouter = require('./routes/detail.routes')
+var mybidRouter = require('./routes/mybid.routes') >>>
+    >>> > MinhC
 var app = express();
 
 app.use(logger('dev'));
@@ -54,12 +69,13 @@ app.use('/detail', lsCategories, detailRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
-app.use('/profile', auth, lsCategories, profileRouter);
-app.use('/cart', auth, lsCategories, cartRouter);
-app.use('/wishlist', auth, lsCategories, wishlistRouter);
-app.use('/postProduct', auth, lsCategories, postProductRouter);
-app.use('/mybid', auth, lsCategories, mybidRouter);
-app.use('/comment', auth, lsCategories,  mybidRouter);
+app.use('/profile', auth, authAdmin, lsCategories, profileRouter);
+app.use('/wonlist', auth, authAdmin, lsCategories, wonlistRouter);
+app.use('/watchlist', auth, authAdmin, lsCategories, watchlistRouter);
+app.use('/postProduct', auth, authAdmin, lsCategories, postProductRouter);
+app.use('/mybid', auth, authAdmin, lsCategories, mybidRouter);
+app.use('/comment', auth, authAdmin, lsCategories, commentRouter);
+app.use('/admin', auth, authNormal, Admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

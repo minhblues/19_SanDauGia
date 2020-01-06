@@ -1,22 +1,85 @@
 {{#section 'js'}}
 <script src="/javascripts/bootstrap-input-spinner.js"></script>
 <script>
-    if ({{ Auction }})
-    alert('Đấu giá thành công!!!');
     if ({{ product.StepPrice }})
     $("input[type='number']").prop('min', parseInt($("input[type='number']").prop('min')) + {{ product.StepPrice }});
     $("input[type='number']").inputSpinner();
-    $("form#Auction").on("submit", e => {
-        $.post(this.action, (data, status) => {
-            alert(data);
+</script>
+<script>
+    $("form#Auction").on("submit", function () {
+        $('#Dialog').on('hide.bs.modal', () => location.reload())
+        $.post("{{ID}}/Auction", $(this).serialize(), (message, status) => {
+            console.log(message)
+            switch (message) {
+                case 'Success':
+                    $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Đấu giá thành công!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Buy':
+                    $('#BuyDialog').modal('show');
+                    break;
+                case 'Sold Out':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm đã được mua bởi user khác!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Time Up':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm hết thời gian đấu giá!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Low Price':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Bạn trả giá quá thấp!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Price Holder':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Bạn đang giữ giá cao hơn giá bạn vừa trả!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Low Score':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Số điểm của bạn không đủ để đấu giá!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                default:
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbspCó lỗi xảy ra, thử lại sau!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+            }
+        })
+        console.log(message)
+        return false;
+    })
+    $("#buy").on("click", function () {
+        $.get("{{ID}}/Buy", (message, status) => {
+            $.post("/detail/{{ID}}/Auction", $(this).serialize(), (message, status) => {
+                switch (message) {
+                    case 'Success':
+                        $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Mua thành công!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                    case 'Sold Out':
+                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm đã được mua bởi user khác!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                    case 'Time Up':
+                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm hết thời gian đấu giá!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                    case 'Low Score':
+                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Số điểm của bạn không đủ để đấu giá!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                    default:
+                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbspCó lỗi xảy ra, thử lại sau!!!</span>');
+                        $('#Dialog').modal('show');
+                        break;
+                }
+                console.log(message)
+            })
         })
     })
 </script>
 <script>
     // Set the date we're counting down to
     var countDownDate = new Date($('#EndTime').html()).getTime();
-
-
     // Update the count down every 1 second
     var x = setInterval(function () {
         var now = new Date().getTime();
@@ -26,7 +89,6 @@
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
             ret = 'Còn ';
             if (days > 0)
                 ret += days + " ngày ";
@@ -36,18 +98,16 @@
                 ret += minutes + " phút ";
             ret += seconds + " giây";
             $('#EndTime').text(ret);
-
         } else {
             $('#EndTime').text("{{DateTimeFormat product.EndTime}}");
         }
-
         if (distance < 0) {
             clearInterval(x);
             $('#EndTime').text("Sản phẩm đã kết thúc");
-            $('#AuctionZone').hide();
         }
     }, 1000);
 </script>
+{{>subJs}}
 {{/section}}
 {{>header}}
 <!-- breadcrumb start-->
@@ -74,12 +134,12 @@
                     <div class="carousel-inner">
                         <div width="300" height="400" class="carousel-item active">
                             <img style="width: 300;height: 400;" class="d-block w-100"
-                                src="/images/arrivel/{{product.IMG}}.png" alt="First slide">
+                                src="/images/product/{{product.ProductID}}/main.jpg" alt="First slide">
                         </div width="300" height="400">
                         {{#each subIMG}}
                         <div class="carousel-item">
-                            <img width="300" height="400" class="d-block w-100" src="/images/arrivel/{{IMG}}.png"
-                                alt="Second slide">
+                            <img width="300" height="400" class="d-block w-100"
+                                src="/images/product/{{ProductID}}/{{id}}.jpg" alt="Second slide">
                         </div>
                         {{/each}}
                     </div>
@@ -101,11 +161,11 @@
                 <div class="s_product_text">
                     <h2 id="product-name">{{product.Name}}</h2>
                     <h3>Giá hiện tại: {{Numberformat product.Price}} VND</h3>
-                    {{#if product.stepPrice}}
-                    <h2>Giá mua ngay: {{Numberformat product.InstancePrice}} VND</h2>
+                    {{#if product.StepPrice}}
+                    <h6>Bước giá: {{Numberformat product.StepPrice}} VND</h6>
                     {{/if}}
-                    {{#if InstancePrice}}
-                    <h2 id="InstancePrice">Giá mua ngay: {{Numberformat product.InstancePrice}} VND</h2>
+                    {{#if product.InstancePrice}}
+                    <h4 id="InstancePrice">Giá mua ngay: {{Numberformat product.InstancePrice}} VND</h4>
                     {{/if}}
                     <div> Thể loại: <a href="/Category/{{catName.CatName}}/products">{{catName.CatName}}</a>
                     </div>
@@ -155,32 +215,48 @@
                                         </span>
                                     </td>
                                 </tr>
+                                {{#if product.Status}}
+                                <tr >
+                                    <td colspan="4">
+                                        Hết hàng
+                                    </td>
+                                </tr>
+                                {{/if}}
                             </tbody>
                         </table>
                     </div>
                     <p>
                         {{product.Description}}
                     </p>
-                        <div class="col-sm-12 mt-10" id="AuctionZone">
-                            <form method="POST" action="/detail/{{ID}}/Auction" id="Auction">
-                                <div class="col-lg-6 col-sm-12">
-                                    <input type="number" name="Price" value="{{product.Price}}" min="{{product.Price}}"
-                                        step="{{product.StepPrice}}">
-                                    <input name="StepPrice" value="{{product.StepPrice}}" hidden=true>
-                                </div>
-                                <div class="col-sm-12 mt-10">
-                                    <button type="submit" class="btn btn-primary">Đấu giá</button>
-                                    <a href="/detail/{{ID}}/Buy" class="btn btn-primary m-auto">Mua ngay</a>
-                                    <a href="/wishlist/{{ID}}" class="btn btn-outline-danger favoriteBtn">
-                                        {{#if product.isFavorite}}
-                                        <i class="fa fa-heart"></i>
-                                        {{else}}
-                                        <i class="far fa-heart "></i>
-                                        {{/if}}
-                                    </a>
-                                </div>
-                            </form>
+                    {{#if isSelling}}
+                    <div class="col-sm-12 mt-10" id="AuctionZone">
+                        <form id="Auction">
+                            <div class="col-lg-6 col-sm-12">
+                                <input type="number" name="Price" value="{{product.Price}}" min="{{product.Price}}"
+                                    step="{{product.StepPrice}}" readonly>
+                                <input name="StepPrice" value="{{product.StepPrice}}" hidden=true>
+                            </div>
+                            <div class="col-sm-12 mt-10">
+                                {{#if isAuthenticated}}
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#AuctionDialog">Đấu giá</button>
+                                <button type="button" class="btn btn-primary m-auto" data-toggle="modal"
+                                    data-target="#BuyDialog">Mua ngay</button>
+                                {{else}}
+                                <a class="btn btn-primary" href="/login?retUrl=/detail/{{ID}}">Đấu giá</a>
+                                <a class="btn btn-primary" href="/login?retUrl=/detail/{{ID}}">Mua ngay</a>
+                                {{/if}}
+                                <a href="/watchlist/{{ID}}" class="btn btn-outline-danger favoriteBtn">
+                                    {{#if product.isFavorite}}
+                                    <i class="fa fa-heart"></i>
+                                    {{else}}
+                                    <i class="far fa-heart "></i>
+                                    {{/if}}
+                                </a>
+                            </div>
+                        </form>
                     </div>
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -272,4 +348,66 @@
             </div>
     </section>
 
+
+    <div class="modal fade" id="AuctionDialog" tabindex="-1" role="dialog" aria-labelledby="AuctionDialogLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AuctionDialogLabel">Xác nhận đấu giá</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    Bạn có chắc muốn đấu giá sản phẩm này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="submit" form="Auction" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="BuyDialog" tabindex="-1" role="dialog" aria-labelledby="BuyDialogLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="BuyDialogLabel">Xác nhận mua</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    Bạn có chắc muốn mua sản phẩm này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="buy">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Dialog" tabindex="-1" role="dialog" aria-labelledby="AuctionDialogLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AuctionDialogLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center" id="message">
+                    <i class="fa fa-check" aria-hidden="true"></i><span>Đấu giá thành công!!!</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
     {{>footer}}

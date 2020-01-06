@@ -1,7 +1,7 @@
 var express = require('express');
 var bcrypt = require('bcryptjs');
 const moment = require('moment');
-
+const userModel = require('../models/users.model');
 var router = express.Router();
 
 /* GET home page. */
@@ -37,7 +37,6 @@ router.post('/', async(req, res) => {
         });
     }
     const dob = moment(req.body.Date, 'MM/DD/YYYY').format('YYYY-MM-DD');
-
     const entity = req.body;
     entity.Password = hash;
     entity.IsBidder = 0;
