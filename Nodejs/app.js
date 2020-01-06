@@ -21,6 +21,10 @@ var postProductRouter = require('./routes/postProduct.routes')
 var Category = require('./routes/category.route')
 var detailRouter = require('./routes/detail.routes')
 var mybidRouter = require('./routes/mybid.routes')
+var commentRouter = require('./routes/comment.routes')
+var Category = require('./routes/category.route')
+var Admin = require('./routes/admin.routes')
+
 var app = express();
 
 app.use(logger('dev'));
@@ -58,7 +62,8 @@ app.use('/wonlist', auth, lsCategories, wonlistRouter);
 app.use('/watchlist', auth, lsCategories, watchlistRouter);
 app.use('/postProduct', auth, lsCategories, postProductRouter);
 app.use('/mybid', auth, lsCategories, mybidRouter);
-app.use('/comment', auth, lsCategories, mybidRouter);
+app.use('/comment', auth, lsCategories, commentRouter);
+app.use('/admin', Admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
