@@ -1,0 +1,121 @@
+{{#section 'js'}}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<script>
+    $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap',
+        todayHighlight: true
+    });
+</script>
+{{/section}}
+
+{{#section 'css'}}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+{{/section}}
+
+<header class="main_menu home_menu">
+    <div class="container-fluid">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-11">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="#"> <img width="50" height="50" src="images/logo.png" alt="logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="menu_icon"><i class="fas fa-bars"></i></span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="checkout_area section_padding">
+    <div class="container">
+        <div class="billing_details">
+            <h3>Sign Up</h3>
+            {{#if err_message}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{err_message}}
+            </div>
+            {{/if}}
+            <form class="row contact_form" action="#" method="Post" novalidate="novalidate">
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="first" name="Firstname" placeholder="First name" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="last" name="Lastname" placeholder="Last name" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="Phone" name="Phone" placeholder="Phone number" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="email" name="Email" placeholder="Email Address" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="username" name="Username" placeholder="User Name " />
+                </div>
+                <div class="col-md-6 form-group p_star ">
+                    <input type="password" class="form-control" id="newpassword" name="f_Newpassword"
+                        placeholder="Password" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="password" class="form-control" id="cfmpassword" name="cfmpassword"
+                        placeholder="Confirm Password" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="Address" name="Address" placeholder="Address " />
+                </div>
+                <div class="md-form col-md-12 form-group ">
+                    <label for="date-picker-example"> Ngày sinh</label>
+                    <input id="datepicker" name="Date" width="270" />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <span id="add">
+                        <script>
+                            var x = Math.floor(Math.random() * 100);
+                            var y = Math.floor(Math.random() * 100);
+                            var z = x + ' + ' + y + ' = ?';
+                            document.getElementById('add').innerHTML = z;
+                            var checkAdd = () => {
+                                var z = document.getElementById('result').value;
+                                if (z != x + y) {
+                                    document.getElementById('requiredAdd').innerHTML = 'Please fill out a correct answer';
+                                    return false;
+                                }
+                                else
+                                    return true;
+                            }
+                        </script>
+                    </span>
+                    <span id="requiredAdd"></span>
+                    <input type="text" class="form-control" id="result" name="result" />
+                </div>
+
+                <div class="col-md-12 form-group ">
+                    <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+                    <br />
+                    <button type="submit" id="signupbutton" value="submit" class="btn_3">
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+<script>
+    document.getElementById("signupbutton").onclick = function () {
+        location.href = "/";
+    };
+    $('.datepicker').pickadate({
+        weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        showMonthsShort: true
+    })
+</script>

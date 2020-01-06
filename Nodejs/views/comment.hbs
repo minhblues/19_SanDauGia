@@ -1,0 +1,70 @@
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Nhận xét của tôi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+<!--================Cart Area =================-->
+<section class="cart_area mt-5">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="form-group ">
+                <h4>Nhận xét của tôi</h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Đánh giá</th>
+                            <th scope="col">Người đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each this.comment}}
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <img src="{{IMG}}" alt="" />
+                                    </div>
+                                    <div class="media-body">
+                                        <p>{{Name}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <h5>{{comment}}</h5>
+                                <div class="rating_list mt-2">
+                                    <ul class="list">
+                                        <li>
+                                            <a href="#">2.5 Star
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <i class="far fa-star"></i>
+                                                <i class="far fa-star"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                <h5><a href="">{{customer}}</a></h5>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</section>
+{{footer}}

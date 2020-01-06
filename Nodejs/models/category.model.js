@@ -1,12 +1,7 @@
 const db = require('../utils/db');
 
 module.exports = {
-    all: async () => {
-        const rows = await db.load('select * from categories');
-        if (rows.length === 0)
-            return null;
-        return rows;
-    },
+    all: () => db.load('select * from categories'),
     single: async id => {
         ret = await db.load(`select * from categories where CatId = ${id}`);
         return ret[0]

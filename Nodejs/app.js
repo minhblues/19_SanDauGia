@@ -21,6 +21,9 @@ var commentRouter = require('./routes/comment.routes')
 var Category = require('./routes/category.route')
 var Admin = require('./routes/admin.routes')
 
+var postProductRouter = require('./routes/postProduct.routes')
+var detailRouter = require('./routes/detail.routes')
+var mybidRouter = require('./routes/mybid.routes')
 var app = express();
 
 app.use(logger('dev'));
@@ -49,6 +52,7 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs');
 
 app.use('/', lsCategories, homeRouter);
+app.use('/detail', lsCategories, detailRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
@@ -57,6 +61,8 @@ app.use('/cart', auth, lsCategories, cartRouter);
 app.use('/wishlist', auth, lsCategories, wishlistRouter);
 app.use('/comment', auth, lsCategories, commentRouter);
 app.use('/admin', Admin);
+app.use('/postProduct', auth, lsCategories, postProductRouter);
+app.use('/mybid', auth, lsCategories, mybidRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
