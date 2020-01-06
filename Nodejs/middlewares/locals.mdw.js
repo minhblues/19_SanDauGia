@@ -5,6 +5,5 @@ module.exports = async(req, res, next) => {
         res.locals.isAuthenticated = true;
     else res.locals.isAuthenticated = false;
     res.locals.categories = await categoryModel.all();
-
     next();
 }

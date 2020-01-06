@@ -12,7 +12,6 @@ router.get('/', async(req, res) => {
         err_message = "SignUp failed!";
     res.render('profile', {
         title: 'Thông tin cá nhân',
-        categories: res.locals.lsCategories,
         name: user.Name,
         phone: user.Phone,
         email: user.Email,

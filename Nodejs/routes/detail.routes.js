@@ -1,16 +1,16 @@
 var express = require('express');
 const categoryModel = require('../models/category.model');
 const productModel = require('../models/product.model');
+const cartModel = require('../models/cart.model');
 const auctionModel = require('../models/auctions.model');
 const userModel = require('../models/users.model')
 const favoritesModel = require('../models/favorites.model')
 const auth = require('../middlewares/auth.mdw')
 const sleep = require('sleepjs')
-const config = require('../config/default.json');
 var router = express.Router();
 
 
-router.get('/:id*', async(req, res) => {
+router.get('/:id', async(req, res) => {
     const ID = req.params.id;
     const [product, auction, properties, favoriteList] = await Promise.all(
         [productModel.single(ID),
@@ -18,6 +18,8 @@ router.get('/:id*', async(req, res) => {
             productModel.properties(ID),
             favoritesModel.all()
         ]);
+    if (!product)
+        return res.redirect('/err');
     favoriteList.forEach(k => {
         if (k.User == req.session.authUser && k.Product == product.ProductID)
             product.isFavorite = true;
@@ -48,6 +50,7 @@ router.get('/:id*', async(req, res) => {
             id: i
         })
     }
+    isSelling = (product.EndTime >= new Date()) && (product.Status == 0)
     res.render('detail', {
         ID,
         title: product.Name,
@@ -59,35 +62,43 @@ router.get('/:id*', async(req, res) => {
         bidScore,
         sellScore,
         alikeProduct,
-        Auction: req.query.Auction || false
+        Auction: req.query.Auction || false,
+        isSelling
     });
 })
 
 router.post('/:id/Auction', auth, async(req, res) => {
-    [entity, product] = await Promise.all(
+    [entity, product, score] = await Promise.all(
         [
             auctionModel.getHighestPrice(req.params.id),
-            productModel.single(req.params.id)
+            productModel.single(req.params.id),
+            userModel.getScore(req.session.authUser)
         ]);
     res.type('html');
     res.charset = 'utf-8';
-    if (+req.body.Price < +product.Price + (+product.StepPrice)) {
-        res.status(304);
-        res.statusMessage('failed');
-        return res.send("Giá không hợp lệ (Giá phải cao hơn giá gốc ít nhất một khoảng bước giá)");
-    }
-
+    if (product.Public == 0 && score < 0.8)
+        return res.send('Low Score');
+    if (+req.body.Price < +product.Price + (+product.StepPrice))
+        return res.send("Low Price");
+    if (product.EndTime < new Date())
+        return res.send("Time Up");
+    if (product.Status == 1)
+        return res.send("Sold Out")
+    if (product.InstancePrice != null)
+        if (+req.body.Price >= product.InstancePrice)
+            return res.send("Buy");
     product.AuctionTime = +product.AuctionTime + 1;
     if (entity)
-        if (req.body.Price > entity.Price) {
-            product.Price = +entity.Price + +req.body.StepPrice;
+        if (+req.body.Price > +entity.Price) {
+            console.log(+req.body.Price, +entity.Price)
+            product.Price = +entity.Price + (+req.body.StepPrice);
             product.PriceHolder = req.session.authUser;
             await Promise.all(
                 [
                     auctionModel.patchHighestPrice({
                         Product: req.params.id,
                         User: req.session.authUser,
-                        Price: req.body.Price
+                        Price: +req.body.Price
                     }),
                     auctionModel.add({
                         Product: req.params.id,
@@ -98,11 +109,13 @@ router.post('/:id/Auction', auth, async(req, res) => {
                     productModel.patch(product)
                 ]);
         } else {
-            product.Price = +req.body.Price + +product.StepPrice;
+            if (req.session.authUser == product.PriceHolder)
+                return res.send("Price Holder")
+            product.Price = +req.body.Price + (+product.StepPrice);
             await auctionModel.add({
                 Product: req.params.id,
                 Bidder: req.session.authUser,
-                Price: req.body.Price,
+                Price: +req.body.Price,
                 Time: new Date()
             });
             await (sleep(1000))
@@ -118,14 +131,14 @@ router.post('/:id/Auction', auth, async(req, res) => {
                 ]);
         }
     else {
-        product.Price = +product.Price + +product.StepPrice;
+        product.Price = +product.Price + (+product.StepPrice);
         product.PriceHolder = req.session.authUser;
         await Promise.all(
             [
                 auctionModel.addHighestPrice({
                     Product: req.params.id,
                     User: req.session.authUser,
-                    Price: req.body.Price
+                    Price: +req.body.Price
                 }),
                 auctionModel.add({
                     Product: req.params.id,
@@ -137,10 +150,26 @@ router.post('/:id/Auction', auth, async(req, res) => {
             ])
     }
     res.status(200);
-    res.send("Đấu giá thành công!!!");
+    res.send("Success");
 });
 
-router.post('/:id/Buy', auth, async(req, res) => {
-
+router.get('/:id/Buy', auth, async(req, res) => {
+    product = await productModel.single(req.params.id);
+    score = await userModel.getScore(req.session.authUser);
+    if (product.Public == 0 && score < 0.8)
+        return res.send('Low Score');
+    if (product.EndTime < new Date())
+        return res.send("Time Up");
+    if (product.Status == 1)
+        return res.send("Sold Out")
+    product.Status = 1;
+    await Promise.all(
+        [productModel.patch(product),
+            cartModel.add({
+                User: req.session.authUser,
+                Product: req.params.id
+            })
+        ]);
+    res.send("Success");
 });
 module.exports = router;

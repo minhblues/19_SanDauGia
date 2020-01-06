@@ -1,5 +1,4 @@
 var createError = require('http-errors');
-const hbs_sections = require('express-handlebars-sections');
 var express = require('express');
 var session = require('express-session');
 var path = require('path');
@@ -15,8 +14,8 @@ var homeRouter = require('./routes/home.routes')
 var loginRouter = require('./routes/login.routes')
 var signupRouter = require('./routes/signup.routes')
 var profileRouter = require('./routes/profile.routes')
-var cartRouter = require('./routes/cart.routes')
-var wishlistRouter = require('./routes/wishlist.routes')
+var wonlistRouter = require('./routes/wonlist.routes')
+var watchlistRouter = require('./routes/watchlist.routes')
 var commentRouter = require('./routes/comment.routes')
 var postProductRouter = require('./routes/postProduct.routes')
 var Category = require('./routes/category.route')
@@ -55,11 +54,11 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/Category', lsCategories, Category);
 app.use('/profile', auth, lsCategories, profileRouter);
-app.use('/cart', auth, lsCategories, cartRouter);
-app.use('/wishlist', auth, lsCategories, wishlistRouter);
+app.use('/wonlist', auth, lsCategories, wonlistRouter);
+app.use('/watchlist', auth, lsCategories, watchlistRouter);
 app.use('/postProduct', auth, lsCategories, postProductRouter);
 app.use('/mybid', auth, lsCategories, mybidRouter);
-app.use('/comment', auth, lsCategories,  mybidRouter);
+app.use('/comment', auth, lsCategories, mybidRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
