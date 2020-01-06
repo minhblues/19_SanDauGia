@@ -31,5 +31,6 @@ module.exports = {
         const condition = { Username: entity.Username };
         delete entity.Username;
         return db.patch('users', entity, condition);
-    },
+    }
+    
 }

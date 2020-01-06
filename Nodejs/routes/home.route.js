@@ -1,6 +1,6 @@
 var express = require('express');
 const productModel = require('../models/product.model');
-const favoritesModel = require('../models/favorites.model')
+const favoritesModel = require('../models/favorites.model');
 const config = require('../config/default.json');
 var router = express.Router();
 
@@ -31,7 +31,6 @@ router.get('/', async(req, res) => {
         mostExpensive,
     });
 });
-
 
 router.get('/logout', (req, res) => {
     req.session.isAuthenticated = false;

@@ -1,4 +1,5 @@
 var express = require('express');
+var nodemailer = require('nodemailer');
 const productModel = require('../models/product.model')
 const userModel = require('../models/users.model');
 var router = express.Router();
