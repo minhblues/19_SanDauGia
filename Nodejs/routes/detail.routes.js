@@ -21,7 +21,7 @@ router.get('/:id', async(req, res) => {
     if (!product)
         return res.redirect('/err');
     favoriteList.forEach(k => {
-        if (k.User == req.session.authUser && k.Product == product.ProductID)
+        if (k.User == req.session.authUser.Username && k.Product == product.ProductID)
             product.isFavorite = true;
     });
     const [catName, sellScore, alikeProduct] = await Promise.all(
@@ -39,7 +39,7 @@ router.get('/:id', async(req, res) => {
     });
     alikeProduct.forEach(j => {
         favoriteList.forEach(k => {
-            if (k.User == req.session.authUser && k.Product == j.ProductID)
+            if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
                 j.isFavorite = true;
         });
     });
@@ -72,7 +72,7 @@ router.post('/:id/Auction', auth, async(req, res) => {
         [
             auctionModel.getHighestPrice(req.params.id),
             productModel.single(req.params.id),
-            userModel.getScore(req.session.authUser)
+            userModel.getScore(req.session.authUser.Username)
         ]);
     res.type('html');
     res.charset = 'utf-8';
@@ -92,29 +92,29 @@ router.post('/:id/Auction', auth, async(req, res) => {
         if (+req.body.Price > +entity.Price) {
             console.log(+req.body.Price, +entity.Price)
             product.Price = +entity.Price + (+req.body.StepPrice);
-            product.PriceHolder = req.session.authUser;
+            product.PriceHolder = req.session.authUser.Username;
             await Promise.all(
                 [
                     auctionModel.patchHighestPrice({
                         Product: req.params.id,
-                        User: req.session.authUser,
+                        User: req.session.authUser.Username,
                         Price: +req.body.Price
                     }),
                     auctionModel.add({
                         Product: req.params.id,
-                        Bidder: req.session.authUser,
+                        Bidder: req.session.authUser.Username,
                         Price: product.Price,
                         Time: new Date()
                     }),
                     productModel.patch(product)
                 ]);
         } else {
-            if (req.session.authUser == product.PriceHolder)
+            if (req.session.authUser.Username == product.PriceHolder)
                 return res.send("Price Holder")
             product.Price = +req.body.Price + (+product.StepPrice);
             await auctionModel.add({
                 Product: req.params.id,
-                Bidder: req.session.authUser,
+                Bidder: req.session.authUser.Username,
                 Price: +req.body.Price,
                 Time: new Date()
             });
@@ -132,17 +132,17 @@ router.post('/:id/Auction', auth, async(req, res) => {
         }
     else {
         product.Price = +product.Price + (+product.StepPrice);
-        product.PriceHolder = req.session.authUser;
+        product.PriceHolder = req.session.authUser.Username;
         await Promise.all(
             [
                 auctionModel.addHighestPrice({
                     Product: req.params.id,
-                    User: req.session.authUser,
+                    User: req.session.authUser.Username,
                     Price: +req.body.Price
                 }),
                 auctionModel.add({
                     Product: req.params.id,
-                    Bidder: req.session.authUser,
+                    Bidder: req.session.authUser.Username,
                     Price: product.Price,
                     Time: new Date()
                 }),
@@ -155,7 +155,7 @@ router.post('/:id/Auction', auth, async(req, res) => {
 
 router.get('/:id/Buy', auth, async(req, res) => {
     product = await productModel.single(req.params.id);
-    score = await userModel.getScore(req.session.authUser);
+    score = await userModel.getScore(req.session.authUser.Username);
     if (product.Public == 0 && score < 0.8)
         return res.send('Low Score');
     if (product.EndTime < new Date())
@@ -166,7 +166,7 @@ router.get('/:id/Buy', auth, async(req, res) => {
     await Promise.all(
         [productModel.patch(product),
             cartModel.add({
-                User: req.session.authUser,
+                User: req.session.authUser.Username,
                 Product: req.params.id
             })
         ]);

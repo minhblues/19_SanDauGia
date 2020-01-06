@@ -18,7 +18,7 @@ router.get('/', async(req, res) => {
     data.forEach(i => {
         i.forEach(j => {
             favoriteList.forEach(k => {
-                if (k.User == req.session.authUser && k.Product == j.ProductID)
+                if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
                     j.isFavorite = true;
             });
         });
@@ -34,8 +34,8 @@ router.get('/', async(req, res) => {
 
 router.get('/logout', (req, res) => {
     req.session.isAuthenticated = false;
-    if (req.session.authUser)
-        delete req.session.authUser;
+    if (req.session.authUser.Username)
+        delete req.session.authUser.Username;
     res.redirect('/login');
 })
 
@@ -55,7 +55,7 @@ router.get('/search', async(req, res) => {
 
     products.forEach(j => {
         favoriteList.forEach(k => {
-            if (k.User == req.session.authUser && k.Product == j.ProductID)
+            if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
                 j.isFavorite = true;
         });
     });
