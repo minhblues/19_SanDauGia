@@ -58,7 +58,6 @@ input[type="number"] {
 
 * {
     -webkit-box-sizing: border-box;
-<<<<<<< HEAD
     box-sizing: border-box;
 }
 
@@ -73,72 +72,37 @@ body {
 }
 
 #notfound .notfound-bg {
-=======
-            box-sizing: border-box;
-  }
-  
-  body {
-    padding: 0;
-    margin: 0;
-  }
-  
-  #notfound {
-    position: relative;
-    height: 100vh;
-  }
-  
-  #notfound .notfound-bg {
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
+
     position: absolute;
     width: 100%;
     height: 100%;
     background-image: url('/images/error/bg.jpg');
     background-size: cover;
-<<<<<<< HEAD
 }
 
 #notfound .notfound-bg:after {
-=======
-  }
-  
-  #notfound .notfound-bg:after {
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
+
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: rgba(255, 0, 36, 0.7);
-<<<<<<< HEAD
 }
 
 #notfound .notfound {
-=======
-  }
-  
-  #notfound .notfound {
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
     position: absolute;
     left: 50%;
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
-<<<<<<< HEAD
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
 .notfound {
-=======
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-  }
-  
-  .notfound {
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
     max-width: 910px;
     width: 100%;
     line-height: 1.4;
     text-align: center;
-<<<<<<< HEAD
 }
 
 .notfound .notfound-404 {
@@ -147,43 +111,22 @@ body {
 }
 
 .notfound .notfound-404 h1 {
-=======
-  }
-  
-  .notfound .notfound-404 {
-    position: relative;
-    height: 200px;
-  }
-  
-  .notfound .notfound-404 h1 {
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
     font-family: 'Montserrat', sans-serif;
     position: absolute;
     left: 50%;
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
-<<<<<<< HEAD
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-=======
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
     font-size: 220px;
     font-weight: 900;
     margin: 0px;
     color: #fff;
     text-transform: uppercase;
     letter-spacing: 10px;
-<<<<<<< HEAD
 }
 
 .notfound h2 {
-=======
-  }
-  
-  .notfound h2 {
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
     font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     font-weight: 700;
@@ -191,16 +134,10 @@ body {
     color: #fff;
     margin-top: 20px;
     margin-bottom: 15px;
-<<<<<<< HEAD
 }
 
 .notfound .home-btn,
 .notfound .contact-btn {
-=======
-  }
-  
-  .notfound .home-btn, .notfound .contact-btn {
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
     font-family: 'Montserrat', sans-serif;
     display: inline-block;
     font-weight: 700;
@@ -214,7 +151,6 @@ body {
     margin: 7px;
     -webkit-transition: 0.2s all;
     transition: 0.2s all;
-<<<<<<< HEAD
 }
 
 .notfound .home-btn:hover,
@@ -237,29 +173,6 @@ body {
 }
 
 .notfound-social>a {
-=======
-  }
-  
-  .notfound .home-btn:hover, .notfound .contact-btn:hover {
-    opacity: 0.9;
-  }
-  
-  .notfound .home-btn {
-    color: rgba(255, 0, 36, 0.7);
-    background: #fff;
-  }
-  
-  .notfound .contact-btn {
-    border: 2px solid rgba(255, 255, 255, 0.9);
-    color: rgba(255, 255, 255, 0.9);
-  }
-  
-  .notfound-social {
-    margin-top: 25px;
-  }
-  
-  .notfound-social>a {
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
     display: inline-block;
     height: 40px;
     line-height: 40px;
@@ -269,7 +182,6 @@ body {
     margin: 0px 6px;
     -webkit-transition: 0.2s all;
     transition: 0.2s all;
-<<<<<<< HEAD
 }
 
 .notfound-social>a:hover {
@@ -310,33 +222,3 @@ body {
     overflow: auto;
     overflow-y: auto;
 }
-=======
-  }
-  .notfound-social>a:hover {
-    color: rgba(255, 0, 36, 0.7);
-    background-color: #fff;
-    border-radius: 50%;
-  }
-  
-  @media only screen and (max-width: 767px) {
-    .notfound .notfound-404 h1 {
-      font-size: 182px;
-    }
-  }
-  
-  @media only screen and (max-width: 480px) {
-    .notfound .notfound-404 {
-      height: 146px;
-    }
-    .notfound .notfound-404 h1 {
-      font-size: 146px;
-    }
-    .notfound h2 {
-      font-size: 16px;
-    }
-    .notfound .home-btn, .notfound .contact-btn {
-      font-size: 14px;
-    }
-  }
-  
->>>>>>> parent of adeab00... Thêm quản lý danh sách người dùng
