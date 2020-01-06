@@ -39,7 +39,7 @@ router.get('/danhmuc', async(req, res) => {
     });
 });
 
-router.get('/capquyen', async(req, res) => {
+router.get('/', async(req, res) => {
     const list = await userModel.all();
     res.render('admin_upgrade', {
         title: 'Admin',
@@ -55,13 +55,6 @@ router.get('/danhmuc/them', async(req, res) => {
     });
 });
 
-router.get('/danhmuc/them', async(req, res) => {
-    const list = await userModel.all();
-    res.render('add_categories', {
-        title: 'Thêm danh mục',
-        users: list
-    });
-});
 
 router.post('/danhmuc/them', (req, res) => {
     res.end();
