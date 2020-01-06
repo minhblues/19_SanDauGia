@@ -45,14 +45,9 @@ module.exports = {
                             where (match(Name) against(\"${key}\")) OR (match(CatName) against(\"${key}\"))`);
         return ret[0].total
     },
-<<<<<<< Updated upstream
-    getWinningProductByUser: user=>db.load(`select * from products where EndTime<NOW() and PriceHolder=\"${user}\" and Status=0`),
-    getProductByUserCart: user=>db.load(`select products.* from products,carts where ProductID=Product and User=\"${user}\"`)
-=======
     getWinningProductByUser: user => db.load(`select * from products where EndTime<NOW() and PriceHolder=\"${user}\" and Status=0`),
     getProductByUserCart: user => db.load(`select products.* from products,carts where ProductID=Product and User=\"${user}\" and carts.Status=0`),
     getFavoriteProductByUser: user => db.load(`select products.* from products,favorites where ProductID=Product and User=\"${user}\"`),
     getProductByUserHistoryBidder: user => db.load(`select distinct products.* from products,auctions where ProductID=Product and Bidder=\"${user}\"`),
     getProductBySeller: user => db.load(`select products.* from products where Seller=\"${user}\"`)
->>>>>>> Stashed changes
 };
