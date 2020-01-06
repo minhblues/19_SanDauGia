@@ -15,7 +15,9 @@ router.post('/danhmuc/del', controller.deleteCategory);
 router.get('/', controller.getWaitingUser);
 
 router.get('/:username/accept', controller.acceptWaitingUser);
+router.get('/danhmuc/them', controller.addCategoryShow);
 
+router.post('/danhmuc/them', controller.addCategory)
 router.get('/:username/delete', controller.declineWaitingUser);
 
 module.exports = router;

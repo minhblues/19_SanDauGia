@@ -28,13 +28,19 @@ module.exports = {
         });
     },
 
-    showCategory: async(req, res) => {},
+    showCategory: async(req, res) => {
+        const list = await userModel.all();
+        res.render('admin_categories', {
+            title: 'Admin',
+            users: list
+        });
+    },
 
     getCategoryById: async(req, res) => {
         const rows = await categoriesModel.single(req.params.id);
         res.render('edit_categories', {
             title: 'Sửa danh mục',
-            category: rows
+            categories: rows
         });
     },
 
@@ -44,8 +50,24 @@ module.exports = {
     },
 
     deleteCategory: async(req, res) => {
+        console.log(CatId);
         const result = await categoriesModel.del(req.body.CatId);
         res.redirect('/admin/danhmuc');
+    },
+    addCategoryShow: (req, res) => {
+        res.render('add_categories', {
+            title: 'Thêm danh mục'
+        });
+    },
+    addCategory: async(req, res) => {
+        const entity = {
+            CatName: req.body.txtCatName,
+        }
+        const result = await categoriesModel.add(entity);
+        console.log(result);
+        res.render('add_categories', {
+            title: 'Thêm danh mục'
+        });
     },
 
     getWaitingUser: async(req, res) => {
