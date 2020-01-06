@@ -12,27 +12,26 @@ const categoryModel = require('./models/category.model')
 const authAdmin = require('./middlewares/admin.mdw')
 const authNormal = require('./middlewares/normalUser.mdw')
 
-var homeRouter = require('./routes/home.routes')
-var loginRouter = require('./routes/login.routes')
-var signupRouter = require('./routes/signup.routes')
-var profileRouter = require('./routes/profile.routes')
-var wonlistRouter = require('./routes/wonlist.routes')
-var watchlistRouter = require('./routes/watchlist.routes')
-var commentRouter = require('./routes/comment.routes')
-var postProductRouter = require('./routes/postProduct.routes')
+var homeRouter = require('./routes/home.route')
+var loginRouter = require('./routes/login.route')
+var signupRouter = require('./routes/signup.route')
+var profileRouter = require('./routes/profile.route')
+var wonlistRouter = require('./routes/wonlist.route')
+var watchlistRouter = require('./routes/watchlist.route')
+var commentRouter = require('./routes/comment.route')
+var postProductRouter = require('./routes/postProduct.route')
 var Category = require('./routes/category.route')
-var detailRouter = require('./routes/detail.routes')
-var mybidRouter = require('./routes/mybid.routes')
-var commentRouter = require('./routes/comment.routes')
+var detailRouter = require('./routes/detail.route')
+var mybidRouter = require('./routes/mybid.route')
+var commentRouter = require('./routes/comment.route')
 var Category = require('./routes/category.route')
-var Admin = require('./routes/admin.routes')
-
+var Admin = require('./routes/admin.route')
 var Category = require('./routes/category.route')
-var Admin = require('./routes/admin.routes')
-
-var postProductRouter = require('./routes/postProduct.routes')
-var detailRouter = require('./routes/detail.routes')
-var mybidRouter = require('./routes/mybid.routes')
+var Admin = require('./routes/admin.route')
+var postProductRouter = require('./routes/postProduct.route')
+var detailRouter = require('./routes/detail.route')
+var mybidRouter = require('./routes/mybid.route')
+var myproductRouter = require('./routes/myproduct.route')
 
 var app = express();
 
@@ -73,6 +72,7 @@ app.use('/postProduct', auth, authAdmin, lsCategories, postProductRouter);
 app.use('/mybid', auth, authAdmin, lsCategories, mybidRouter);
 app.use('/comment', auth, authAdmin, lsCategories, commentRouter);
 app.use('/admin', auth, authNormal, Admin);
+app.use('/myproduct', auth, authAdmin, myproductRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -53,7 +53,6 @@
     })
     $("#buy").on("click", function () {
         $.get("{{ID}}/Buy", (message, status) => {
-            $.post("/detail/{{ID}}/Auction", $(this).serialize(), (message, status) => {
                 switch (message) {
                     case 'Success':
                         $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Mua thành công!!!</span>');
@@ -77,7 +76,6 @@
                         break;
                 }
                 console.log(message)
-            })
         })
     })
 </script>
