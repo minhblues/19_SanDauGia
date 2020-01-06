@@ -33,7 +33,7 @@ module.exports = {
         delete entity.ProductID;
         return db.patch('products', entity, condition);
     },
-    search: async(key, offset) => {
+    search: async (key, offset) => {
         return await db.load(`select products.*,CatName 
                                             from products left join categories on products.Category=categories.CatId
                                             where (match(Name) against(\"${key}\")) OR (match(CatName) against(\"${key}\"))
@@ -46,6 +46,10 @@ module.exports = {
         return ret[0].total
     },
     getWinningProductByUser: user => db.load(`select * from products where EndTime<NOW() and PriceHolder=\"${user}\" and Status=0`),
-    getProductByUserCart: user => db.load(`select products.* from products,carts where ProductID=Product and User=\"${user}\"`)
-
+    getProductByUserCart: user => db.load(`select products.* from products,carts where ProductID=Product and User=\"${user}\"`),
+    getMaxId: async() =>{
+        ret = await db.load(`select MAX(ProductID) + 1 as ID from products`);
+        return ret[0];
+    }
+    
 };
