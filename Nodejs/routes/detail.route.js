@@ -35,9 +35,14 @@ router.get('/:id', async(req, res) => {
     if (auction.length != 0)
         bidScore = await userModel.getScore(auction[0].Bidder)
     i = 1;
-    auction.forEach(element => {
+
+    auction.forEach(async element => {
         element.STT = i;
         i++;
+    })
+    auction.forEach(async element => {
+        element.Name = await userModel.singleByUserName(element.Bidder);
+        element.Name = "****" + element.Name.Name.substr(element.Name.Name.length - 4);
     });
     if (req.session.isAuthenticated)
         alikeProduct.forEach(j => {
@@ -47,15 +52,15 @@ router.get('/:id', async(req, res) => {
                     j.isFavorite = true;
             });
         });
-    console.log(favoriteList)
-    subIMG = []
+    console.log(favoriteList);
+    subIMG = [];
     for (i = 1; i <= product.ImageCount; i++) {
         subIMG.push({
             ProductID: product.ProductID,
             id: i
         })
-    }
-    isSelling = (product.EndTime >= new Date()) && (product.Status == 0)
+    };
+    isSelling = (product.EndTime >= new Date()) && (product.Status == 0);
     res.render('detail', {
         ID,
         title: product.Name,
@@ -81,9 +86,10 @@ router.post('/:id/Auction', auth, async(req, res) => {
         ]);
     res.type('html');
     res.charset = 'utf-8';
+
     if (product.Seller == req.session.authUser.Username)
-        return res.send('Your Product')
-    if (product.Public == 0 && score < 0.8)
+        return res.send('Your product')
+    if (product.Public == 1 && score < 0.8)
         return res.send('Low Score');
     if (+req.body.Price < +product.Price + (+product.StepPrice))
         return res.send("Low Price");
@@ -163,8 +169,9 @@ router.post('/:id/Auction', auth, async(req, res) => {
 router.get('/:id/Buy', auth, async(req, res) => {
     product = await productModel.single(req.params.id);
     score = await userModel.getScore(req.session.authUser.Username);
+
     if (product.Seller == req.session.authUser.Username)
-        return res.send('Your Product')
+        return res.send('Your product')
     if (!product.InstancePrice)
         return res.send('No Instance Price')
     if (product.Public == 0 && score < 0.8)

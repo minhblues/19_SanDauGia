@@ -1,5 +1,4 @@
 const productModel = require('../models/product.model');
-const categoryModel = require('../models/category.model');
 const favoritesModel = require('../models/favorites.model')
 const config = require('../config/default.json');
 module.exports = {

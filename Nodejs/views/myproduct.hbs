@@ -1,16 +1,15 @@
 {{#section 'js'}}
 <script>
     $('#Dialog').on('hide.bs.modal', () => location.reload())
-    $('a.submitExtraTime').each(function () {
+    $('a.likeBtn').each(function () {
         $(this).on('click', function () {
-            console.log($(this).prop('href'));
             $.get($(this).prop('href'), (data, status) => {
                 if (data == 'Success') {
-                    $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Gia hạn thành công!!!</span>');
-                    $('#Dialog').modal('show');
+                    alert(data);
+                    location.reload();
                 } else {
-                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color: green;"></i><span>&nbsp;Có lỗi xảy ra!!!</span>');
-                    $('#Dialog').modal('show');
+                    alert('Có lỗi xảy ra');
+                    location.reload();
                 }
             })
             return false;
@@ -69,10 +68,10 @@
                             <td data-th="PriceHolder" class="text-center">{{PriceHolder}}</td>
                             {{#if ratable}}
                             <td data-th="Score" class="text-center">
-                                <a class="btn btn-outline-success" href="/myproduct/{{ProductID}}?Action=like">
+                                <a class="btn btn-outline-success likeBtn" href="/myproduct/{{ProductID}}?Action=like">
                                     <i class="far fa-thumbs-up"></i>
                                     </a>
-                                <a  class="btn btn-outline-danger" href="/myproduct/{{ProductID}}?Action=dislike">
+                                <a  class="btn btn-outline-danger likeBtn" href="/myproduct/{{ProductID}}?Action=dislike">
                                     <i class="far fa-thumbs-down"></i></a>
                             </td>
                             {{/if}}

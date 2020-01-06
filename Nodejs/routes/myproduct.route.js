@@ -11,7 +11,6 @@ router.get('/', async(req, res) => {
             product.ratable = false;
         else product.ratable = true;
     });
-    console.log(products)
     res.render('myproduct', {
         title: 'Sản phẩm của tôi',
         products
