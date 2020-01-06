@@ -6,17 +6,21 @@ const productModel = require('../models/product.model')
 router.get('/', async(req, res) => {
     //  console.log(req.files);
     products = await productModel.getProductBySeller(req.session.authUser.Username)
+    products.forEach(product => {
+        if ((product.EndTime >= new Date() && product.Status == 0) || product.PriceHolder == null)
+            product.ratable = false;
+        else product.ratable = true;
+    });
+    console.log(products)
     res.render('myproduct', {
         title: 'Sản phẩm của tôi',
         products
     });
 })
 
-router.get('/extratime', async(req, res) => {
-    product = await productModel.single(req.query.Product);
-    if (req.query.Product.EndTime < new Date())
-        product.EndTime = new Date(now() + 7 * 24 * 3600 * 1000);
-    else product.EndTime = new Date(product.EndTime.getTime() + 7 * 24 * 3600 * 1000);
+router.get('/:id', async(req, res) => {
+    product = await productModel.single(req.params.id);
+
     await productModel.patch(product);
     res.send('Success');
 })

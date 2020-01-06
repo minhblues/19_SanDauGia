@@ -1,7 +1,7 @@
 {{#section 'js'}}
 <script>
     $('#Dialog').on('hide.bs.modal', () => location.reload())
-    $('a.submitExtraTime').each(function()  {
+    $('a.submitExtraTime').each(function () {
         $(this).on('click', function () {
             console.log($(this).prop('href'));
             $.get($(this).prop('href'), (data, status) => {
@@ -41,9 +41,10 @@
                 <table id="cart" class="table table-hover table-condensed">
                     <thead>
                         <tr>
-                            <th style="width:50%">Sản phẩm</th>
+                            <th style="width:40%">Sản phẩm</th>
                             <th style="width:10%">Giá hiện tại</th>
                             <th style="width:30%" class="text-center">Thời gian còn lại</th>
+                            <th style="width:10%" class="text-center">Người giữ giá</th>
                             <th style="width:10%"></th>
                         </tr>
                     </thead>
@@ -64,34 +65,17 @@
                             </td>
                             <td data-th="Price">{{Numberformat Price}}VND</td>
 
-                            <td data-th="Seller" class="text-center">{{EndTimeFormat EndTime}}</td>
+                            <td data-th="EndTime" class="text-center">{{EndTimeFormat EndTime}}</td>
+                            <td data-th="PriceHolder" class="text-center">{{PriceHolder}}</td>
+                            {{#if ratable}}
                             <td data-th="Score" class="text-center">
-                                <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                    data-target="#ExtraTimeDialog{{ProductID}}">Gia hạn</button>
-                                    </td>
-                            
-                            <div class="modal fade" id="ExtraTimeDialog{{ProductID}}" tabindex="-1" role="dialog"
-                                aria-labelledby="BuyDialogLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="BuyDialogLabel">Xác nhận gia hạn</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body text-center">
-                                            Bạn có chắc muốn gia hạn sản phẩm này không?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Hủy</button>
-                                            <a href="/myproduct/extratime?Product={{ProductID}}"
-                                                class="btn btn-primary submitExtraTime">Xác nhận</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                <a class="btn btn-outline-success" href="/myproduct/{{ProductID}}?Action=like">
+                                    <i class="far fa-thumbs-up"></i>
+                                    </a>
+                                <a  class="btn btn-outline-danger" href="/myproduct/{{ProductID}}?Action=dislike">
+                                    <i class="far fa-thumbs-down"></i></a>
+                            </td>
+                            {{/if}}
                         </tr>
                         {{/each}}
                     </tbody>
@@ -100,23 +84,4 @@
         </div>
     </div>
 </section>
-
-<div class="modal fade" id="Dialog" tabindex="-1" role="dialog" aria-labelledby="AuctionDialogLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="AuctionDialogLabel">Thông báo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center" id="message">
-                <i class="fa fa-check" aria-hidden="true"></i><span>Gia hạn thành công!!!</span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Xác nhận</button>
-            </div>
-        </div>
-    </div>
-</div>
 {{>footer}}
