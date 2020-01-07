@@ -17,11 +17,11 @@ module.exports={
             html: htm
         }
         console.log(mailOptions);
-        smtpTransport.sendMail(mailOptions, function (error, response) {
+        smtpTransport.sendMail(mailOptions, (error, res) => {
             if (error) {
                 console.log(error);
             } else {
-                console.log("Message sent: " + response.message);
+                console.log("Message sent: " + res.message);
             }
         });
     
