@@ -48,12 +48,12 @@ router.get('/:id', async(req, res) => {
     if (req.session.isAuthenticated)
         alikeProduct.forEach(j => {
             favoriteList.forEach(k => {
-                console.log(k)
+               // console.log(k)
                 if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
                     j.isFavorite = true;
             });
         });
-    console.log(favoriteList);
+ //   console.log(favoriteList);
     subIMG = [];
     for (i = 1; i <= product.ImageCount; i++) {
         subIMG.push({
@@ -62,6 +62,10 @@ router.get('/:id', async(req, res) => {
         })
     };
     isSelling = (product.EndTime >= new Date()) && (product.Status == 0);
+
+   
+   // product.Description = doc;
+
     res.render('detail', {
         ID,
         title: product.Name,
@@ -105,7 +109,7 @@ router.post('/:id/Auction', auth, async(req, res) => {
     product.AuctionTime = +product.AuctionTime + 1;
     if (entity)
         if (+req.body.Price > +entity.Price) {
-            console.log(+req.body.Price, +entity.Price)
+           // console.log(+req.body.Price, +entity.Price)
             product.Price = +entity.Price + (+req.body.StepPrice);
             product.PriceHolder = req.session.authUser.Username;
             await Promise.all(
