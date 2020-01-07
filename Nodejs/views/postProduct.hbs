@@ -54,6 +54,14 @@
             <div class="form-group ">
                 <h4>Đăng sản phẩm</h4>
             </div>
+             {{#if err_message}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{err_message}}
+            </div>
+            {{/if}}
             <form class="row contact_form" action="" method="POST" novalidate="novalidate" enctype="multipart/form-data">
                 <div class="col-md-12 form-group ">
                     <label class="col-sm-2 col-form-label" for="fullname">Tên sản phẩm </label>
