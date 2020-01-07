@@ -7,6 +7,7 @@ const userModel = require('../models/users.model');
 const mailerModel = require('../models/mailer.model');
 const favoritesModel = require('../models/favorites.model');
 const bannedModel = require('../models/banned.model');
+const moment=require('moment')
 
 const auth = require('../middlewares/auth.mdw')
 const sleep = require('sleepjs')
@@ -50,12 +51,12 @@ router.get('/:id', async(req, res) => {
     if (req.session.isAuthenticated)
         alikeProduct.forEach(j => {
             favoriteList.forEach(k => {
-                console.log(k)
+               // console.log(k)
                 if (k.User == req.session.authUser.Username && k.Product == j.ProductID)
                     j.isFavorite = true;
             });
         });
-    console.log(favoriteList);
+ //   console.log(favoriteList);
     subIMG = [];
     for (i = 1; i <= product.ImageCount; i++) {
         subIMG.push({
@@ -114,7 +115,7 @@ router.post('/:id/Auction', auth, async(req, res) => {
     product.AuctionTime = +product.AuctionTime + 1;
     if (entity)
         if (+req.body.Price > +entity.Price) {
-            console.log(+req.body.Price, +entity.Price)
+           // console.log(+req.body.Price, +entity.Price)
             product.Price = +entity.Price + (+req.body.StepPrice);
             product.PriceHolder = req.session.authUser.Username;
             await Promise.all(
@@ -227,6 +228,15 @@ router.get('/:id/ban', async(req, res) => {
         }
         await productModel.patch(product);
     }
+    user=await userModel.singleByUserName(req.query.Username);
+    mailerModel.sendEmail(req, res, user.Email, "Đấu giá thành công!", "Chúc mừng bạn đấu giá thành công!");
     res.send('success');
+})
+
+router.post('/:id/addDescription',async (req,res)=>{
+    product=await productModel.single(req.params.id);
+    product.Description=product.Description+'\n'+moment().format('DD/MM/YYYY hh:mm')+'\n'+req.body.Description;
+    await productModel.patch(product);
+    res.send('success')
 })
 module.exports = router;
