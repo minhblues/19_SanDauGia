@@ -6,6 +6,9 @@ const auctionModel = require('../models/auctions.model');
 const userModel = require('../models/users.model');
 const mailerModel = require('../models/mailer.model');
 const favoritesModel = require('../models/favorites.model');
+const bannedModel = require('../models/banned.model');
+const moment=require('moment')
+
 const auth = require('../middlewares/auth.mdw')
 const sleep = require('sleepjs')
 var router = express.Router();
@@ -61,11 +64,13 @@ router.get('/:id', async(req, res) => {
             id: i
         })
     };
-    isSelling = (product.EndTime >= new Date()) && (product.Status == 0);
-
-   
-   // product.Description = doc;
-
+    isBan = []
+    if (req.session.authUser)
+        isBan = await bannedModel.isBan(req.session.authUser.Username, ID);
+    isSelling = (product.EndTime >= new Date()) && (product.Status == 0) && isBan.length == 0;
+    isMyProduct = false;
+    if (req.session.authUser)
+        isMyProduct = (product.Seller == req.session.authUser.Username);
     res.render('detail', {
         ID,
         title: product.Name,
@@ -77,6 +82,7 @@ router.get('/:id', async(req, res) => {
         bidScore,
         sellScore,
         alikeProduct,
+        isMyProduct,
         Auction: req.query.Auction || false,
         isSelling
     });
@@ -197,4 +203,40 @@ router.get('/:id/Buy', auth, async(req, res) => {
         ]);
     res.send("Success");
 });
+
+router.get('/:id/ban', async(req, res) => {
+    await bannedModel.add({
+        Username: req.query.Username,
+        Product: req.params.id
+    })
+    product = await productModel.single(req.params.id);
+    if (product.PriceHolder == req.session.authUser.Username) {
+        auction = await auctionModel.getAuctionByProductId(req.params.id);
+        console.log(auction[0])
+        kt = false;
+        for (i = 0; i < auction.length; i++) {
+            check = await bannedModel.isBan(auction[i].Bidder, req.params.id);
+            if (check.length == 0) {
+                product.PriceHolder = auction[i].Bidder;
+                product.Price = auction[i].Price;
+                kt = true
+            }
+        }
+        if (!kt) {
+            product.Price = product.StartPrice;
+            product.PriceHolder = null;
+        }
+        await productModel.patch(product);
+    }
+    user=await userModel.singleByUserName(req.query.Username);
+    mailerModel.sendEmail(req, res, user.Email, "Đấu giá thành công!", "Chúc mừng bạn đấu giá thành công!");
+    res.send('success');
+})
+
+router.post('/:id/addDescription',async (req,res)=>{
+    product=await productModel.single(req.params.id);
+    product.Description=product.Description+'\n'+moment().format('DD/MM/YYYY hh:mm')+'\n'+req.body.Description;
+    await productModel.patch(product);
+    res.send('success')
+})
 module.exports = router;

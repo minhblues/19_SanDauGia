@@ -1,9 +1,28 @@
 {{#section 'js'}}
 <script src="/javascripts/bootstrap-input-spinner.js"></script>
 <script>
-    if ({{ product.StepPrice }})
     $("input[type='number']").prop('min', parseInt($("input[type='number']").prop('min')) + {{ product.StepPrice }});
     $("input[type='number']").inputSpinner();
+    $('a.banBtn').each(function () {
+        $(this).on('click', function () {
+            var r = confirm('Bạn có muốn chặn user này đấu giá không?')
+            if (r)
+                $.get($(this).prop('href'), (data, status) => {
+                    alert(data);
+                    window.location.reload();
+                })
+            return false;
+        })
+    })
+    $('#addDescription').on('submit',function(){
+        var r=confirm('Xác nhận thêm mô tả ?')
+        if(r)
+        $.post($(this).prop('action'), $(this).serialize(),function(data,status){
+            alert(data);
+            location.reload();
+        })
+        return false;
+    })
 </script>
 <script>
      var temp = $('#home').text();
@@ -59,29 +78,29 @@
     })
     $("#buy").on("click", function () {
         $.get("{{ID}}/Buy", (message, status) => {
-                switch (message) {
-                    case 'Success':
-                        $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Mua thành công!!!</span>');
-                        $('#Dialog').modal('show');
-                        break;
-                    case 'Sold Out':
-                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm đã được mua bởi user khác!!!</span>');
-                        $('#Dialog').modal('show');
-                        break;
-                    case 'Time Up':
-                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm hết thời gian đấu giá!!!</span>');
-                        $('#Dialog').modal('show');
-                        break;
-                    case 'Low Score':
-                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Số điểm của bạn không đủ để đấu giá!!!</span>');
-                        $('#Dialog').modal('show');
-                        break;
-                    default:
-                        $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbspCó lỗi xảy ra, thử lại sau!!!</span>');
-                        $('#Dialog').modal('show');
-                        break;
-                }
-                console.log(message)
+            switch (message) {
+                case 'Success':
+                    $('#message').html('<i class="fa fa-check fa-lg" style="color: green;"></i><span>&nbsp;Mua thành công!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Sold Out':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm đã được mua bởi user khác!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Time Up':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Sản phẩm hết thời gian đấu giá!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                case 'Low Score':
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbsp;Số điểm của bạn không đủ để đấu giá!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+                default:
+                    $('#message').html('<i class="fas fa-exclamation-triangle" style="color:black;"></i>&nbspCó lỗi xảy ra, thử lại sau!!!</span>');
+                    $('#Dialog').modal('show');
+                    break;
+            }
+            console.log(message)
         })
     })
 </script>
@@ -224,9 +243,9 @@
                                     </td>
                                 </tr>
                                 {{#if isSelling}}
-                                
+
                                 {{else}}
-                                <tr >
+                                <tr>
                                     <td colspan="4">
                                         Hết hàng
                                     </td>
@@ -289,6 +308,19 @@
                     </tr>
                 </thead>
                 <tbody id="history-table">
+                    {{#if isMyProduct}}
+                    {{#each auction}}
+                    <tr>
+                        <th>{{STT}}</th>
+                        <td>{{Name}}</td>
+                        <td>{{Numberformat Price}} VND</td>
+                        <td><a href="/detail/{{Product}}/ban?Username={{Bidder}}" class="btn btn-outline-danger banBtn">
+                                <i class="fas fa-trash    "></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    {{else}}
                     {{#each auction}}
                     <tr>
                         <th>{{STT}}</th>
@@ -296,6 +328,7 @@
                         <td>{{Numberformat Price}} VND</td>
                     </tr>
                     {{/each}}
+                    {{/if}}
                 </tbody>
             </table>
         </div>
@@ -315,9 +348,16 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    {{!-- <p> --}}
+                    <p class="Description">
                         {{product.Description}}
-                    {{!-- </p> --}}
+                    </p>
+                    {{#if isMyProduct}}
+                    <form class="col-md-12 form-group" id="addDescription" action='/detail/{{product.ProductID}}/addDescription' method="POST">
+                        <label class="col-sm-4 col-form-label" for="txtFullDes">Mô tả</label>
+                        <textarea class="form-control" id="txtFullDes" name="Description"></textarea>
+                    <button type="submit" class="btn btn-primary mt-10">Thêm mô tả</button>
+                    </form>
+                    {{/if}}
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive">

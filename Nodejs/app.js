@@ -40,23 +40,23 @@ app.set('view engine', 'hbs');
 
 middleware(app);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    next(createError(404));
-});
+// app.use(function(req, res, next) {
+//     next(createError(404));
+// });
 
-// error handler
-app.use(async(err, req, res, next) => {
-    if (!res.locals.lsCategories)
-        res.locals.lsCategories = await categoryModel.all();
-    categories = res.locals.lsCategories;
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-    // render the error page
-    errstatus = err.status || 500;
-    res.status(errstatus);
-    res.render('error', { categories, errstatus });
-});
+// // error handler
+// app.use(async(err, req, res, next) => {
+//     if (!res.locals.lsCategories)
+//         res.locals.lsCategories = await categoryModel.all();
+//     categories = res.locals.lsCategories;
+//     // set locals, only providing error in development
+//     res.locals.message = err.message;
+//     res.locals.error = req.app.get('env') === 'development' ? err : {};
+//     // render the error page
+//     errstatus = err.status || 500;
+//     res.status(errstatus);
+//     res.render('error', { categories, errstatus });
+// });
 
 
 
