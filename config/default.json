@@ -1,11 +1,11 @@
 {
     "mysql": {
         "connectionLimit": 50,
-        "host": "localhost",
+        "host": "remotemysql.com",
         "port": 3306,
-        "user": "root",
-        "password": "1234",
-        "database": "onlineauction"
+        "user": "dOYRwXBe6W",
+        "password": "nODs7GwhB6",
+        "database": "dOYRwXBe6W"
     },
     "paginate": {
         "limit": 4
