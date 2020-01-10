@@ -24,13 +24,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 var router = express.Router();
 router.get('/', function (req, res, next) {
+    if(req.session.authUser)
+    if (req.session.authUser.Status != 1)
+        return res.redirect('/');
   res.render('postProduct', {
     title: 'Đăng sản phẩm',
     err_message,
   });
 });
 
-router.post('/', upload.array('fuMain', 3), async (req, res) => {
+router.post('/', upload.array('fuMain', 4), async (req, res) => {
   i = 0;
 
   if (req.body.Name.length === 0 || req.body.Price.length === 0 || req.body.StepPrice.length === 0 ||
@@ -40,7 +43,7 @@ router.post('/', upload.array('fuMain', 3), async (req, res) => {
       err_message: 'Vui lòng điền đầy đủ thông tin.'
     });
   }
-  if (req.files.length !== 3) {
+  if (req.files.length < 3) {
     return res.render('postProduct', {
       title: 'Đăng sản phẩm',
       err_message: 'Sản phẩm cần 3 ảnh minh hoạ'

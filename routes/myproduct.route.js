@@ -7,6 +7,10 @@ const helper = require('../config/handlebars-helper')
 
 
 router.get('/', async(req, res) => {
+    
+    if(req.session.authUser)
+    if (req.session.authUser.Status != 1)
+        return res.redirect('/');
     //  console.log(req.files);
     products = await productModel.getProductBySeller(req.session.authUser.Username)
     products.forEach(product => {

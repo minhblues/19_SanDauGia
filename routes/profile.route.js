@@ -24,7 +24,7 @@ router.get('/', async(req, res) => {
 
 router.post('/', async(req, res) => {
 
-    const user = req.session.authUser;
+    const user = await userModel.singleByUserName(req.session.authUser.Username);
     const dob = moment(user.Date, 'YYYY-MM-DD').format('DD/MM/YYYY');
     if (user === null) {
         return res.redirect('?error=true');

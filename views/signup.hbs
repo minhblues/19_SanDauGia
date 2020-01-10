@@ -6,6 +6,28 @@
         uiLibrary: 'bootstrap',
     });
 </script>
+<script>
+    $('#x').text(Math.floor(Math.random()*100));
+    $('#y').text(Math.floor(Math.random()*100));
+    $('#signupbutton').on('click', function () {
+        console.log(parseInt(('#x').text()) + parseInt($('#y').text()))
+        if (parseInt(('#x').text()) + parseInt($('#y').text()) == $('#result').val())
+            $('#signup').submit();
+        else
+            {alert('sai captcha');
+                location.reload();
+            }
+    })
+</script>
+<script>
+    document.getElementById("signupbutton").onclick = function () {
+        location.href = "/";
+    };
+    $('.datepicker').pickadate({
+        weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        showMonthsShort: true
+    })
+</script>
 {{/section}}
 
 {{#section 'css'}}
@@ -44,7 +66,7 @@
                 {{err_message}}
             </div>
             {{/if}}
-            <form class="row contact_form" action="#" method="Post" novalidate="novalidate">
+            <form class="row contact_form" action="#" method="Post" novalidate="novalidate" id='signup'>
                 <div class="col-md-6 form-group p_star">
                     <input type="text" class="form-control" id="first" name="Firstname" placeholder="First name" />
                 </div>
@@ -76,22 +98,7 @@
                     <input id="datepicker" name="Date" width="270" />
                 </div>
                 <div class="col-md-6 form-group p_star">
-                    <span id="add">
-                        <script>
-                            var x = Math.floor(Math.random() * 100);
-                            var y = Math.floor(Math.random() * 100);
-                            var z = x + ' + ' + y + ' = ?';
-                            document.getElementById('add').innerHTML = z;
-                            var checkAdd = () => {
-                                var z = document.getElementById('result').value;
-                                if (z != x + y) {
-                                    document.getElementById('requiredAdd').innerHTML = 'Please fill out a correct answer';
-                                    return false;
-                                }
-                                else
-                                    return true;
-                            }
-                        </script>
+                    <span id="x"></span>+<span id="y"></span>=?
                     </span>
                     <span id="requiredAdd"></span>
                     <input type="text" class="form-control" id="result" name="result" />
@@ -109,12 +116,3 @@
         </div>
     </div>
 </section>
-<script>
-    document.getElementById("signupbutton").onclick = function () {
-        location.href = "/";
-    };
-    $('.datepicker').pickadate({
-        weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-        showMonthsShort: true
-    })
-</script>
